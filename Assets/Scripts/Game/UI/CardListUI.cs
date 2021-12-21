@@ -43,12 +43,11 @@ class ItemCard : UIWindowWidget
 
     #region 事件
     public void Init(int index){
-        var sprite = Resources.LoadAll<Sprite>("Images/card");
-
+        var sprite = CardMgr.Instance.GetCardSprite("card_"+index);
         Debug.Log(sprite);
-        // if(sprite!= null){
-        //     m_imgIcon.sprite = sprite;
-        // }
+        if(sprite!= null){
+            m_imgIcon.sprite = sprite;
+        }
     }
     #endregion
 
