@@ -54,7 +54,7 @@ public class AudioMgr : Singleton<AudioMgr>
             GameObject obj = new GameObject();
             obj.name = "bgAudio";
             bgAudio = obj.AddComponent<AudioSource>();
-            GameObject.DontDestroyOnLoad(obj);
+            Object.DontDestroyOnLoad(obj);
         }
         ResourcesManager.Instance.LoadAsync<AudioClip>("Audio/BG/" + name, (clip) =>
         {
@@ -67,7 +67,7 @@ public class AudioMgr : Singleton<AudioMgr>
 
     public void PauseBackGroundMusic()
     {
-        if (bgAudio = null)
+        if (bgAudio == null)
         {
             return;
         }
@@ -76,7 +76,7 @@ public class AudioMgr : Singleton<AudioMgr>
 
     public void StopBackGroundAudio()
     {
-        if (bgAudio = null)
+        if (bgAudio == null)
         {
             return;
         }
@@ -111,7 +111,7 @@ public class AudioMgr : Singleton<AudioMgr>
         {
             soundList.Remove(audioSource);
             audioSource.Stop();
-            GameObject.Destroy(audioSource);
+            Object.Destroy(audioSource);
         }
     }
 
@@ -132,7 +132,7 @@ public class AudioMgr : Singleton<AudioMgr>
         {
             if (!soundList[i].isPlaying)
             {
-                GameObject.Destroy(soundList[i]);
+                Object.Destroy(soundList[i]);
                 soundList.RemoveAt(i);
             }
         }
