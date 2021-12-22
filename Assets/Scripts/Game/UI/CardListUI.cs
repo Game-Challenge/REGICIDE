@@ -18,12 +18,24 @@ class CardListUI : UIWindow
     protected override void OnCreate()
     {
         base.OnCreate();
-        AdjustIconNum(cardLilst,54,m_tfContent,m_itemCard);
+
+        GameMgr.Instance.RandomMyCards();
+        GameMgr.Instance.TurnCard();
+        var data = GameMgr.Instance.GetMyCard();
+
+        AdjustIconNum(cardLilst, data.Count, m_tfContent, m_itemCard);
         m_itemCard.gameObject.SetActive(false);
         for (int i = 0; i < cardLilst.Count; i++)
         {
-            cardLilst[i].Init(i);
+            cardLilst[i].Init(data[i]);
         }
+
+        //AdjustIconNum(cardLilst,54,m_tfContent,m_itemCard);
+        //m_itemCard.gameObject.SetActive(false);
+        //for (int i = 0; i < cardLilst.Count; i++)
+        //{
+        //    cardLilst[i].Init(i);
+        //}
     }
 
     #region 事件
@@ -47,6 +59,11 @@ class ItemCard : UIWindowWidget
         if(sprite!= null){
             m_imgIcon.sprite = sprite;
         }
+    }
+
+    public void Init(CardData data)
+    {
+        m_imgIcon.sprite = data.sprite;
     }
     #endregion
 

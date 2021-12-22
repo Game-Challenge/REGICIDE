@@ -162,7 +162,6 @@ public partial class UIWindow
     {
         GameObject goInst = (GameObject)ResourcesManager.Instance.Load(resPath);
         goInst.transform.SetParent(parent.transform);
-        //GameObject goInst = DResources.AllocGameObject(resPath, parentTrans);
         if (goInst == null)
         {
             return false;

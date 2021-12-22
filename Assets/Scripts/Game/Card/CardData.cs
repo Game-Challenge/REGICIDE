@@ -10,10 +10,18 @@ public enum CardType
     JOKER,  //
 }
 
-public class CardData
+public enum CardValue
+{
+    NONE,
+    J = 11, 
+    Q = 12,
+    K = 13,
+}
+
+public struct CardData
 {
     #region 属性
-    public CardType cardType = CardType.NONE;
+    public CardType cardType;
     public int CardInt { private set; get; }
     public int CardValue { private set; get; }
 

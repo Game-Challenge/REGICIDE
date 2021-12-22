@@ -6,6 +6,15 @@ sealed partial class GameApp : UnitySingleton<GameApp>
 {
     public int TargetFrameRate = 300;
 
+    public PlayerNum payerNum = PlayerNum.One;
+    public enum PlayerNum
+    {
+        One,
+        Two,
+        Three,
+        Four,
+    }
+
     public override void Awake()
     {
         base.Awake();
@@ -19,7 +28,8 @@ sealed partial class GameApp : UnitySingleton<GameApp>
         RegistAllSystem();
 
         GameMgr.Instance.Init();
-        UISys.Mgr.ShowWindow<CardListUI>();
+
+        UISys.Mgr.ShowWindow<GameUI>();
 
         var str = ResourcesManager.Instance.Load<TextAsset>("regicide");
         Debug.Log(str);
