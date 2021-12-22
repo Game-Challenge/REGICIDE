@@ -46,7 +46,7 @@ class CardListUI : UIWindow
 class ItemCard : UIWindowWidget
 {
     private CardData m_cardData;
-    private bool m_choice = false;
+    private bool m_choice;
     #region 脚本工具生成的代码
     private Image m_imgIcon;
     private GameObject m_goSelect;
@@ -72,15 +72,26 @@ class ItemCard : UIWindowWidget
     {
         m_cardData = data;
         m_imgIcon.sprite = m_cardData.sprite;
+        m_choice = false;
+        Refresh();
     }
     #endregion
 
     private void Choice()
     {
+        if (m_cardData.IsBoss)
+        {
+            return;
+        }
         m_choice = !m_choice;
+        Refresh();
+    }
+
+    private void Refresh()
+    {
         if (m_choice)
         {
-            EventCenter.Instance.EventTrigger<CardData>("Choice",m_cardData);
+            EventCenter.Instance.EventTrigger<CardData>("Choice", m_cardData);
             m_goSelect?.gameObject.SetActive(true);
         }
         else

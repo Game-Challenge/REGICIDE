@@ -26,9 +26,7 @@ public class GameMgr : Singleton<GameMgr>
         PlayerNum = (int)GameApp.Instance.payerNum + 1;
         InitTotalCards();
         InitMyCards();
-        //InitBoss();
         GameMgr.Instance.RandomMyCards();
-
     }
 
     private void RegiserEvent()
@@ -73,7 +71,9 @@ public class GameMgr : Singleton<GameMgr>
 
     public void InitBoss()
     {
-        var cardData = m_bossList[0];
+        Random random = new Random((int)DateTime.Now.Ticks);
+        var index = random.Next(0, m_bossList.Count - 1);
+        var cardData = m_bossList[index];
         m_bossActor = ActorMgr.Instance.InstanceActor(cardData);
         EventCenter.Instance.EventTrigger<BossActor>("InitBoss", m_bossActor);
     }

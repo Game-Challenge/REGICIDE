@@ -31,10 +31,10 @@ sealed partial class GameApp : UnitySingleton<GameApp>
 
         UISys.Mgr.ShowWindow<GameUI>();
 
-        var str = ResourcesManager.Instance.Load<TextAsset>("regicide");
-        Debug.Log(str);
-        var jsonData = JsonHelper.Instance.Deserialize(str.text);
-        Debug.Log(jsonData);
+        //var str = ResourcesManager.Instance.Load<TextAsset>("regicide");
+        //Debug.Log(str);
+        //var jsonData = JsonHelper.Instance.Deserialize(str.text);
+        //Debug.Log(jsonData);
     }
 }
 
