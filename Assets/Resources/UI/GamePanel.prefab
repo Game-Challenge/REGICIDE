@@ -5171,7 +5171,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -806412757
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
@@ -5272,7 +5272,6 @@ GameObject:
   - component: {fileID: 3397260017684783131}
   - component: {fileID: 3397260017684783125}
   - component: {fileID: 3397260017684783130}
-  - component: {fileID: 3397260017684783124}
   m_Layer: 0
   m_Name: EnemyArmyImage
   m_TagString: Untagged
@@ -5336,30 +5335,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3397260017684783124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3397260017684783128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58bf150fed56c0841bb4602709058c8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  valueTyp: 23
-  currentValueText: {fileID: 0}
-  minValueText: {fileID: 0}
-  maxValueText: {fileID: 0}
-  currentValueSlider: {fileID: 0}
-  minValueSlider: {fileID: 0}
-  maxValueSlider: {fileID: 0}
-  currentValueImage: {fileID: 3397260017684783130}
-  minValueImage: {fileID: 0}
-  maxValueImage: {fileID: 0}
-  formatter: 0
-  displayMultiplier: 1
 --- !u!1 &3397260017773002378
 GameObject:
   m_ObjectHideFlags: 0
@@ -10155,7 +10130,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -806412757
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
@@ -15089,7 +15064,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -806412757
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
@@ -20495,7 +20470,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -806412757
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
@@ -21536,8 +21511,6 @@ GameObject:
   - component: {fileID: 3397260018505328864}
   - component: {fileID: 3397260018505328865}
   - component: {fileID: 3397260018505328870}
-  - component: {fileID: 3397260018505328867}
-  - component: {fileID: 3397260018505328866}
   - component: {fileID: 3397260018505328861}
   m_Layer: 0
   m_Name: WarPanel
@@ -21619,7 +21592,7 @@ Animator:
   m_GameObject: {fileID: 3397260018505328868}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d8c7cb7518e8d7545a3158f25818f9bc, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -21628,55 +21601,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &3397260018505328867
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3397260018505328868}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 836cbdb2b1faa334bbee64a1d91f2d22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  retriggerable: 0
-  unscaledTime: 0
-  startOnStart: 0
-  delay: 1
-  countdownDisplay:
-    countdownText: {fileID: 0}
-    countdownFormat: '#'
-    countdownSlider: {fileID: 0}
-  AfterDelay:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3397260018505328870}
-        m_MethodName: SetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: win
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &3397260018505328866
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3397260018505328868}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29a381d8fadc61b4a86bdc599632192d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rects:
-  - {x: 0, y: 500}
-  - {x: 0, y: 0}
 --- !u!114 &3397260018505328861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21872,7 +21796,7 @@ Animator:
   m_GameObject: {fileID: 3397260018557575894}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8af124d41dfcebf4aad756b903a4c2f4, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -21967,7 +21891,6 @@ GameObject:
   - component: {fileID: 3397260018629134341}
   - component: {fileID: 3397260018629134343}
   - component: {fileID: 3397260018629134340}
-  - component: {fileID: 3397260018629134342}
   m_Layer: 0
   m_Name: PlayerArmyImage
   m_TagString: Untagged
@@ -22031,30 +21954,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3397260018629134342
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3397260018629134346}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58bf150fed56c0841bb4602709058c8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  valueTyp: 5
-  currentValueText: {fileID: 0}
-  minValueText: {fileID: 0}
-  maxValueText: {fileID: 0}
-  currentValueSlider: {fileID: 0}
-  minValueSlider: {fileID: 0}
-  maxValueSlider: {fileID: 0}
-  currentValueImage: {fileID: 3397260018629134340}
-  minValueImage: {fileID: 0}
-  maxValueImage: {fileID: 0}
-  formatter: 0
-  displayMultiplier: 1
 --- !u!1 &3397260018855566468
 GameObject:
   m_ObjectHideFlags: 0
@@ -22156,7 +22055,7 @@ Animator:
   m_GameObject: {fileID: 3397260018855566468}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8af124d41dfcebf4aad756b903a4c2f4, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -22266,7 +22165,7 @@ Animator:
   m_GameObject: {fileID: 3397260018886623711}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8af124d41dfcebf4aad756b903a4c2f4, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -27087,7 +26986,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -806412757
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
@@ -27277,7 +27176,7 @@ Animator:
   m_GameObject: {fileID: 3397260019005762504}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8a7752bc5ba9bec4890b654c3fb0b16e, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -32515,7 +32414,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -806412757
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
@@ -32641,7 +32540,7 @@ Animator:
   m_GameObject: {fileID: 3397260019314264349}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8af124d41dfcebf4aad756b903a4c2f4, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -37706,7 +37605,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -806412757
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
@@ -37952,7 +37851,7 @@ Animator:
   m_GameObject: {fileID: 3397260019458384686}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8af124d41dfcebf4aad756b903a4c2f4, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -38046,7 +37945,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3397260019484371335}
   - component: {fileID: 3397260019484371329}
-  - component: {fileID: 3397260019484371334}
   m_Layer: 0
   m_Name: GamePanel
   m_TagString: Untagged
@@ -38082,20 +37980,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3397260019484371332}
   m_CullTransparentMesh: 0
---- !u!114 &3397260019484371334
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3397260019484371332}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c97afc556caea1c44969477eb7ddec74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ConformX: 0
-  ConformY: 1
 --- !u!1 &3397260019486956339
 GameObject:
   m_ObjectHideFlags: 0
@@ -38185,7 +38069,6 @@ GameObject:
   - component: {fileID: 3397260019493673287}
   - component: {fileID: 3397260019493673661}
   - component: {fileID: 3397260019493673281}
-  - component: {fileID: 3397260019493673280}
   - component: {fileID: 3397260019493673283}
   m_Layer: 0
   m_Name: UpdatedStatsPanel
@@ -38251,35 +38134,6 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
---- !u!114 &3397260019493673280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3397260019493673284}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 146d495626f8a3e43aab81145e436e05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 0}
-  emptySprite: {fileID: 21300000, guid: 51f32fa672cd95447b2c56aa0e969cf6, type: 3}
-  collectionTime: 0.5
-  displayTime: 2
-  positiveColor: {r: 0.20038268, g: 0.745283, b: 0.34548637, a: 1}
-  negativeColor: {r: 1, g: 0.125, b: 0.125, a: 1}
-  changeDisplaySlots:
-  - img: {fileID: 3397260019121528982}
-    txt: {fileID: 3397260018075040904}
-  - img: {fileID: 3397260018583051104}
-    txt: {fileID: 3397260018330829675}
-  - img: {fileID: 3397260018256730763}
-    txt: {fileID: 3397260017916891822}
-  - img: {fileID: 3397260019476675463}
-    txt: {fileID: 3397260018232196282}
-  - img: {fileID: 3397260017414429388}
-    txt: {fileID: 3397260018426264052}
 --- !u!114 &3397260019493673283
 MonoBehaviour:
   m_ObjectHideFlags: 0
