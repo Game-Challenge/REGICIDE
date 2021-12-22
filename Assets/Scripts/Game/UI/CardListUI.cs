@@ -18,7 +18,7 @@ class CardListUI : UIWindow
     protected override void OnCreate()
     {
         base.OnCreate();
-        AdjustIconNum(cardLilst,53,m_tfContent,m_itemCard);
+        AdjustIconNum(cardLilst,54,m_tfContent,m_itemCard);
         m_itemCard.gameObject.SetActive(false);
         for (int i = 0; i < cardLilst.Count; i++)
         {
@@ -44,7 +44,6 @@ class ItemCard : UIWindowWidget
     #region 事件
     public void Init(int index){
         var sprite = CardMgr.Instance.GetCardSprite("card_"+index);
-        Debug.Log(sprite);
         if(sprite!= null){
             m_imgIcon.sprite = sprite;
         }

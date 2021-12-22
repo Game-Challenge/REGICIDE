@@ -21,5 +21,18 @@ public class CardMgr:Singleton<CardMgr>{
         }
         return sprite;
     }
+    public Sprite GetCardSprite(int index)
+    {
+        Sprite sprite = null;
+        if (m_spriteDic.TryGetValue("card_" + index, out sprite))
+        {
+            return sprite;
+        }
+        return sprite;
+    }
 
+    public CardData InstanceData(int cardInt)
+    {
+        return new CardData(cardInt);
+    }
 }
