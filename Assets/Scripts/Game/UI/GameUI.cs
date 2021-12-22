@@ -12,6 +12,7 @@ class GameUI : UIWindow
     private GameObject m_itemCard;
     private Transform m_tfContent;
     private Transform m_tfBossContent;
+    private Button m_btnAttack;
     protected override void ScriptGenerator()
     {
         m_goContent = FindChild("m_goContent").gameObject;
@@ -20,6 +21,8 @@ class GameUI : UIWindow
         m_itemCard = FindChild("m_goContent/m_goBottom/m_itemCard").gameObject;
         m_tfContent = FindChild("m_goContent/m_goBottom/ScrollView/Viewport/m_tfContent");
         m_tfBossContent = FindChild("m_goContent/m_goMiddle/m_tfBossContent");
+        m_btnAttack = FindChildComponent<Button>("m_goContent/m_goMiddle/m_btnAttack");
+        m_btnAttack.onClick.AddListener(Attack);
     }
     #endregion
 
@@ -27,6 +30,7 @@ class GameUI : UIWindow
     {
         base.RegisterEvent();
         EventCenter.Instance.AddEventListener<BossActor>("InitBoss", InitBoss);
+        EventCenter.Instance.AddEventListener("RefreshGameUI", RefreshGameUI);
     }
 
     private void InitBoss(BossActor bossActor)
@@ -35,12 +39,22 @@ class GameUI : UIWindow
         bossItem.Init(bossActor.cardData);
     }
 
+    private void Attack()
+    {
+        GameMgr.Instance.Attack();
+    }
+
     #region 事件
     protected override void OnCreate()
     {
         base.OnCreate();
         GameMgr.Instance.InitBoss();
         GameMgr.Instance.TurnCard();
+        RefreshGameUI();
+    }
+
+    private void RefreshGameUI()
+    {
         var data = GameMgr.Instance.GetMyCard();
 
         AdjustIconNum(cardLilst, data.Count, m_tfContent, m_itemCard);

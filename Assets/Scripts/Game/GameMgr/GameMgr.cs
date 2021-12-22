@@ -19,17 +19,56 @@ public class GameMgr : Singleton<GameMgr>
     private List<CardData> m_myList = new List<CardData>(TotalCardNum);     //可抽卡
     private List<CardData> m_useList = new List<CardData>(TotalCardNum);    //墓地
     private List<CardData> m_bossList = new List<CardData>();                       //boss堆
-
+    private List<CardData> m_choiceList = new List<CardData>();                      
     public void Init()
     {
+        RegiserEvent();
         PlayerNum = (int)GameApp.Instance.payerNum + 1;
         InitTotalCards();
         InitMyCards();
         //InitBoss();
         GameMgr.Instance.RandomMyCards();
+
+    }
+
+    private void RegiserEvent()
+    {
         MonoManager.Instance.AddUpdateListener(Update);
         EventCenter.Instance.AddEventListener("BossAttack", Hurt);
         EventCenter.Instance.AddEventListener<int>("AttackBoss", AttackBoss);
+        EventCenter.Instance.AddEventListener<CardData>("Choice", Choice);
+        EventCenter.Instance.AddEventListener<CardData>("DeChoice", DeChoice);
+    }
+
+    private void Choice(CardData cardData)
+    {
+        m_choiceList.Add(cardData);
+    }
+
+    private void DeChoice(CardData cardData)
+    {
+        for (int i = 0; i < m_choiceList.Count; i++)
+        {
+            m_choiceList.Remove(cardData);
+        }
+    }
+
+    public void Attack()
+    {
+        var value = 0;
+        for (int i = 0; i < m_choiceList.Count; i++)
+        {
+            var card = m_choiceList[i];
+
+            value += card.CardValue;
+
+            m_useList.Add(card);
+
+            m_curList.Remove(card);
+        }
+        m_choiceList.Clear();
+        EventCenter.Instance.EventTrigger("RefreshGameUI");
+        AttackBoss(value);
     }
 
     public void InitBoss()

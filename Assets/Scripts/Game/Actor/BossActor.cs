@@ -48,6 +48,7 @@ public class BossActor
             Hp = 0;
             Debug.Log("BossDie");
         }
+        Debug.Log("Boss Hp:" + Hp);
     }
 
     public void Attack()

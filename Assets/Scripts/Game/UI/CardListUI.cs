@@ -45,11 +45,18 @@ class CardListUI : UIWindow
 
 class ItemCard : UIWindowWidget
 {
+    private CardData m_cardData;
+    private bool m_choice = false;
     #region 脚本工具生成的代码
     private Image m_imgIcon;
+    private GameObject m_goSelect;
+    private Button m_btnChoice;
     protected override void ScriptGenerator()
     {
         m_imgIcon = FindChildComponent<Image>("m_imgIcon");
+        m_goSelect = FindChild("m_goSelect").gameObject;
+        m_btnChoice = FindChildComponent<Button>("m_imgIcon");
+        m_btnChoice.onClick.AddListener(Choice);
     }
     #endregion
 
@@ -63,8 +70,23 @@ class ItemCard : UIWindowWidget
 
     public void Init(CardData data)
     {
-        m_imgIcon.sprite = data.sprite;
+        m_cardData = data;
+        m_imgIcon.sprite = m_cardData.sprite;
     }
     #endregion
 
+    private void Choice()
+    {
+        m_choice = !m_choice;
+        if (m_choice)
+        {
+            EventCenter.Instance.EventTrigger<CardData>("Choice",m_cardData);
+            m_goSelect?.gameObject.SetActive(true);
+        }
+        else
+        {
+            EventCenter.Instance.EventTrigger<CardData>("DeChoice", m_cardData);
+            m_goSelect?.gameObject.SetActive(false);
+        }
+    }
 }
