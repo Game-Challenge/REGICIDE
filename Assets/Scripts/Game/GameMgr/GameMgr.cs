@@ -156,6 +156,7 @@ public class GameMgr : Singleton<GameMgr>
                 var temp = list[i];
                 list[i] = list[index];
                 list[index] = temp;
+                //(list[i], list[index]) = (list[i], list[index]);
             }
         }
     }
