@@ -5,9 +5,10 @@ using Random = System.Random;
 
 public class GameMgr : Singleton<GameMgr>
 {
+    #region 属性
     public int PlayerNum;
 
-    public int CurrentCardNum
+    public int CurrentCardsNum
     {
         get
         {
@@ -15,17 +16,28 @@ public class GameMgr : Singleton<GameMgr>
         }
     }
 
+    /// <summary>
+    /// 当前的手牌
+    /// </summary>
+    public List<CardData> CurrentCards
+    {
+        get
+        {
+            return m_curList;
+        }
+    }
     public const int TotalCardNum = 54;
     public const int MyMaxCardNum = 8;
-
     private BossActor m_bossActor;
-
     private List<CardData> m_totalList = new List<CardData>(TotalCardNum);  //总牌堆
     private List<CardData> m_curList = new List<CardData>(MyMaxCardNum);    //手卡
     private List<CardData> m_myList = new List<CardData>(TotalCardNum);     //可抽卡
     private List<CardData> m_useList = new List<CardData>(TotalCardNum);    //墓地
     private List<CardData> m_bossList = new List<CardData>();                       //boss堆
-    private List<CardData> m_choiceList = new List<CardData>();                      
+    private List<CardData> m_choiceList = new List<CardData>();
+    #endregion
+
+    #region 生命周期
     public void Init()
     {
         RegiserEvent();
@@ -38,15 +50,21 @@ public class GameMgr : Singleton<GameMgr>
     private void RegiserEvent()
     {
         MonoManager.Instance.AddUpdateListener(Update);
-        EventCenter.Instance.AddEventListener("BossAttack", Hurt);
+        EventCenter.Instance.AddEventListener("AbordCard", AbordCard);
+        EventCenter.Instance.AddEventListener<int>("BossAttack", Hurt);
         EventCenter.Instance.AddEventListener<int>("AttackBoss", AttackBoss);
         EventCenter.Instance.AddEventListener<CardData>("Choice", Choice);
         EventCenter.Instance.AddEventListener<CardData>("DeChoice", DeChoice);
-
         EventCenter.Instance.AddEventListener("BossDie", BossDie);
     }
 
-    #region 选择卡
+    private void Update()
+    {
+
+    }
+    #endregion
+
+    #region 战斗中卡排操作
     private void Choice(CardData cardData)
     {
         m_choiceList.Add(cardData);
@@ -59,6 +77,39 @@ public class GameMgr : Singleton<GameMgr>
             m_choiceList.Remove(cardData);
         }
     }
+
+    private void AbordCard()
+    {
+        int myValue = 0;
+
+        foreach (var card in m_choiceList)
+        {
+            myValue += card.CardValue;
+        }
+
+        if (myValue < m_needAbordValue)
+        {
+            Debug.Log("您需遗弃的牌点数不足");
+            return;
+        }
+
+        for (int i = 0; i < m_choiceList.Count; i++)
+        {
+            var card = m_choiceList[i];
+
+            m_useList.Add(card);
+
+            m_curList.Remove(card);
+        }
+
+        m_choiceList.Clear();
+
+        m_needAbordValue = 0;
+
+        SetState(GameState.STATEONE);
+
+        EventCenter.Instance.EventTrigger("RefreshGameUI");
+    }
     #endregion
 
     #region Boss 接口
@@ -69,6 +120,7 @@ public class GameMgr : Singleton<GameMgr>
         var cardData = m_bossList[index];
         m_bossActor = ActorMgr.Instance.InstanceActor(cardData);
         EventCenter.Instance.EventTrigger<BossActor>("RefreshBoss", m_bossActor);
+        SetState(GameState.STATEONE);
     }
 
     private void AttackBoss(int value)
@@ -77,6 +129,7 @@ public class GameMgr : Singleton<GameMgr>
         {
             m_bossActor.Hurt(value);
         }
+        SetState(GameState.STATETHREE);
     }
 
     private void BossDie()
@@ -84,6 +137,8 @@ public class GameMgr : Singleton<GameMgr>
         InitBoss();
     }
     #endregion
+
+    #region 战斗相关
 
     public bool CheckCardSkill(List<CardData> choiceList)
     {
@@ -105,14 +160,19 @@ public class GameMgr : Singleton<GameMgr>
             }
             else if (card.cardType == CardType.HEART)
             {
-                
+
             }
         }
-
+        SetState(GameState.STATETWO);
         return doubleAtk;
     }
 
-    //验证卡是否合法
+
+    /// <summary>
+    ///  验证卡是否合法
+    /// </summary>
+    /// <param name="choiceList"></param>
+    /// <returns></returns>
     public bool CheckCardInvild(List<CardData> choiceList)
     {
         var count = choiceList.Count;
@@ -160,6 +220,11 @@ public class GameMgr : Singleton<GameMgr>
 
     public void Attack()
     {
+        if (gameState != GameState.STATEONE)
+        {
+            Debug.Log(string.Format("当前阶段是：{0}，无法攻击",gameState));
+            return;
+        }
         if (!CheckCardInvild(m_choiceList))
         {
             Debug.Log("您选择的卡片不符合规定");
@@ -185,13 +250,16 @@ public class GameMgr : Singleton<GameMgr>
         AttackBoss(value);
     }
 
-
-
-    private void Hurt()
+    private int m_needAbordValue = 0;
+    private void Hurt(int value)
     {
-        Debug.Log("Hurt");
+        SetState(GameState.STATEFOUR);
+        Debug.Log("Hurt:" + value);
+        m_needAbordValue = value;
     }
+    #endregion
 
+    #region Card操作
     private void InitTotalCards()
     {
         m_totalList.Clear();
@@ -228,7 +296,7 @@ public class GameMgr : Singleton<GameMgr>
     {
         List<CardData> temp = new List<CardData>();
 
-        var turnCount = MyMaxCardNum - CurrentCardNum;
+        var turnCount = MyMaxCardNum - CurrentCardsNum;
         turnCount = m_myList.Count > turnCount ? turnCount : m_myList.Count;
         for (int i = 0; i < turnCount; i++)
         {
@@ -243,7 +311,7 @@ public class GameMgr : Singleton<GameMgr>
     {
         List<CardData> temp = new List<CardData>();
 
-        var couldTurnCount = MyMaxCardNum - CurrentCardNum;
+        var couldTurnCount = MyMaxCardNum - CurrentCardsNum;
 
         if (couldTurnCount == 0)
         {
@@ -259,12 +327,6 @@ public class GameMgr : Singleton<GameMgr>
         }
         m_curList.AddRange(temp);
         //EventCenter.Instance.EventTrigger("RefreshGameUI");
-    }
-
-
-    public List<CardData> GetMyCard()
-    {
-        return m_curList;
     }
 
     public static void RandomSort<T>(List<T> list)
@@ -285,18 +347,40 @@ public class GameMgr : Singleton<GameMgr>
             }
         }
     }
+    #endregion
 
-    private void Update()
-    {
-
-    }
+    #region 游戏阶段
+    private int m_stateIndex;
+    public GameState gameState { private set; get; }
 
     public enum GameState
     {
         NONE,
-        STATEONE,
-        STATETWO,
-        STATETHREE,
-        STATEFOUR,
+        STATEONE,   //阶段一，打出手牌
+        STATETWO,   //阶段二，激活技能
+        STATETHREE, //阶段三，造成伤害
+        STATEFOUR,  //阶段四，承受伤害
     }
+
+    public void NextState()
+    {
+        m_stateIndex++;
+        if (m_stateIndex > 4)
+        {
+            m_stateIndex = 1;
+        }
+        gameState = (GameState)m_stateIndex;
+    }
+
+    public void SetState(GameState state)
+    {
+        gameState = state;
+        m_stateIndex = (int)state;
+    }
+
+    public void EndGame()
+    {
+        SetState(GameState.NONE);
+    }
+    #endregion
 }

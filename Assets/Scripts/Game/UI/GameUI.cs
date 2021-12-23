@@ -14,6 +14,7 @@ class GameUI : UIWindow
     private Transform m_tfContent;
     private Transform m_tfBossContent;
     private Button m_btnAttack;
+    private Button m_btnAbord;
     protected override void ScriptGenerator()
     {
         m_goContent = FindChild("m_goContent").gameObject;
@@ -23,7 +24,9 @@ class GameUI : UIWindow
         m_tfContent = FindChild("m_goContent/m_goBottom/ScrollView/Viewport/m_tfContent");
         m_tfBossContent = FindChild("m_goContent/m_goMiddle/m_tfBossContent");
         m_btnAttack = FindChildComponent<Button>("m_goContent/m_goMiddle/m_btnAttack");
+        m_btnAbord = FindChildComponent<Button>("m_goContent/m_goMiddle/m_btnAbord");
         m_btnAttack.onClick.AddListener(Attack);
+        m_btnAbord.onClick.AddListener(Abord);
     }
     #endregion
 
@@ -49,6 +52,14 @@ class GameUI : UIWindow
         GameMgr.Instance.Attack();
     }
 
+    private void Abord()
+    {
+        if (GameMgr.Instance.gameState == GameMgr.GameState.STATEFOUR)
+        {
+            EventCenter.Instance.EventTrigger("AbordCard");
+        }
+    }
+
     #region 事件
     protected override void OnCreate()
     {
@@ -60,7 +71,7 @@ class GameUI : UIWindow
 
     private void RefreshGameUI()
     {
-        var data = GameMgr.Instance.GetMyCard();
+        var data = GameMgr.Instance.CurrentCards;
 
         AdjustIconNum(cardLilst, data.Count, m_tfContent, m_itemCard);
         m_itemCard.gameObject.SetActive(false);

@@ -21,7 +21,7 @@ class CardListUI : UIWindow
 
         GameMgr.Instance.RandomMyCards();
         GameMgr.Instance.TurnCard();
-        var data = GameMgr.Instance.GetMyCard();
+        var data = GameMgr.Instance.CurrentCards;
 
         AdjustIconNum(cardLilst, data.Count, m_tfContent, m_itemCard);
         m_itemCard.gameObject.SetActive(false);

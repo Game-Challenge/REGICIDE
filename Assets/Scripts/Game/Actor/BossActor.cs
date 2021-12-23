@@ -68,7 +68,17 @@ public class BossActor
             Debug.Log("BossDie");
             EventCenter.Instance.EventTrigger("BossDie");
         }
+        else
+        {
+            MonoManager.Instance.StartCoroutine(BossAttack());
+        }
         Debug.Log("Boss Hp:" + Hp);
+    }
+
+    private IEnumerator BossAttack()
+    {
+        yield return new WaitForSeconds(1);
+        EventCenter.Instance.EventTrigger("BossAttack", Atk);
     }
 
     public void Attack()
