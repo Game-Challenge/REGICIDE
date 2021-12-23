@@ -161,11 +161,16 @@ public partial class UIWindow
     public bool CreateByPath(string resPath, UIWindow parent, Transform parentTrans = null, bool visible = true)
     {
         GameObject goInst = (GameObject)ResourcesManager.Instance.Load(resPath);
-        goInst.transform.SetParent(parent.transform);
-        if (goInst == null)
+
+        if (parentTrans != null)
         {
-            return false;
+            goInst.transform.SetParent(parentTrans);
         }
+        else
+        {
+            goInst.transform.SetParent(parent.transform);
+        }
+
         if (!Create(parent, goInst, visible))
         {
             return false;

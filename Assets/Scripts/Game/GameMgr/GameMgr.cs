@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
 
-public class GameMgr : Singleton<GameMgr>
+partial class GameMgr : Singleton<GameMgr>
 {
     #region 属性
     public int PlayerNum;
@@ -89,7 +89,7 @@ public class GameMgr : Singleton<GameMgr>
 
         if (myValue < m_needAbordValue)
         {
-            Debug.Log("您需遗弃的牌点数不足");
+            UISys.ShowTipMsg("您需遗弃的牌点数不足");
             return;
         }
 
@@ -146,19 +146,19 @@ public class GameMgr : Singleton<GameMgr>
 
         foreach (var card in choiceList)
         {
-            if (card.cardType == CardType.DIAMOND)
+            if (card.cardType == CardType.DIAMOND && m_bossActor.cardType != CardType.DIAMOND)
             {
                 TurnCard(card.CardValue);
             }
-            else if (card.cardType == CardType.CLUB)
+            else if (card.cardType == CardType.CLUB && m_bossActor.cardType != CardType.CLUB)
             {
                 doubleAtk = true;
             }
-            else if (card.cardType == CardType.SPADE)
+            else if (card.cardType == CardType.SPADE && m_bossActor.cardType != CardType.SPADE)
             {
                 EventCenter.Instance.EventTrigger<int>("DownAtk", card.CardValue);
             }
-            else if (card.cardType == CardType.HEART)
+            else if (card.cardType == CardType.HEART && m_bossActor.cardType != CardType.HEART)
             {
 
             }
@@ -222,12 +222,12 @@ public class GameMgr : Singleton<GameMgr>
     {
         if (gameState != GameState.STATEONE)
         {
-            Debug.Log(string.Format("当前阶段是：{0}，无法攻击",gameState));
+            UISys.ShowTipMsg(string.Format("当前阶段是：{0}，无法攻击",gameState));
             return;
         }
         if (!CheckCardInvild(m_choiceList))
         {
-            Debug.Log("您选择的卡片不符合规定");
+            UISys.ShowTipMsg("您选择的卡片不符合规定");
             return;
         }
         var value = 0;
@@ -254,6 +254,7 @@ public class GameMgr : Singleton<GameMgr>
     private void Hurt(int value)
     {
         SetState(GameState.STATEFOUR);
+        UISys.ShowTipMsg("受到君主的伤害:"+value);
         Debug.Log("Hurt:" + value);
         m_needAbordValue = value;
     }
@@ -362,6 +363,11 @@ public class GameMgr : Singleton<GameMgr>
         STATEFOUR,  //阶段四，承受伤害
     }
 
+    public Dictionary<GameState, string> stateMsgDic = new Dictionary<GameState, string>()
+    {
+        {GameState.STATEONE,"阶段一，打出手牌"},{GameState.STATETWO,"阶段二，激活技能"},{GameState.STATETHREE,"阶段三，造成伤害"},{GameState.STATEFOUR,"阶段四，承受伤害"}
+    };
+
     public void NextState()
     {
         m_stateIndex++;
@@ -376,6 +382,14 @@ public class GameMgr : Singleton<GameMgr>
     {
         gameState = state;
         m_stateIndex = (int)state;
+        UISys.ShowTipMsg("当前阶段:" + GetCurrentStateStr());
+    }
+
+    public string GetCurrentStateStr()
+    {
+        string str = String.Empty;
+        stateMsgDic.TryGetValue(gameState, out str);
+        return str;
     }
 
     public void EndGame()

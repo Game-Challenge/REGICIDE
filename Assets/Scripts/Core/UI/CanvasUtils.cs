@@ -97,7 +97,7 @@ public static class CanvasUtils
         rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Right, right, size.x);
         rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top, top, size.y);
     }
-    public static void Center(RectTransform rectTransform, float x, float y)
+    public static void SetCenter(this RectTransform rectTransform, float x = 0, float y = 0)
     {
         Vector2 size = rectTransform.rect.size;
         rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, size.x);

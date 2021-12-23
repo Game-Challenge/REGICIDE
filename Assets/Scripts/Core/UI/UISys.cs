@@ -52,5 +52,14 @@ class UISys:BaseLogicSys<UISys>
 
         controller.ResigterUIEvent();
     }
+
+    public static void ShowTipMsg(string tex, int diyTime = 0)
+    {
+        var tipUI = Mgr.ShowWindow<TipUI>(UI_Layer.System);
+        if (tipUI != null)
+        {
+            tipUI.ShowNewTip(tex, diyTime);
+        }
+    }
 }
 

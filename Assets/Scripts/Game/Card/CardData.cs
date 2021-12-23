@@ -16,6 +16,8 @@ public enum CardValue
     J = 11, 
     Q = 12,
     K = 13,
+    SmallJoker = 14,
+    Joker = 15,
 }
 
 public struct CardData

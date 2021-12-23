@@ -9,6 +9,14 @@ public class BossActor
 
     public int Atk { private set; get; }
 
+    public CardType cardType
+    {
+        get
+        {
+            return cardData.cardType;
+        }
+    }
+
     public BossActor(CardData cardData)
     {
         this.cardData = cardData;
@@ -43,6 +51,18 @@ public class BossActor
             {
                 Hp = 40;
                 Atk = 20;
+                break;
+            }
+            case CardValue.SmallJoker:
+            {
+                Hp = 50;
+                Atk = 25;
+                break;
+            }
+            case CardValue.Joker:
+            {
+                Hp = 60;
+                Atk = 35;
                 break;
             }
         }

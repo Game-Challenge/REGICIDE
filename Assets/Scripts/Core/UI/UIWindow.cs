@@ -22,10 +22,39 @@ public partial class UIWindow
     private bool m_isClosed = false;
 
     protected UIManager m_UIManager = null;
-    #endregion
 
-    //通过里氏转换原则 存储所有控件
-    private Dictionary<string, List<UIBehaviour>> controlDic = new Dictionary<string, List<UIBehaviour>>();
+    public int SortingOrder
+    {
+        get
+        {
+            if (m_canvas != null)
+            {
+                return m_canvas.sortingOrder;
+            }
+
+            return 0;
+        }
+
+        set
+        {
+            if (m_canvas != null)
+            {
+                int oldOrder = m_canvas.sortingOrder;
+                if (oldOrder != value)
+                {
+                    var listCanvas = gameObject.GetComponentsInChildren<Canvas>(true);
+                    for (int i = 0; i < listCanvas.Length; i++)
+                    {
+                        var childCanvas = listCanvas[i];
+                        childCanvas.sortingOrder = value + (childCanvas.sortingOrder - oldOrder);
+                    }
+                    m_canvas.sortingOrder = value;
+                    _OnSortingOrderChg();
+                }
+            }
+        }
+    }
+    #endregion
 
     enum UIWindowBaseType
     {

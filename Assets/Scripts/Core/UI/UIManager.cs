@@ -20,7 +20,7 @@ public enum UI_Layer
 public class UIManager : Singleton<UIManager>
 {
     public RectTransform canvas;
-
+    private int sortOrder;
     private Transform bottom;
     private Transform mid;
     private Transform top;
@@ -101,6 +101,7 @@ public class UIManager : Singleton<UIManager>
         {
             m_uiidDic.Remove(uiid);
         }
+        sortOrder -= 50;
 
         window.Destroy();
 
@@ -154,15 +155,23 @@ public class UIManager : Singleton<UIManager>
         m_uiidDic.Add(uiid, window);
 
         Transform father = bottom;
+        int baseSort = 0;
         switch (layer)
         {
+            case UI_Layer.Bottom:
+                baseSort = 0;
+                father = bottom;
+                break;
             case UI_Layer.Mid:
+                baseSort = 500;
                 father = mid;
                 break;
             case UI_Layer.Top:
+                baseSort = 1000;
                 father = top;
                 break;
             case UI_Layer.System:
+                baseSort = 2000;
                 father = system;
                 break;
         }
@@ -183,6 +192,8 @@ public class UIManager : Singleton<UIManager>
             return false;
         }
 
+        window.SortingOrder = sortOrder + baseSort;
+        sortOrder += 50;
         return true;
     }
     private string GetUIResourcePath(string typeName)
