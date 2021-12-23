@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 class GameUI : UIWindow
 {
+    private ItemCard m_bossCard;
     private List<ItemCard> cardLilst = new List<ItemCard>();
     #region 脚本工具生成的代码
     private GameObject m_goContent;
@@ -29,14 +30,18 @@ class GameUI : UIWindow
     protected override void RegisterEvent()
     {
         base.RegisterEvent();
-        EventCenter.Instance.AddEventListener<BossActor>("InitBoss", InitBoss);
+        EventCenter.Instance.AddEventListener<BossActor>("RefreshBoss", RefreshBoss);
         EventCenter.Instance.AddEventListener("RefreshGameUI", RefreshGameUI);
     }
 
-    private void InitBoss(BossActor bossActor)
+    private void RefreshBoss(BossActor bossActor)
     {
-        var bossItem = CreateWidgetByPrefab<ItemCard>(m_itemCard, m_tfBossContent);
-        bossItem.Init(bossActor.cardData);
+        if (m_bossCard == null)
+        {
+            m_bossCard = CreateWidgetByPrefab<ItemCard>(m_itemCard, m_tfBossContent);
+        }
+        
+        m_bossCard.Init(bossActor.cardData);
     }
 
     private void Attack()

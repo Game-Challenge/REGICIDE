@@ -12,7 +12,15 @@ public class BossActor
     public BossActor(CardData cardData)
     {
         this.cardData = cardData;
+        RegisterEvent();
         Init();
+    }
+
+    private void RegisterEvent()
+    {
+        EventCenter.Instance.AddEventListener("Attack", Attack);
+        EventCenter.Instance.AddEventListener<int>("Hurt", Hurt);
+        EventCenter.Instance.AddEventListener<int>("DownAtk", DownAtk);
     }
 
     private void Init()
@@ -40,6 +48,17 @@ public class BossActor
         }
     }
 
+    private void DownAtk(int value)
+    {
+        Atk -= value;
+
+        if (Atk <= 0)
+        {
+            Atk = 0;
+        }
+        Debug.Log("Boss DownAtk ,Current Atk:" + Atk);
+    }
+
     public void Hurt(int value)
     {
         Hp -= value;
@@ -47,6 +66,7 @@ public class BossActor
         {
             Hp = 0;
             Debug.Log("BossDie");
+            EventCenter.Instance.EventTrigger("BossDie");
         }
         Debug.Log("Boss Hp:" + Hp);
     }

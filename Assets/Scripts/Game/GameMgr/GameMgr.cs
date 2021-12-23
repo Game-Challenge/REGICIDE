@@ -7,7 +7,13 @@ public class GameMgr : Singleton<GameMgr>
 {
     public int PlayerNum;
 
-    public int CurrentCardNum = 0;
+    public int CurrentCardNum
+    {
+        get
+        {
+            return m_curList.Count;
+        }
+    }
 
     public const int TotalCardNum = 54;
     public const int MyMaxCardNum = 8;
@@ -36,8 +42,11 @@ public class GameMgr : Singleton<GameMgr>
         EventCenter.Instance.AddEventListener<int>("AttackBoss", AttackBoss);
         EventCenter.Instance.AddEventListener<CardData>("Choice", Choice);
         EventCenter.Instance.AddEventListener<CardData>("DeChoice", DeChoice);
+
+        EventCenter.Instance.AddEventListener("BossDie", BossDie);
     }
 
+    #region 选择卡
     private void Choice(CardData cardData)
     {
         m_choiceList.Add(cardData);
@@ -49,6 +58,58 @@ public class GameMgr : Singleton<GameMgr>
         {
             m_choiceList.Remove(cardData);
         }
+    }
+    #endregion
+
+    #region Boss 接口
+    public void InitBoss()
+    {
+        Random random = new Random((int)DateTime.Now.Ticks);
+        var index = random.Next(0, m_bossList.Count - 1);
+        var cardData = m_bossList[index];
+        m_bossActor = ActorMgr.Instance.InstanceActor(cardData);
+        EventCenter.Instance.EventTrigger<BossActor>("RefreshBoss", m_bossActor);
+    }
+
+    private void AttackBoss(int value)
+    {
+        if (m_bossActor != null)
+        {
+            m_bossActor.Hurt(value);
+        }
+    }
+
+    private void BossDie()
+    {
+        InitBoss();
+    }
+    #endregion
+
+    public bool CheckCardSkill(List<CardData> choiceList)
+    {
+        bool doubleAtk = false;
+
+        foreach (var card in choiceList)
+        {
+            if (card.cardType == CardType.DIAMOND)
+            {
+                TurnCard(card.CardValue);
+            }
+            else if (card.cardType == CardType.CLUB)
+            {
+                doubleAtk = true;
+            }
+            else if (card.cardType == CardType.SPADE)
+            {
+                EventCenter.Instance.EventTrigger<int>("DownAtk", card.CardValue);
+            }
+            else if (card.cardType == CardType.HEART)
+            {
+                
+            }
+        }
+
+        return doubleAtk;
     }
 
     public void Attack()
@@ -64,27 +125,16 @@ public class GameMgr : Singleton<GameMgr>
 
             m_curList.Remove(card);
         }
+        if (CheckCardSkill(m_choiceList))
+        {
+            value = value * 2;
+        }
         m_choiceList.Clear();
         EventCenter.Instance.EventTrigger("RefreshGameUI");
         AttackBoss(value);
     }
 
-    public void InitBoss()
-    {
-        Random random = new Random((int)DateTime.Now.Ticks);
-        var index = random.Next(0, m_bossList.Count - 1);
-        var cardData = m_bossList[index];
-        m_bossActor = ActorMgr.Instance.InstanceActor(cardData);
-        EventCenter.Instance.EventTrigger<BossActor>("InitBoss", m_bossActor);
-    }
 
-    private void AttackBoss(int value)
-    {
-        if (m_bossActor != null)
-        {
-            m_bossActor.Hurt(value);
-        }
-    }
 
     private void Hurt()
     {
@@ -135,7 +185,31 @@ public class GameMgr : Singleton<GameMgr>
             m_myList.RemoveAt(0);
         }
         m_curList.AddRange(temp);
+        //EventCenter.Instance.EventTrigger("RefreshGameUI");
     }
+
+    public void TurnCard(int turnCount)
+    {
+        List<CardData> temp = new List<CardData>();
+
+        var couldTurnCount = MyMaxCardNum - CurrentCardNum;
+
+        if (couldTurnCount == 0)
+        {
+            return;
+        }
+        turnCount = m_myList.Count > turnCount ? turnCount : m_myList.Count;
+
+        turnCount = couldTurnCount > turnCount ? turnCount : couldTurnCount;
+        for (int i = 0; i < turnCount; i++)
+        {
+            temp.Add(m_myList[i]);
+            m_myList.RemoveAt(0);
+        }
+        m_curList.AddRange(temp);
+        //EventCenter.Instance.EventTrigger("RefreshGameUI");
+    }
+
 
     public List<CardData> GetMyCard()
     {
@@ -160,17 +234,6 @@ public class GameMgr : Singleton<GameMgr>
             }
         }
     }
-
-    //private List<T> RandomSort<T>(List<T> list)
-    //{
-    //    var random = new Random((int)DateTime.Now.Ticks);
-    //    var newList = new List<T>();
-    //    foreach (var item in list)
-    //    {
-    //        newList.Insert(random.Next(newList.Count), item);
-    //    }
-    //    return newList;
-    //}
 
     private void Update()
     {
