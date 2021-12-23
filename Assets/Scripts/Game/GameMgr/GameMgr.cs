@@ -112,8 +112,59 @@ public class GameMgr : Singleton<GameMgr>
         return doubleAtk;
     }
 
+    //验证卡是否合法
+    public bool CheckCardInvild(List<CardData> choiceList)
+    {
+        var count = choiceList.Count;
+
+        if (count == 1)
+        {
+            return true;
+        }
+        else if (count == 2)
+        {
+            if (choiceList[0].CardValue == choiceList[1].CardValue)
+            {
+                return true;
+            }
+            else if (choiceList[0].CardValue == 1 || choiceList[1].CardValue == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            if (count == 0)
+            {
+                return false;
+            }
+            else
+            {
+                var value = choiceList[0].CardValue;
+                for (int i = 0; i < count; i++)
+                {
+                    if (choiceList[i].CardValue != value)
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
     public void Attack()
     {
+        if (!CheckCardInvild(m_choiceList))
+        {
+            Debug.Log("您选择的卡片不符合规定");
+            return;
+        }
         var value = 0;
         for (int i = 0; i < m_choiceList.Count; i++)
         {
