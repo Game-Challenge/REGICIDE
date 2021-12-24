@@ -29,10 +29,11 @@ class InventoryUI : UIWindowWidget
     #region 事件
     private void OnClickMenuBtn()
     {
-        UISys.Mgr.ShowWindow<SettingUI>();
+        
     }
     private void OnClickSettingBtn()
     {
+        UISys.Mgr.ShowWindow<SettingUI>();
     }
     private void OnClickLeftBtn()
     {

@@ -303,7 +303,6 @@ partial class GameMgr : Singleton<GameMgr>
 
     public void RandomSort<T>(List<T> list)
     {
-        //Random random = new Random((int)DateTime.Now.Ticks);
         Random random = new Random((int)DateTime.Now.Ticks);
         Debug.Log((int)DateTime.Now.Ticks);
         int index = 0;
