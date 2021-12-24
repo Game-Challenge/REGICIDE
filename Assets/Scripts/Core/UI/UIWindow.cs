@@ -23,6 +23,8 @@ public partial class UIWindow
 
     protected UIManager m_UIManager = null;
 
+    public UI_Layer UILayer;
+
     public int SortingOrder
     {
         get

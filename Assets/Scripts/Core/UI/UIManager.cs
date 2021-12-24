@@ -20,7 +20,11 @@ public enum UI_Layer
 public class UIManager : Singleton<UIManager>
 {
     public RectTransform canvas;
-    private int sortOrder;
+    //private int sortOrder;
+    private int bottomSortOrder;
+    private int midSortOrder;
+    private int topSortOrder;
+    private int systemSortOrder;
     private Transform bottom;
     private Transform mid;
     private Transform top;
@@ -101,8 +105,21 @@ public class UIManager : Singleton<UIManager>
         {
             m_uiidDic.Remove(uiid);
         }
-        sortOrder -= 50;
-
+        switch (window.UILayer)
+        {
+            case UI_Layer.Bottom:
+                bottomSortOrder -= 50;
+                break;
+            case UI_Layer.Mid:
+                midSortOrder -= 50;
+                break;
+            case UI_Layer.Top:
+                topSortOrder -= 50;
+                break;
+            case UI_Layer.System:
+                systemSortOrder -= 50;
+                break;
+        }
         window.Destroy();
 
         window = null;
@@ -156,23 +173,29 @@ public class UIManager : Singleton<UIManager>
 
         Transform father = bottom;
         int baseSort = 0;
+        int sortOrder = 0;
+        window.UILayer = layer;
         switch (layer)
         {
             case UI_Layer.Bottom:
                 baseSort = 0;
                 father = bottom;
+                sortOrder = bottomSortOrder;
                 break;
             case UI_Layer.Mid:
                 baseSort = 500;
                 father = mid;
+                sortOrder = midSortOrder;
                 break;
             case UI_Layer.Top:
                 baseSort = 1000;
                 father = top;
+                sortOrder = topSortOrder;
                 break;
             case UI_Layer.System:
                 baseSort = 2000;
                 father = system;
+                sortOrder = systemSortOrder;
                 break;
         }
 
@@ -193,7 +216,22 @@ public class UIManager : Singleton<UIManager>
         }
 
         window.SortingOrder = sortOrder + baseSort;
-        sortOrder += 50;
+
+        switch (layer)
+        {
+            case UI_Layer.Bottom:
+                bottomSortOrder += 50;
+                break;
+            case UI_Layer.Mid:
+                midSortOrder += 50;
+                break;
+            case UI_Layer.Top:
+                topSortOrder += 50;
+                break;
+            case UI_Layer.System:
+                systemSortOrder += 50;
+                break;
+        }
         return true;
     }
     private string GetUIResourcePath(string typeName)
