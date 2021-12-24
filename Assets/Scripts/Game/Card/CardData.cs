@@ -28,6 +28,14 @@ public struct CardData
     public int CardValue { private set; get; }
 
     public Sprite sprite;
+
+    public bool IsPet
+    {
+        get
+        {
+            return CardValue == 1;
+        }
+    }
     public bool IsBoss
     {
         get

@@ -123,7 +123,7 @@ partial class GameMgr : Singleton<GameMgr>
         SetState(GameState.STATEONE);
     }
 
-    private void AttackBoss(int value)
+    public void AttackBoss(int value)
     {
         SetState(GameState.STATETHREE);
 
@@ -140,35 +140,6 @@ partial class GameMgr : Singleton<GameMgr>
     #endregion
 
     #region 战斗相关
-
-    public bool CheckCardSkill(List<CardData> choiceList)
-    {
-        bool doubleAtk = false;
-
-        foreach (var card in choiceList)
-        {
-            if (card.cardType == CardType.DIAMOND && m_bossActor.cardType != CardType.DIAMOND)
-            {
-                TurnCard(card.CardValue);
-            }
-            else if (card.cardType == CardType.CLUB && m_bossActor.cardType != CardType.CLUB)
-            {
-                doubleAtk = true;
-            }
-            else if (card.cardType == CardType.SPADE && m_bossActor.cardType != CardType.SPADE)
-            {
-                EventCenter.Instance.EventTrigger<int>("DownAtk", card.CardValue);
-            }
-            else if (card.cardType == CardType.HEART && m_bossActor.cardType != CardType.HEART)
-            {
-
-            }
-        }
-        SetState(GameState.STATETWO);
-        return doubleAtk;
-    }
-
-
     /// <summary>
     ///  验证卡是否合法
     /// </summary>
@@ -223,7 +194,7 @@ partial class GameMgr : Singleton<GameMgr>
     {
         if (gameState != GameState.STATEONE)
         {
-            UISys.ShowTipMsg(string.Format("当前阶段是：{0}，无法攻击",gameState));
+            UISys.ShowTipMsg(string.Format("当前阶段是：{0}，无法攻击", stateMsgDic[gameState]));
             return;
         }
         if (!CheckCardInvild(m_choiceList))
@@ -231,24 +202,23 @@ partial class GameMgr : Singleton<GameMgr>
             UISys.ShowTipMsg("您选择的卡片不符合规定");
             return;
         }
-        var value = 0;
+
+        var attackData = BattleMgr.Instance.GenAttackData(m_choiceList);
+
         for (int i = 0; i < m_choiceList.Count; i++)
         {
             var card = m_choiceList[i];
-
-            value += card.CardValue;
 
             m_useList.Add(card);
 
             m_curList.Remove(card);
         }
-        if (CheckCardSkill(m_choiceList))
-        {
-            value = value * 2;
-        }
+
         m_choiceList.Clear();
+
+        BattleMgr.Instance.ImpactSkill(attackData);
+
         EventCenter.Instance.EventTrigger("RefreshGameUI");
-        AttackBoss(value);
     }
 
     private int m_needAbordValue = 0;
@@ -275,6 +245,7 @@ partial class GameMgr : Singleton<GameMgr>
 
     private void InitMyCards()
     {
+        m_myList.Clear();
         for (int i = 0; i < m_totalList.Count; i++)
         {
             var cardData = m_totalList[i];
@@ -306,7 +277,6 @@ partial class GameMgr : Singleton<GameMgr>
             m_myList.RemoveAt(0);
         }
         m_curList.AddRange(temp);
-        //EventCenter.Instance.EventTrigger("RefreshGameUI");
     }
 
     public void TurnCard(int turnCount)
@@ -331,10 +301,11 @@ partial class GameMgr : Singleton<GameMgr>
         //EventCenter.Instance.EventTrigger("RefreshGameUI");
     }
 
-    public static void RandomSort<T>(List<T> list)
+    public void RandomSort<T>(List<T> list)
     {
+        //Random random = new Random((int)DateTime.Now.Ticks);
         Random random = new Random((int)DateTime.Now.Ticks);
-
+        Debug.Log((int)DateTime.Now.Ticks);
         int index = 0;
         for (int i = 0; i < list.Count; i++)
         {
@@ -396,6 +367,21 @@ partial class GameMgr : Singleton<GameMgr>
     public void EndGame()
     {
         SetState(GameState.NONE);
+    }
+
+    public void RestartGame()
+    {
+        UISys.ShowTipMsg("重新开始！！");
+        InitTotalCards();
+        InitMyCards();
+        m_curList.Clear();
+        m_useList.Clear();
+        m_choiceList.Clear();
+        RandomMyCards();
+        InitBoss();
+        TurnCard();
+        SetState(GameState.STATEONE);
+        EventCenter.Instance.EventTrigger("RefreshGameUI");
     }
     #endregion
 }
