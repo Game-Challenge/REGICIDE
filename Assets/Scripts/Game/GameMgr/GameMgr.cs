@@ -125,11 +125,12 @@ partial class GameMgr : Singleton<GameMgr>
 
     private void AttackBoss(int value)
     {
+        SetState(GameState.STATETHREE);
+
         if (m_bossActor != null)
         {
             m_bossActor.Hurt(value);
         }
-        SetState(GameState.STATETHREE);
     }
 
     private void BossDie()
