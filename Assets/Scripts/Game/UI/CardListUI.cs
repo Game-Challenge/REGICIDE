@@ -45,18 +45,33 @@ class CardListUI : UIWindow
 
 class ItemCard : UIWindowWidget
 {
+    private List<Heart> m_listHeart = new List<Heart>();
     private CardData m_cardData;
     private bool m_choice;
     #region 脚本工具生成的代码
     private Image m_imgIcon;
     private GameObject m_goSelect;
     private Button m_btnChoice;
+
+    private GameObject m_goCardInfo;
+    private Transform m_tfHeart;
+    private GameObject m_goHeart;
+    private GameObject m_goInfo;
+    private Text m_textAtk;
+    private Text m_textDefine;
     protected override void ScriptGenerator()
     {
         m_imgIcon = FindChildComponent<Image>("m_imgIcon");
         m_goSelect = FindChild("m_goSelect").gameObject;
         m_btnChoice = FindChildComponent<Button>("m_imgIcon");
         m_btnChoice.onClick.AddListener(Choice);
+
+        m_goCardInfo = FindChild("m_goCardInfo").gameObject;
+        m_tfHeart = FindChild("m_goCardInfo/m_tfHeart");
+        m_goHeart = FindChild("m_goCardInfo/m_tfHeart/m_goHeart").gameObject;
+        m_goInfo = FindChild("m_goCardInfo/m_goInfo").gameObject;
+        m_textAtk = FindChildComponent<Text>("m_goCardInfo/m_goInfo/m_InfoBlock/m_textAtk");
+        m_textDefine = FindChildComponent<Text>("m_goCardInfo/m_goInfo/m_InfoBlock/m_textDefine");
     }
     #endregion
 
@@ -73,6 +88,7 @@ class ItemCard : UIWindowWidget
         m_cardData = data;
         m_imgIcon.sprite = m_cardData.sprite;
         m_choice = false;
+        m_goCardInfo.gameObject.SetActive(false);
         Refresh();
     }
 
@@ -83,6 +99,28 @@ class ItemCard : UIWindowWidget
         m_choice = false;
         Refresh();
         gameObject.transform.localScale = new Vector3(2, 2, 2);
+
+        m_goCardInfo.gameObject.SetActive(true);
+        BossRefresh(actor);
+        RegisterBossEvent();
+    }
+
+    private bool hadRegister;
+    protected void RegisterBossEvent()
+    {
+        if (hadRegister)
+        {
+            return;
+        }
+        hadRegister = true;
+        EventCenter.Instance.AddEventListener<BossActor>("BossRefresh",BossRefresh);
+    }
+
+    private void BossRefresh(BossActor actor)
+    {
+        AdjustIconNum(m_listHeart, actor.Hp, m_tfHeart, m_goHeart);
+        m_textAtk.text = "攻击：" + actor.Atk;
+        m_textDefine.text = "生命：" + actor.Hp;
     }
     #endregion
 
@@ -111,4 +149,9 @@ class ItemCard : UIWindowWidget
             m_goSelect?.gameObject.SetActive(false);
         }
     }
+}
+
+class Heart : UIWindowWidget
+{
+
 }

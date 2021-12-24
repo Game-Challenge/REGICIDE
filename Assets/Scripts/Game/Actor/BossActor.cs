@@ -77,6 +77,7 @@ public class BossActor: GameActor
             Atk = 0;
         }
         Debug.Log("Boss DownAtk ,Current Atk:" + Atk);
+        EventCenter.Instance.EventTrigger("BossRefresh",this);
     }
 
     public void Hurt(int value)
@@ -87,9 +88,11 @@ public class BossActor: GameActor
             Hp = 0;
             Debug.Log("BossDie");
             EventCenter.Instance.EventTrigger("BossDie");
+            EventCenter.Instance.EventTrigger("BossRefresh", this);
         }
         else
         {
+            EventCenter.Instance.EventTrigger("BossRefresh", this);
             MonoManager.Instance.StartCoroutine(BossAttack());
         }
         Debug.Log("Boss Hp:" + Hp);
@@ -99,6 +102,7 @@ public class BossActor: GameActor
     {
         yield return new WaitForSeconds(1);
         EventCenter.Instance.EventTrigger("BossAttack", Atk);
+        EventCenter.Instance.EventTrigger("BossRefresh", this);
     }
 
     public void Attack()

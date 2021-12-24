@@ -119,7 +119,8 @@ partial class GameMgr : Singleton<GameMgr>
         var index = random.Next(0, m_bossList.Count - 1);
         var cardData = m_bossList[index];
         m_bossActor = ActorMgr.Instance.InstanceActor(cardData);
-        EventCenter.Instance.EventTrigger<BossActor>("RefreshBoss", m_bossActor);
+        EventCenter.Instance.EventTrigger("RefreshBoss", m_bossActor);
+        EventCenter.Instance.EventTrigger("BossRefresh", m_bossActor);
         SetState(GameState.STATEONE);
     }
 
