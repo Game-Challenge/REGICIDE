@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class BossActor
+public class BossActor: GameActor
 {
     public CardData cardData { private set; get; }
 

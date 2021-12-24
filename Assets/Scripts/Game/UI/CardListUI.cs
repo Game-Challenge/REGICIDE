@@ -75,6 +75,15 @@ class ItemCard : UIWindowWidget
         m_choice = false;
         Refresh();
     }
+
+    public void Init(BossActor actor)
+    {
+        m_cardData = actor.cardData;
+        m_imgIcon.sprite = m_cardData.sprite;
+        m_choice = false;
+        Refresh();
+        gameObject.transform.localScale = new Vector3(2, 2, 2);
+    }
     #endregion
 
     private void Choice()

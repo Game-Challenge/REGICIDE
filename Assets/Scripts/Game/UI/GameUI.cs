@@ -50,7 +50,7 @@ class GameUI : UIWindow
             m_bossCard = CreateWidgetByPrefab<ItemCard>(m_itemCard, m_tfBossContent);
         }
         
-        m_bossCard.Init(bossActor.cardData);
+        m_bossCard.Init(bossActor);
     }
 
     private void Attack()
