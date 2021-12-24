@@ -101,11 +101,13 @@ class ItemCard : UIWindowWidget
         if (m_choice)
         {
             EventCenter.Instance.EventTrigger<CardData>("Choice", m_cardData);
+            this.gameObject.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
             m_goSelect?.gameObject.SetActive(true);
         }
         else
         {
             EventCenter.Instance.EventTrigger<CardData>("DeChoice", m_cardData);
+            this.gameObject.transform.localScale = new Vector3(1, 1, 1);
             m_goSelect?.gameObject.SetActive(false);
         }
     }
