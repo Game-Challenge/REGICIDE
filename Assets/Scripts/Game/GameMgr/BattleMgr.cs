@@ -10,6 +10,7 @@ public struct AttackData
     public bool CouldAddHp;
     public int Damage;
     public bool HadPet;
+    public bool HadJoker;
     public AttackData(List<CardData> list)
     {
         CouldTurnCard = false;
@@ -18,8 +19,7 @@ public struct AttackData
         CouldAddHp = false;
         Damage = 0;
         HadPet = false;
-
-        var count = list.Count;
+        HadJoker = false;
 
         foreach (var card in list)
         {
@@ -48,6 +48,10 @@ public struct AttackData
             {
                 CouldAddHp = true;
             }
+            else if(card.cardType == CardType.JOKER)
+            {
+                HadJoker = true;
+            }
         }
 
         if (HadPet)
@@ -64,29 +68,26 @@ public class BattleMgr : Singleton<BattleMgr>
         return new AttackData(list);
     }
 
-    public void ImpactSkill(AttackData attackData)
+    public void ImpactSkill(AttackData attackData,BossActor actor)
     {
         Debug.Log(string.Format("attackData: 数值{0},抽卡{1},降低boss攻击{2},回复{3},双倍攻击{4}",attackData.Damage,attackData.CouldTurnCard,attackData.CouldDownBossAtk,attackData.CouldAddHp,attackData.CouldDoubleAtk));
 
-        bool couldDouble = attackData.CouldDoubleAtk;
+        bool couldDouble = attackData.CouldDoubleAtk && actor.cardType != CardType.CLUB;
 
         int value = couldDouble ? attackData.Damage * 2 : attackData.Damage;
 
-        if (attackData.CouldDownBossAtk)
+        if (attackData.CouldDownBossAtk && actor.cardType != CardType.SPADE)
         {
             EventCenter.Instance.EventTrigger<int>("DownAtk", value);
         }
-
-        if (attackData.CouldTurnCard)
+        if (attackData.CouldTurnCard && actor.cardType != CardType.DIAMOND)
         {
             GameMgr.Instance.TurnCard(value);
         }
-
-        if (attackData.CouldAddHp)
+        if (attackData.CouldAddHp && actor.cardType != CardType.HEART)
         {
             
         }
-
         EventCenter.Instance.EventTrigger<int>("AttackBoss", value);
     }
 }

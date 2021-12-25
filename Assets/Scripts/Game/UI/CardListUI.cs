@@ -59,6 +59,7 @@ class ItemCard : UIWindowWidget
     private GameObject m_goInfo;
     private Text m_textAtk;
     private Text m_textDefine;
+    private Image m_imgHp;
     protected override void ScriptGenerator()
     {
         m_imgIcon = FindChildComponent<Image>("m_imgIcon");
@@ -72,6 +73,7 @@ class ItemCard : UIWindowWidget
         m_goInfo = FindChild("m_goCardInfo/m_goInfo").gameObject;
         m_textAtk = FindChildComponent<Text>("m_goCardInfo/m_goInfo/m_InfoBlock/m_textAtk");
         m_textDefine = FindChildComponent<Text>("m_goCardInfo/m_goInfo/m_InfoBlock/m_textDefine");
+        m_imgHp = FindChildComponent<Image>("m_goCardInfo/m_goHp/m_bg/m_imgHp");
     }
     #endregion
 
@@ -101,7 +103,7 @@ class ItemCard : UIWindowWidget
         gameObject.transform.localScale = new Vector3(2, 2, 2);
 
         m_goCardInfo.gameObject.SetActive(true);
-        BossRefresh(actor);
+        BossDataRefresh(actor);
         RegisterBossEvent();
     }
 
@@ -113,14 +115,17 @@ class ItemCard : UIWindowWidget
             return;
         }
         hadRegister = true;
-        EventCenter.Instance.AddEventListener<BossActor>("BossRefresh",BossRefresh);
+        EventCenter.Instance.AddEventListener<BossActor>("BossDataRefresh", BossDataRefresh);
     }
 
-    private void BossRefresh(BossActor actor)
+    private void BossDataRefresh(BossActor actor)
     {
-        AdjustIconNum(m_listHeart, actor.Hp, m_tfHeart, m_goHeart);
+        //AdjustIconNum(m_listHeart, actor.Hp, m_tfHeart, m_goHeart);
+        m_goHeart.SetActive(false);
         m_textAtk.text = "攻击：" + actor.Atk;
         m_textDefine.text = "生命：" + actor.Hp;
+
+        m_imgHp.fillAmount = (float)actor.Hp / (float)actor.MaxHp;
     }
     #endregion
 

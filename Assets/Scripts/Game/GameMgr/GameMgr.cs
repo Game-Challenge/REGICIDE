@@ -28,7 +28,7 @@ partial class GameMgr : Singleton<GameMgr>
     }
     public const int TotalCardNum = 54;
     public const int MyMaxCardNum = 8;
-    private BossActor m_bossActor;
+    public BossActor BossActor;
     private List<CardData> m_totalList = new List<CardData>(TotalCardNum);  //总牌堆
     private List<CardData> m_curList = new List<CardData>(MyMaxCardNum);    //手卡
     private List<CardData> m_myList = new List<CardData>(TotalCardNum);     //可抽卡
@@ -118,9 +118,9 @@ partial class GameMgr : Singleton<GameMgr>
         Random random = new Random((int)DateTime.Now.Ticks);
         var index = random.Next(0, m_bossList.Count - 1);
         var cardData = m_bossList[index];
-        m_bossActor = ActorMgr.Instance.InstanceActor(cardData);
-        EventCenter.Instance.EventTrigger("RefreshBoss", m_bossActor);
-        EventCenter.Instance.EventTrigger("BossRefresh", m_bossActor);
+        BossActor = ActorMgr.Instance.InstanceBossActor(cardData);
+        EventCenter.Instance.EventTrigger("RefreshBoss", BossActor);
+        EventCenter.Instance.EventTrigger("BossDataRefresh", BossActor);
         SetState(GameState.STATEONE);
     }
 
@@ -128,9 +128,9 @@ partial class GameMgr : Singleton<GameMgr>
     {
         SetState(GameState.STATETHREE);
 
-        if (m_bossActor != null)
+        if (BossActor != null)
         {
-            m_bossActor.Hurt(value);
+            BossActor.Hurt(value);
         }
     }
 
@@ -217,7 +217,7 @@ partial class GameMgr : Singleton<GameMgr>
 
         m_choiceList.Clear();
 
-        BattleMgr.Instance.ImpactSkill(attackData);
+        BattleMgr.Instance.ImpactSkill(attackData, BossActor);
 
         EventCenter.Instance.EventTrigger("RefreshGameUI");
     }

@@ -5,6 +5,8 @@ public class BossActor: GameActor
 {
     public CardData cardData { private set; get; }
 
+    public int MaxHp { private set; get; }
+
     public int Hp { private set; get; }
 
     public int Atk { private set; get; }
@@ -24,11 +26,29 @@ public class BossActor: GameActor
         Init();
     }
 
+    ~BossActor()
+    {
+        DeRegisterEvent();
+    }
+
     private void RegisterEvent()
     {
         EventCenter.Instance.AddEventListener("Attack", Attack);
         EventCenter.Instance.AddEventListener<int>("Hurt", Hurt);
         EventCenter.Instance.AddEventListener<int>("DownAtk", DownAtk);
+    }
+
+    private void DeRegisterEvent()
+    {
+        EventCenter.Instance.RemoveEventListener("Attack", Attack);
+        EventCenter.Instance.RemoveEventListener<int>("Hurt", Hurt);
+        EventCenter.Instance.RemoveEventListener<int>("DownAtk", DownAtk);
+    }
+
+    public void ReInit(CardData cardData)
+    {
+        this.cardData = cardData;
+        Init();
     }
 
     private void Init()
@@ -66,6 +86,8 @@ public class BossActor: GameActor
                 break;
             }
         }
+
+        MaxHp = Hp;
     }
 
     private void DownAtk(int value)
@@ -77,7 +99,7 @@ public class BossActor: GameActor
             Atk = 0;
         }
         Debug.Log("Boss DownAtk ,Current Atk:" + Atk);
-        EventCenter.Instance.EventTrigger("BossRefresh",this);
+        EventCenter.Instance.EventTrigger("BossDataRefresh", this);
     }
 
     public void Hurt(int value)
@@ -88,21 +110,20 @@ public class BossActor: GameActor
             Hp = 0;
             Debug.Log("BossDie");
             EventCenter.Instance.EventTrigger("BossDie");
-            EventCenter.Instance.EventTrigger("BossRefresh", this);
         }
         else
         {
-            EventCenter.Instance.EventTrigger("BossRefresh", this);
             MonoManager.Instance.StartCoroutine(BossAttack());
         }
         Debug.Log("Boss Hp:" + Hp);
+        EventCenter.Instance.EventTrigger("BossDataRefresh", this);
     }
 
     private IEnumerator BossAttack()
     {
         yield return new WaitForSeconds(1);
         EventCenter.Instance.EventTrigger("BossAttack", Atk);
-        EventCenter.Instance.EventTrigger("BossRefresh", this);
+        EventCenter.Instance.EventTrigger("BossDataRefresh", this);
     }
 
     public void Attack()
