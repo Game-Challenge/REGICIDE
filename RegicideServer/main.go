@@ -41,5 +41,5 @@ func main() {
 	print("START REGICIDE SERVER")
 	r := gin.Default()
 	r.GET("/ping", ping)
-	r.Run(":12345")
+	r.Run("127.0.0.1:8080")
 }
