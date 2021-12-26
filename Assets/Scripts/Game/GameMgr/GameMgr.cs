@@ -35,14 +35,20 @@ partial class GameMgr : Singleton<GameMgr>
         }
     }
     public const int TotalCardNum = 54;
-    public const int MyMaxCardNum = 8;
+    public int MyMaxCardNum
+    {
+        get
+        {
+            return 8 - PlayerNum + 1;
+        }
+    }
     public BossActor BossActor;
     private List<CardData> m_totalList = new List<CardData>(TotalCardNum);  //总牌堆
-    private List<CardData> m_curList = new List<CardData>(MyMaxCardNum);    //手卡
+    private List<CardData> m_curList = new List<CardData>();                        //手卡
     private List<CardData> m_myList = new List<CardData>(TotalCardNum);     //可抽卡
     private List<CardData> m_useList = new List<CardData>(TotalCardNum);    //墓地
     private List<CardData> m_bossList = new List<CardData>();                       //boss堆
-    private List<CardData> m_choiceList = new List<CardData>();
+    private List<CardData> m_choiceList = new List<CardData>();                     //当前回合选择的卡
     #endregion
 
     #region 生命周期
