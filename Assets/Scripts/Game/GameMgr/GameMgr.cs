@@ -26,6 +26,14 @@ partial class GameMgr : Singleton<GameMgr>
             return m_curList;
         }
     }
+
+    public List<CardData> UseCardDatas
+    {
+        get
+        {
+            return m_useList;
+        }
+    }
     public const int TotalCardNum = 54;
     public const int MyMaxCardNum = 8;
     public BossActor BossActor;
@@ -56,6 +64,7 @@ partial class GameMgr : Singleton<GameMgr>
         EventCenter.Instance.AddEventListener<CardData>("Choice", Choice);
         EventCenter.Instance.AddEventListener<CardData>("DeChoice", DeChoice);
         EventCenter.Instance.AddEventListener("BossDie", BossDie);
+        EventCenter.Instance.AddEventListener<int>("AddHp", AddHp);
     }
 
     private void Update()
@@ -80,6 +89,12 @@ partial class GameMgr : Singleton<GameMgr>
 
     private void AbordCard()
     {
+        if (gameState != GameState.STATEFOUR)
+        {
+            UISys.ShowTipMsg(string.Format("当前阶段是：{0}，无法遗弃卡牌", stateMsgDic[gameState]));
+            return;
+        }
+
         int myValue = 0;
 
         foreach (var card in m_choiceList)
@@ -109,6 +124,25 @@ partial class GameMgr : Singleton<GameMgr>
         SetState(GameState.STATEONE);
 
         EventCenter.Instance.EventTrigger("RefreshGameUI");
+    }
+
+    private void AddHp(int num)
+    {
+        Debug.Log("num " + num);
+        RandomSort(m_useList);
+        var count = m_useList.Count;
+
+        count = count < num ? count : num;
+
+        Debug.Log("Count "+count);
+        for (int i = 0; i < count; i++)
+        {
+            var card = m_useList[i];
+
+            m_myList.Add(card);
+
+            m_useList.Remove(card);
+        }
     }
     #endregion
 

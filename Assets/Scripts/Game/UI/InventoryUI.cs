@@ -29,7 +29,7 @@ class InventoryUI : UIWindowWidget
     #region 事件
     private void OnClickMenuBtn()
     {
-        
+        UISys.Mgr.ShowWindow<RoomUI>();
     }
     private void OnClickSettingBtn()
     {

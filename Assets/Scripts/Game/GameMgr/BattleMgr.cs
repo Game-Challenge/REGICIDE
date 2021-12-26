@@ -70,23 +70,23 @@ public class BattleMgr : Singleton<BattleMgr>
 
     public void ImpactSkill(AttackData attackData,BossActor actor)
     {
-        Debug.Log(string.Format("attackData: 数值{0},抽卡{1},降低boss攻击{2},回复{3},双倍攻击{4}",attackData.Damage,attackData.CouldTurnCard,attackData.CouldDownBossAtk,attackData.CouldAddHp,attackData.CouldDoubleAtk));
+        Debug.LogFormat(string.Format("attackData: 数值{0},抽卡{1},降低boss攻击{2},回复{3},双倍攻击{4}",attackData.Damage,attackData.CouldTurnCard,attackData.CouldDownBossAtk,attackData.CouldAddHp,attackData.CouldDoubleAtk));
 
         bool couldDouble = attackData.CouldDoubleAtk && actor.cardType != CardType.CLUB;
 
         int value = couldDouble ? attackData.Damage * 2 : attackData.Damage;
 
-        if (attackData.CouldDownBossAtk && actor.cardType != CardType.SPADE)
+        if (attackData.CouldDownBossAtk)
         {
-            EventCenter.Instance.EventTrigger<int>("DownAtk", value);
+            EventCenter.Instance.EventTrigger<int>("DownAtk", attackData.Damage);
         }
         if (attackData.CouldTurnCard && actor.cardType != CardType.DIAMOND)
         {
-            GameMgr.Instance.TurnCard(value);
+            GameMgr.Instance.TurnCard(attackData.Damage);
         }
         if (attackData.CouldAddHp && actor.cardType != CardType.HEART)
         {
-            
+            EventCenter.Instance.EventTrigger<int>("AddHp", attackData.Damage);
         }
         EventCenter.Instance.EventTrigger<int>("AttackBoss", value);
     }

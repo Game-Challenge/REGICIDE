@@ -11,10 +11,16 @@ public class BossActor: GameActor
 
     public int Atk { private set; get; }
 
+    public bool JokerAtk { private set; get; }
+
     public CardType cardType
     {
         get
         {
+            if (JokerAtk)
+            {
+                return CardType.NONE;
+            }
             return cardData.cardType;
         }
     }
@@ -36,6 +42,7 @@ public class BossActor: GameActor
         EventCenter.Instance.AddEventListener("Attack", Attack);
         EventCenter.Instance.AddEventListener<int>("Hurt", Hurt);
         EventCenter.Instance.AddEventListener<int>("DownAtk", DownAtk);
+        EventCenter.Instance.AddEventListener("BeJokerAtk", BeJokerAtk);
     }
 
     private void DeRegisterEvent()
@@ -43,11 +50,14 @@ public class BossActor: GameActor
         EventCenter.Instance.RemoveEventListener("Attack", Attack);
         EventCenter.Instance.RemoveEventListener<int>("Hurt", Hurt);
         EventCenter.Instance.RemoveEventListener<int>("DownAtk", DownAtk);
+        EventCenter.Instance.RemoveEventListener("BeJokerAtk", BeJokerAtk);
     }
 
     public void ReInit(CardData cardData)
     {
         this.cardData = cardData;
+        JokerAtk = false;
+        m_cacheAtk = 0;
         Init();
     }
 
@@ -90,16 +100,40 @@ public class BossActor: GameActor
         MaxHp = Hp;
     }
 
+    private void BeJokerAtk()
+    {
+        JokerAtk = true;
+    }
+
+    private int m_cacheAtk = 0;
     private void DownAtk(int value)
     {
-        Atk -= value;
-
-        if (Atk <= 0)
+        if (this.cardType == CardType.SPADE)
         {
-            Atk = 0;
+            m_cacheAtk -= value;
+
+            if (m_cacheAtk <= 0)
+            {
+                m_cacheAtk = 0;
+            }
+
+            if (JokerAtk)
+            {
+                Atk = m_cacheAtk;
+                EventCenter.Instance.EventTrigger("BossDataRefresh", this);
+            }
         }
-        Debug.Log("Boss DownAtk ,Current Atk:" + Atk);
-        EventCenter.Instance.EventTrigger("BossDataRefresh", this);
+        else
+        {
+            Atk -= value;
+
+            if (Atk <= 0)
+            {
+                Atk = 0;
+            }
+            Debug.Log("Boss DownAtk ,Current Atk:" + Atk);
+            EventCenter.Instance.EventTrigger("BossDataRefresh", this);
+        }
     }
 
     public void Hurt(int value)

@@ -18,6 +18,7 @@ class GameUI : UIWindow
     private Button m_btnAttack;
     private Button m_btnAbord;
     private Transform m_goInventoryRoot;
+    private Button m_btnUsed;
     protected override void ScriptGenerator()
     {
         m_goContent = FindChild("m_goContent").gameObject;
@@ -30,8 +31,10 @@ class GameUI : UIWindow
         m_btnAttack = FindChildComponent<Button>("m_goContent/m_goMiddle/m_btnAttack");
         m_btnAbord = FindChildComponent<Button>("m_goContent/m_goMiddle/m_btnAbord");
         m_goInventoryRoot = FindChild("m_goContent/m_goMiddle/m_goInventoryRoot");
+        m_btnUsed = FindChildComponent<Button>("m_goContent/m_goMiddle/m_btnUsed");
         m_btnAttack.onClick.AddListener(Attack);
         m_btnAbord.onClick.AddListener(Abord);
+        m_btnUsed.onClick.AddListener(ShowUsed);
         m_inventoryUI = CreateWidgetByType<InventoryUI>(m_goInventoryRoot);
     }
     #endregion
@@ -60,10 +63,12 @@ class GameUI : UIWindow
 
     private void Abord()
     {
-        if (GameMgr.Instance.gameState == GameMgr.GameState.STATEFOUR)
-        {
-            EventCenter.Instance.EventTrigger("AbordCard");
-        }
+        EventCenter.Instance.EventTrigger("AbordCard");
+    }
+
+    private void ShowUsed()
+    {
+        UISys.Mgr.ShowWindow<UsedListUI>();
     }
 
     #region 事件
