@@ -144,10 +144,13 @@ partial class GameMgr : Singleton<GameMgr>
         for (int i = 0; i < count; i++)
         {
             var card = m_useList[i];
-
             m_myList.Add(card);
+        }
 
-            m_useList.Remove(card);
+        for (int i = 0; i < count; i++)
+        {
+            var card = m_useList[0];
+            m_useList.RemoveAt(0);
         }
     }
     #endregion

@@ -3,6 +3,8 @@
     public int TargetFrameRate = 300;
 
     public PlayerNum payerNum = PlayerNum.One;
+
+    public bool ConnectAuto;
     public enum PlayerNum
     {
         One,
@@ -25,7 +27,13 @@
 
         GameMgr.Instance.Init();
         UISys.Mgr.ShowWindow<StartUI>();
-        GameClient.Instance.Connect();
+
+        if (ConnectAuto)
+        {
+            GameClient.Instance.Connect();
+        }
+
+
 
         //var str = ResourcesManager.Instance.Load<TextAsset>("regicide");
         //Debug.Log(str);

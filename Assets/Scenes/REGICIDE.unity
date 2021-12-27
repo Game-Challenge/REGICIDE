@@ -249,4 +249,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetFrameRate: 300
   payerNum: 0
+  ConnectAuto: 0
   hostPoint: 0
