@@ -18,8 +18,8 @@ class StartUI : UIWindow
     #region 事件
     private void OnClickStartGameBtn()
     {
-        UISys.Mgr.ShowWindow<GameUI>();
         Close();
+        UISys.Mgr.ShowWindow<GameUI>();
     }
     #endregion
 
