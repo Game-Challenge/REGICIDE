@@ -69,7 +69,7 @@ partial class GameMgr : Singleton<GameMgr>
         EventCenter.Instance.AddEventListener<int>("AttackBoss", AttackBoss);
         EventCenter.Instance.AddEventListener<CardData>("Choice", Choice);
         EventCenter.Instance.AddEventListener<CardData>("DeChoice", DeChoice);
-        EventCenter.Instance.AddEventListener("BossDie", BossDie);
+        EventCenter.Instance.AddEventListener<bool>("BossDie", BossDie);
         EventCenter.Instance.AddEventListener<int>("AddHp", AddHp);
     }
 
@@ -174,9 +174,17 @@ partial class GameMgr : Singleton<GameMgr>
         }
     }
 
-    private void BossDie()
+    private void BossDie(bool beFriend = false)
     {
-        InitBoss();
+        if (beFriend)
+        {
+            m_curList.Add(BossActor.cardData);
+            InitBoss();
+        }
+        else
+        {
+            InitBoss();
+        }
     }
     #endregion
 
@@ -196,11 +204,23 @@ partial class GameMgr : Singleton<GameMgr>
         }
         else if (count == 2)
         {
-            if (choiceList[0].CardValue == choiceList[1].CardValue)
+            if (choiceList[0].CardValue == choiceList[1].CardValue)                 //连击
             {
+                var totalvalue = 0;
+
+                foreach (var data in choiceList)
+                {
+                    totalvalue += data.CardValue;
+                }
+
+                if (totalvalue > 10)
+                {
+                    return false;
+                }
+
                 return true;
             }
-            else if (choiceList[0].CardValue == 1 || choiceList[1].CardValue == 1)
+            else if (choiceList[0].CardValue == 1 || choiceList[1].CardValue == 1)  //含有宠物牌
             {
                 return true;
             }
@@ -224,6 +244,11 @@ partial class GameMgr : Singleton<GameMgr>
                     {
                         return false;
                     }
+                }
+
+                if (value * count > 10)
+                {
+                    return false;
                 }
             }
         }

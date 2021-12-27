@@ -72,6 +72,13 @@ public class BattleMgr : Singleton<BattleMgr>
     {
         Debug.LogFormat(string.Format("attackData: 数值{0},抽卡{1},降低boss攻击{2},回复{3},双倍攻击{4}",attackData.Damage,attackData.CouldTurnCard,attackData.CouldDownBossAtk,attackData.CouldAddHp,attackData.CouldDoubleAtk));
 
+        if (attackData.HadJoker)
+        {
+            EventCenter.Instance.EventTrigger("BeJokerAtk"); 
+            GameMgr.Instance.SetState(GameMgr.GameState.STATEONE);
+            return;
+        }
+
         bool couldDouble = attackData.CouldDoubleAtk && actor.cardType != CardType.CLUB;
 
         int value = couldDouble ? attackData.Damage * 2 : attackData.Damage;

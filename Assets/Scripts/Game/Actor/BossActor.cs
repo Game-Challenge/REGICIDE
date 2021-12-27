@@ -141,9 +141,8 @@ public class BossActor: GameActor
         Hp -= value;
         if (Hp <= 0)
         {
+            EventCenter.Instance.EventTrigger("BossDie", Hp == 0); //boss被归化，变成卡堆第一张
             Hp = 0;
-            Debug.Log("BossDie");
-            EventCenter.Instance.EventTrigger("BossDie");
         }
         else
         {

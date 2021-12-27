@@ -56,8 +56,8 @@ public struct CardData
     public CardData(int cardInt)
     {
         CardInt = cardInt;
-        CardValue = (cardInt == 52 || cardInt == 53) ? 100 : (cardInt % 13) + 1;
-        cardType =(CardValue == 100)?CardType.JOKER:(CardType)(((cardInt) / 13)+1);
+        CardValue = (cardInt == 52 || cardInt == 53) ? 0 : (cardInt % 13) + 1;
+        cardType =(CardValue == 0)?CardType.JOKER:(CardType)(((cardInt) / 13)+1);
         sprite = CardMgr.Instance.GetCardSprite(cardInt);
     }
 }
