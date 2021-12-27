@@ -25,6 +25,7 @@
 
         GameMgr.Instance.Init();
         UISys.Mgr.ShowWindow<StartUI>();
+        GameClient.Instance.Connect();
 
         //var str = ResourcesManager.Instance.Load<TextAsset>("regicide");
         //Debug.Log(str);

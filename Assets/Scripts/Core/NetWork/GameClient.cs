@@ -52,6 +52,11 @@ public class GameClient : Singleton<GameClient>
 
     #endregion
 
+    public void Init()
+    {
+
+    }
+
     #region 构造函数
     public GameClient()
     {
@@ -65,11 +70,12 @@ public class GameClient : Singleton<GameClient>
     ~GameClient()
     {
         MonoManager.Instance.RemoveUpdateListener(Update);
-        aucThread.Abort();
-        socket.Close();
+        aucThread?.Abort();
+        socket?.Close();
 
         aucThread = null;
         socket = null;
+        OnDestroy();
     }
 
     public void ResigterEvent()
@@ -447,7 +453,7 @@ public class GameClient : Singleton<GameClient>
 
     private bool DoSendData(MainPack pack)
     {
-        if (socket.Connected == false || socket == null)
+        if (socket == null || socket.Connected == false)
         {
             return false;
         }

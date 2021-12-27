@@ -110,7 +110,8 @@ sealed partial class GameApp
     {
         EventCenter.OnInit();
         AddLogicSys(UISys.Instance);
-        //AddLogicSys(AudioSys.Instance);
+        AddLogicSys(DataCenterSys.Instance);
+        GameClient.Instance.Init();
     }
 
     protected bool AddLogicSys(ILogicSys logicSys)

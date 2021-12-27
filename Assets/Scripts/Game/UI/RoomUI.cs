@@ -18,9 +18,15 @@ class RoomUI : UIWindow
     }
     #endregion
 
+    protected override void RegisterEvent()
+    {
+        base.RegisterEvent();
+    }
+
     protected override void OnCreate()
     {
         base.OnCreate();
+        RoomDataMgr.Instance.FindRoomReq();
         AdjustIconNum(m_roomList,30,m_tfContent,m_itemRoom);
         m_itemRoom.gameObject.SetActive(false);
     }
