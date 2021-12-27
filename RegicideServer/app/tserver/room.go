@@ -58,7 +58,7 @@ func (room *Room) Join(client *Client) {
 	}
 
 	room.ClientList = append(room.ClientList, client)
-	room.Starting(client)
+	// room.Starting(client)
 }
 
 func (room *Room) Starting(client *Client) {
@@ -71,10 +71,7 @@ func (room *Room) Starting(client *Client) {
 		playerpack := &GameProto.PlayerPack{}
 		playerpack.Playername = _client.Username
 		playerpack.PlayerID = strconv.Itoa(int(_client.RoleId))
-		if _client.Actor != nil {
-			playerpack.Appearance = _client.Actor.AppearancePack
-			playerpack.PosPack = _client.Actor.PosPack
-		}
+
 		mainPack.Playerpack = append(mainPack.Playerpack, playerpack)
 	}
 	room.Broadcast(mainPack)

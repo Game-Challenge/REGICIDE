@@ -68,10 +68,6 @@ func (dataCenter *DataCenter) sendBuffer(client *Client, mainpack *GameProto.Mai
 
 	dataCenter.BufferHead[0] = byte(bodylen)
 
-	logger.Info("bodylen: ", bodylen)
-
-	logger.Info("byte(bodylen): ", byte(bodylen))
-
 	buff := append(dataCenter.BufferHead, data...)
 
 	logger.Crit(conn.RemoteAddr(), "send mainpack: ", mainpack)
