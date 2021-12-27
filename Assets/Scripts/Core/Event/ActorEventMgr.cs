@@ -1,57 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using UnityEngine.Events;
 
-internal interface IEventInfo
-{
-
-}
-
-public class EventInfo<T>:IEventInfo
-{
-    public UnityAction<T> actions;
-
-    public EventInfo(UnityAction<T> action)
-    {
-        actions += action;
-    }
-}
-
-public class EventInfo<T,U> : IEventInfo
-{
-    public UnityAction<T, U> actions;
-
-    public EventInfo(UnityAction<T, U> action)
-    {
-        actions += action;
-    }
-}
-
-public class EventInfo<T, U, W> : IEventInfo
-{
-    public UnityAction<T, U, W> actions;
-
-    public EventInfo(UnityAction<T, U, W> action)
-    {
-        actions += action;
-    }
-}
-
-public class EventInfo: IEventInfo
-{
-    public UnityAction actions;
-
-    public EventInfo(UnityAction action)
-    {
-        actions += action;
-    }
-}
-
-/// <summary>
-/// 事件中心
-/// </summary>
-public class EventCenter : Singleton<EventCenter>
+public class ActorEventMgr
 {
     //Key    --- 事件名称
     //Value  --- 监听这个事件对应函数的委托
@@ -73,7 +23,7 @@ public class EventCenter : Singleton<EventCenter>
     /// </summary>
     /// <param name="name">事件的名字</param>
     /// <param name="action">准备用来处理事件的委托函数</param>
-    public void AddEventListener<T>(string name,UnityAction<T> action)
+    public void AddEventListener<T>(string name, UnityAction<T> action)
     {
         if (eventDic.ContainsKey(name))
         {
@@ -102,7 +52,7 @@ public class EventCenter : Singleton<EventCenter>
     /// </summary>
     /// <param name="name"></param>
     /// <param name="action"></param>
-    public void RemoveEventListener<T>(string name,UnityAction<T> action)
+    public void RemoveEventListener<T>(string name, UnityAction<T> action)
     {
         if (action == null)
         {
@@ -132,12 +82,13 @@ public class EventCenter : Singleton<EventCenter>
     /// 事件触发
     /// </summary>
     /// <param name="name">触发事件的名字</param>
-    public void EventTrigger<T>(string name,T info)
+    public void EventTrigger<T>(string name, T info)
     {
         if (eventDic.ContainsKey(name))
         {
             //直接执行委托eventDic[name]();
-            if ((eventDic[name] as EventInfo<T>).actions != null){
+            if ((eventDic[name] as EventInfo<T>).actions != null)
+            {
                 (eventDic[name] as EventInfo<T>).actions.Invoke(info);
             }
         }
@@ -176,15 +127,15 @@ public class EventCenter : Singleton<EventCenter>
         }
     }
 
-    public void AddEventListener<T,U>(int eventid, UnityAction<T,U> action)
+    public void AddEventListener<T, U>(int eventid, UnityAction<T, U> action)
     {
         if (m_eventDic.ContainsKey(eventid))
         {
-            (m_eventDic[eventid] as EventInfo<T,U>).actions += action;
+            (m_eventDic[eventid] as EventInfo<T, U>).actions += action;
         }
         else
         {
-            m_eventDic.Add(eventid, new EventInfo<T,U>(action));
+            m_eventDic.Add(eventid, new EventInfo<T, U>(action));
         }
     }
 
@@ -196,7 +147,7 @@ public class EventCenter : Singleton<EventCenter>
         }
         else
         {
-            m_eventDic.Add(eventid, new EventInfo<T, U , W>(action));
+            m_eventDic.Add(eventid, new EventInfo<T, U, W>(action));
         }
     }
 
@@ -230,7 +181,7 @@ public class EventCenter : Singleton<EventCenter>
         }
     }
 
-    public void RemoveEventListener<T,U>(int eventid, UnityAction<T,U> action)
+    public void RemoveEventListener<T, U>(int eventid, UnityAction<T, U> action)
     {
         if (action == null)
         {
@@ -239,7 +190,7 @@ public class EventCenter : Singleton<EventCenter>
 
         if (m_eventDic.ContainsKey(eventid))
         {
-            (m_eventDic[eventid] as EventInfo<T,U>).actions -= action;
+            (m_eventDic[eventid] as EventInfo<T, U>).actions -= action;
         }
     }
 
@@ -272,26 +223,26 @@ public class EventCenter : Singleton<EventCenter>
         }
     }
 
-    public void EventTrigger<T,U>(int eventid, T info,U info2)
+    public void EventTrigger<T, U>(int eventid, T info, U info2)
     {
         if (m_eventDic.ContainsKey(eventid))
         {
             //直接执行委托eventDic[name]();
-            if ((m_eventDic[eventid] as EventInfo<T,U>).actions != null)
+            if ((m_eventDic[eventid] as EventInfo<T, U>).actions != null)
             {
-                (m_eventDic[eventid] as EventInfo<T,U>).actions.Invoke(info,info2);
+                (m_eventDic[eventid] as EventInfo<T, U>).actions.Invoke(info, info2);
             }
         }
     }
 
-    public void EventTrigger<T, U , W>(int eventid, T info, U info2, W info3)
+    public void EventTrigger<T, U, W>(int eventid, T info, U info2, W info3)
     {
         if (m_eventDic.ContainsKey(eventid))
         {
             //直接执行委托eventDic[name]();
-            if ((m_eventDic[eventid] as EventInfo<T, U , W>).actions != null)
+            if ((m_eventDic[eventid] as EventInfo<T, U, W>).actions != null)
             {
-                (m_eventDic[eventid] as EventInfo<T, U , W>).actions.Invoke(info, info2, info3);
+                (m_eventDic[eventid] as EventInfo<T, U, W>).actions.Invoke(info, info2, info3);
             }
         }
     }
@@ -323,3 +274,35 @@ public class EventCenter : Singleton<EventCenter>
     }
 }
 
+public static class ActorEventHelper
+{
+    public static void Send(PlayerActor actor, string eventStr)
+    {
+        actor.Event.EventTrigger(eventStr);
+    }
+
+    public static void Send(PlayerActor actor, int eventId)
+    {
+        actor.Event.EventTrigger(eventId);
+    }
+
+    public static void Send<T>(PlayerActor actor, string eventStr,T info)
+    {
+        actor.Event.EventTrigger<T>(eventStr, info);
+    }
+
+    public static void Send<T>(PlayerActor actor, int eventId, T info)
+    {
+        actor.Event.EventTrigger<T>(eventId, info);
+    }
+
+    public static void Send<T,U>(PlayerActor actor, int eventId, T info1,U info2)
+    {
+        actor.Event.EventTrigger<T,U>(eventId, info1, info2);
+    }
+
+    public static void Send<T, U, V>(PlayerActor actor, int eventId, T info1, U info2,V info3)
+    {
+        actor.Event.EventTrigger<T, U, V>(eventId, info1, info2, info3);
+    }
+}
