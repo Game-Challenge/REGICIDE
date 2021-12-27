@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-class MainUI : UIWindow
+class StartUI : UIWindow
 {
     #region 脚本工具生成的代码
     private Text m_textStartGame;

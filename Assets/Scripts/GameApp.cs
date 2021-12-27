@@ -28,7 +28,7 @@ sealed partial class GameApp : UnitySingleton<GameApp>
         RegistAllSystem();
 
         GameMgr.Instance.Init();
-        UISys.Mgr.ShowWindow<MainUI>();
+        UISys.Mgr.ShowWindow<StartUI>();
 
         //var str = ResourcesManager.Instance.Load<TextAsset>("regicide");
         //Debug.Log(str);
