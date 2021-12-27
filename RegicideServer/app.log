@@ -2880,3 +2880,14 @@
 2021-12-27 20:10:57 [INFO] [g:/github/REGICIDE/RegicideServer/app/tserver/DataCenter.go:73] byte(bodylen):  9
 2021-12-27 20:10:57 [CRIT] [g:/github/REGICIDE/RegicideServer/app/tserver/DataCenter.go:77] 127.0.0.1:62316 send mainpack:  requestcode:Room actioncode:JoinRoom returncode:Success str:"0" 
 2021-12-27 20:10:57 [CRIT] [g:/github/REGICIDE/RegicideServer/app/tserver/DataCenter.go:79] 127.0.0.1:62316 send buff:  [9 0 0 0 8 2 16 6 24 1 42 1 48]
+2021-12-27 20:52:18 [DEBG] [g:/github/REGICIDE/RegicideServer/manager/utils.go:17] Server port :54809
+2021-12-27 20:52:18 [DEBG] [g:/github/REGICIDE/RegicideServer/app/tserver/controller.go:71] RegisterController {User User map[Login:0xc3a9e0 Register:0xc3ab40] <nil>}
+2021-12-27 20:52:18 [DEBG] [g:/github/REGICIDE/RegicideServer/app/tserver/controller.go:71] RegisterController {Room Room map[Chat:0xc39ea0 FindRoom:0xc3a320 JoinRoom:0xc3a040 StartGame:0xc3a680] <nil>}
+2021-12-27 20:52:18 [DEBG] [g:/github/REGICIDE/RegicideServer/app/tserver/controller.go:71] RegisterController {Game Game map[ATTACK:0xc39b60 DAMAGE:0xc39ba0 HURT:0xc39be0 SKILL:0xc39b20 UpPos:0xc39b20] <nil>}
+2021-12-27 20:52:18 [INFO] [g:/github/REGICIDE/RegicideServer/app/tserver/server.go:32] Starting Tcp Server :54809
+2021-12-27 20:52:28 [DEBG] [g:/github/REGICIDE/RegicideServer/app/tserver/server.go:75] Add client to Server => 127.0.0.1:57844   ClientCount => 1
+2021-12-27 20:52:33 [CRIT] [g:/github/REGICIDE/RegicideServer/app/tserver/DataCenter.go:36] Receive from client: 127.0.0.1:57844 requestcode:Room actioncode:FindRoom 
+2021-12-27 20:52:33 [DEBG] [g:/github/REGICIDE/RegicideServer/app/tserver/controller.go:106] requestcode:Room actioncode:FindRoom returncode:Success roompack:<roomname:"1" maxnum:999 > 
+2021-12-27 20:52:33 [CRIT] [g:/github/REGICIDE/RegicideServer/app/tserver/DataCenter.go:73] 127.0.0.1:57844 send mainpack:  requestcode:Room actioncode:FindRoom returncode:Success roompack:<roomname:"1" maxnum:999 > 
+2021-12-27 20:52:33 [CRIT] [g:/github/REGICIDE/RegicideServer/app/tserver/DataCenter.go:75] 127.0.0.1:57844 send buff:  [14 0 0 0 8 2 16 4 24 1 50 6 10 1 49 16 231 7]
+2021-12-27 20:52:34 [CRIT] [g:/github/REGICIDE/RegicideServer/app/tserver/DataCenter.go:36] Receive from client: 127.0.0.1:57844 requestcode:Room actioncode:JoinRoom str:"0" 

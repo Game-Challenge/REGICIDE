@@ -3,7 +3,9 @@ package tserver
 import (
 	GameProto "RegicideServer/Gameproto"
 	"errors"
+	"math/rand"
 	"strconv"
+	"time"
 
 	"github.com/wonderivan/logger"
 )
@@ -11,6 +13,16 @@ import (
 type Room struct {
 	ClientList []*Client
 	RoomPack   *GameProto.RoomPack
+}
+
+type BossActor struct {
+	MaxHp     int32
+	Hp        int32
+	Atk       int32
+	JokerAtk  bool
+	CardInt   int32
+	CardValue int32
+	CardType  int32
 }
 
 func InstanceRoom(roomPack *GameProto.RoomPack) Room {
@@ -59,6 +71,9 @@ func (room *Room) Join(client *Client) {
 
 	room.ClientList = append(room.ClientList, client)
 	// room.Starting(client)
+
+	room.InitCards()
+	room.InitMyCards()
 }
 
 func (room *Room) Starting(client *Client) {
@@ -97,4 +112,72 @@ func (room *Room) BroadcastTCP(client *Client, mainPack *GameProto.MainPack) {
 		}
 		room.ClientList[i].SendTCP(mainPack)
 	}
+}
+
+//Cards
+func (room *Room) InitCards() {
+	for i := 0; i < 54; i++ {
+		cardData := InstanceCardData(i)
+		ToTalCardList = append(ToTalCardList, &cardData)
+	}
+}
+
+func (room *Room) InitMyCards() {
+	for i := 0; i < len(ToTalCardList); i++ {
+		cardData := ToTalCardList[i]
+		if cardData.IsBoss {
+			BossList = append(BossList, cardData)
+		} else {
+			MyCardList = append(MyCardList, cardData)
+		}
+	}
+	RandomSort(MyCardList)
+	logger.Debug(MyCardList)
+}
+
+func RandomSort(cardDatas []*CardData) {
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	count := len(cardDatas)
+	for i := 0; i < count; i++ {
+		index := r.Intn(count - 1)
+		temp := cardDatas[i]
+		cardDatas[i] = cardDatas[index]
+		cardDatas[index] = temp
+	}
+}
+
+var ToTalCardList []*CardData
+var MyCardList []*CardData
+var BossList []*CardData
+
+type CardData struct {
+	CardInt   int
+	CardValue int
+	CardType  int
+	IsBoss    bool
+	IsJoker   bool
+	IsPet     bool
+}
+
+func InstanceCardData(cardInt int) CardData {
+
+	cardValue := 0
+	if cardInt == 52 || cardInt == 53 {
+		cardValue = 0
+	} else {
+		cardValue = (cardInt % 13) + 1
+	}
+	cardType := 0
+	if cardValue == 0 {
+		cardType = 5
+	} else {
+		cardType = ((cardInt) / 13) + 1
+	}
+
+	isJoker := cardType == 5
+	isBoss := cardValue > 10 && !isJoker
+	isPet := cardValue == 1
+
+	cardData := CardData{CardInt: cardInt, CardType: cardType, IsJoker: isJoker, IsBoss: isBoss, IsPet: isPet}
+	return cardData
 }
