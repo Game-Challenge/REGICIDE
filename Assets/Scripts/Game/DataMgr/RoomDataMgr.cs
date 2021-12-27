@@ -1,8 +1,10 @@
-﻿using RegicideProtocol;
+﻿using System.Collections.Generic;
+using RegicideProtocol;
 using UnityEngine;
 
 class RoomDataMgr : DataCenterModule<RoomDataMgr>
 {
+    private List<RoomPack> m_roomPacks = new List<RoomPack>();
     public override void Init()
     {
         GameClient.Instance.RegActionHandle((int)ActionCode.FindRoom, FindRoomRes);
@@ -25,6 +27,15 @@ class RoomDataMgr : DataCenterModule<RoomDataMgr>
             return;
         }
         Debug.Log(mainPack);
+
+        m_roomPacks.Clear();
+
+        foreach (var room in mainPack.Roompack)
+        {
+            m_roomPacks.Add(room);
+        }
+
+        EventCenter.Instance.EventTrigger("RoomPack", m_roomPacks);
     }
 
     public void CreateRoomReq(string roomName, int maxNum)
@@ -47,10 +58,10 @@ class RoomDataMgr : DataCenterModule<RoomDataMgr>
         Debug.Log(mainPack);
     }
 
-    public void JoinRoomReq(string roomName)
+    public void JoinRoomReq(int roomID)
     {
         MainPack mainPack = ProtoUtil.BuildMainPack(RequestCode.Room, ActionCode.JoinRoom);
-        mainPack.Str = roomName;
+        mainPack.Str = roomID.ToString();
         GameClient.Instance.SendCSMsg(mainPack);
     }
 

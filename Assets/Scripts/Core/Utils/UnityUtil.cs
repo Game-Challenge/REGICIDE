@@ -284,4 +284,14 @@ public class UnityUtil
 
         return null;
     }
+
+    public static T GetComponent<T>(GameObject go)
+    {
+        if (go != null)
+        {
+            return go.GetComponent<T>();
+        }
+
+        return default(T);
+    }
 }

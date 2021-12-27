@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using RegicideProtocol;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,6 +22,7 @@ class RoomUI : UIWindow
     protected override void RegisterEvent()
     {
         base.RegisterEvent();
+        EventCenter.Instance.AddEventListener<List<RoomPack>>("RoomPack", OnRefresh);
     }
 
     protected override void OnCreate()
@@ -29,6 +31,17 @@ class RoomUI : UIWindow
         RoomDataMgr.Instance.FindRoomReq();
         AdjustIconNum(m_roomList,30,m_tfContent,m_itemRoom);
         m_itemRoom.gameObject.SetActive(false);
+    }
+
+    private void OnRefresh(List<RoomPack> roomPacks)
+    {
+        AdjustIconNum(m_roomList, roomPacks.Count, m_tfContent, m_itemRoom);
+        m_itemRoom.gameObject.SetActive(false);
+
+        for (int i = 0; i < m_roomList.Count; i++)
+        {
+            m_roomList[i].Init(roomPacks[i]);
+        }
     }
 
     #region 事件
@@ -41,7 +54,9 @@ class RoomUI : UIWindow
 }
 class RoomItem : UIWindowWidget
 {
+    private RoomPack m_roomPack;
     #region 脚本工具生成的代码
+    private Button m_btnChoice;
     private Transform m_tfContent;
     private Image m_imgIcon;
     private Text m_textRoomInfo;
@@ -54,6 +69,8 @@ class RoomItem : UIWindowWidget
         m_textRoomInfo = FindChildComponent<Text>("m_tfContent/m_textRoomInfo");
         m_textNum = FindChildComponent<Text>("m_tfContent/m_textNum");
         m_textRoomId = FindChildComponent<Text>("m_textRoomId");
+        m_btnChoice = UnityUtil.GetComponent<Button>(gameObject);
+        m_btnChoice.onClick.AddListener(OnChoice);
     }
     #endregion
 
@@ -62,6 +79,19 @@ class RoomItem : UIWindowWidget
         base.OnCreate();
         var rect = m_tfContent as RectTransform;
         LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
+    }
+
+    public void Init(RoomPack roomPack)
+    {
+        m_roomPack = roomPack;
+        m_textRoomId.text = roomPack.RoomID.ToString();
+        m_textRoomInfo.text = roomPack.Roomname;
+        m_textNum.text = string.Format("{0}/{1}",roomPack.Curnum,roomPack.Maxnum);
+    }
+
+    private void OnChoice()
+    {
+        RoomDataMgr.Instance.JoinRoomReq(m_roomPack.RoomID);
     }
 
     #region 事件
