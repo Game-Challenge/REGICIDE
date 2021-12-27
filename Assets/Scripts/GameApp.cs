@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-sealed partial class GameApp : UnitySingleton<GameApp>
+﻿sealed partial class GameApp : UnitySingleton<GameApp>
 {
     public int TargetFrameRate = 300;
 

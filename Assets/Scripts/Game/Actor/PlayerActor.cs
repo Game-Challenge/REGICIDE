@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerActor:GameActor
 {
-    private ActorEventMgr eventMgr;
+    private ActorEventMgr eventMgr = new ActorEventMgr();
 
     public ActorEventMgr Event
     {
@@ -17,6 +17,11 @@ public class PlayerActor:GameActor
 
     private List<CardData> m_curList = new List<CardData>(GameMgr.Instance.MyMaxCardNum);    //手卡
     private List<CardData> m_choiceList = new List<CardData>();                             //当前回合选择的卡
+
+    private void RegisterEvent()
+    {
+        
+    }
 
     #region 战斗中卡排操作
     private void Choice(CardData cardData)

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using RegicideProtocol;
+using UnityEngine;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,9 +19,19 @@ class StartUI : UIWindow
     #region 事件
     private void OnClickStartGameBtn()
     {
+        Test();
         Close();
         UISys.Mgr.ShowWindow<GameUI>();
     }
     #endregion
 
+    private void Test()
+    {
+        //MainPack mainPack = ProtoUtil.BuildMainPack(RequestCode.Room, ActionCode.CreateRoom);
+        //RoomPack room = new RoomPack();
+        //room.Roomname = "123";
+        //room.Maxnum = 4;
+        //mainPack.Roompack.Add(room);
+        //WebSocketMgr.Instance.SendCSMsg(mainPack);
+    }
 }
