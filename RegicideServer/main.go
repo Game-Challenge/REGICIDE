@@ -15,13 +15,41 @@ var upGrader = websocket.Upgrader{
 	},
 }
 
+var ConnMap = make(map[uint32]*Conn)
+
+var ConnIdMap = make(map[uint32]*websocket.Conn)
+
+var RoomList = []*Room{}
+
+var connid uint32
+
+type Conn struct {
+	connid    uint32
+	websocket *websocket.Conn
+}
+
+type Room struct {
+	roomId       uint32
+	userNum      uint32
+	roomName     string
+	roomUsePW    bool
+	roomPassword string
+	conn         *Conn
+}
+
 //websocket实现
-func ping(c *gin.Context) {
+func handleWebSocket(c *gin.Context) {
 	//升级get请求为webSocket协议
+
 	ws, err := upGrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
 		return
 	}
+	connid++
+	ConnIdMap[connid] = ws
+	conn := &Conn{connid: connid, websocket: ws}
+	ConnMap[connid] = conn
+
 	defer ws.Close() //返回前关闭
 	for {
 		//读取ws中的数据
@@ -40,6 +68,6 @@ func ping(c *gin.Context) {
 func main() {
 	print("START REGICIDE SERVER")
 	r := gin.Default()
-	r.GET("/ping", ping)
+	r.GET("/ws", handleWebSocket)
 	r.Run("127.0.0.1:8080")
 }

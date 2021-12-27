@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class WebSocketMgr:UnitySingleton<WebSocketMgr>
 {
-    string address = "http://127.0.0.1:8080/ping";
+    string address = "http://127.0.0.1:8080/ws";
     WebSocket webSocket;
     public Text Tips;
          
