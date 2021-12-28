@@ -25,8 +25,24 @@ type BossActor struct {
 	CardType  int32
 }
 
+var roomID int32 = 1000
+
 func InstanceRoom(roomPack *GameProto.RoomPack) Room {
 	room := Room{RoomPack: roomPack}
+	return room
+}
+
+func CreateRoom(roomName string) Room {
+	roomID = roomID + 1
+
+	mainPack := &GameProto.MainPack{}
+	mainPack.Requestcode = GameProto.RequestCode_Room
+	roompack := &GameProto.RoomPack{}
+	roompack.Roomname = roomName
+	roompack.Maxnum = 4
+	roompack.RoomID = roomID
+	room := InstanceRoom(roompack)
+	RoomList = append(RoomList, &room)
 	return room
 }
 
@@ -76,6 +92,26 @@ func (room *Room) Join(client *Client) {
 	// room.InitMyCards()
 }
 
+func (room *Room) StartGame(client *Client) {
+	gameState := &GameProto.GameStatePack{}
+	gameState.State = GameProto.GAMESTATE_STATE1
+	room.RoomPack.Gamestate = gameState
+
+	mainPack := &GameProto.MainPack{}
+	mainPack.Requestcode = GameProto.RequestCode_Room
+	mainPack.Actioncode = GameProto.ActionCode_StartGame
+
+	for i := 0; i < len(room.ClientList); i++ {
+		_client := room.ClientList[i]
+		playerpack := &GameProto.PlayerPack{}
+		playerpack.Playername = strconv.Itoa(int(_client.Uniid)) //todo _client.Username
+		playerpack.PlayerID = strconv.Itoa(int(_client.Uniid))
+		mainPack.Playerpack = append(mainPack.Playerpack, playerpack)
+	}
+	room.Broadcast(mainPack)
+}
+
+//遗弃
 func (room *Room) Starting(client *Client) {
 	gameState := &GameProto.GameStatePack{}
 	gameState.State = GameProto.GAMESTATE_STATE1

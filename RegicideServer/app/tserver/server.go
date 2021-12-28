@@ -34,8 +34,9 @@ func Start(server Server) {
 	checkErr(err)
 	listener, err := net.ListenTCP("tcp", tcpAddr)
 	checkErr(err)
-	CreateRooms()
+	CreateRoom("断剑重铸之日")
 	var connid uint32
+	connid = 6000
 	for {
 		conn, err := listener.Accept()
 		if err != nil {

@@ -338,6 +338,8 @@ public partial class UIWindow
 
         OnCreate();
 
+        FindChildrenControl<Button>();
+
         if (visible)
         {
             Show(true);
@@ -474,6 +476,55 @@ public partial class UIWindow
     }
     //--------------------------------------------------------------生命周期---------------------------------------------------------//
 
+    //通过里氏转换原则 存储所有控件
+    private Dictionary<string, List<UIBehaviour>> controlDic = new Dictionary<string, List<UIBehaviour>>();
+
+    /// <summary>
+    /// 找到子对象的对应控件
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    private void FindChildrenControl<T>() where T : UIBehaviour
+    {
+        T[] controls = UnityUtil.GetComponentsInChildren<T>(gameObject);
+
+        if (gameObject == null)
+        {
+            Debug.LogError(name + ": UI GameObject Is Null Now...");
+            return;
+        }
+
+        if (controls == null)
+        {
+            Debug.LogError(name + ": Controls Is Null Now...");
+            return;
+        }
+
+        for (int i = 0; i < controls.Length; i++)
+        {
+            string objName = controls[i].gameObject.name;
+
+            if (controlDic.ContainsKey(objName))
+            {
+                controlDic[objName].Add(controls[i]);
+            }
+            else
+            {
+                controlDic.Add(controls[i].gameObject.name, new List<UIBehaviour>() { controls[i] });
+
+                if (controls[i] is Button)
+                {
+                    if (controls[i].gameObject.GetComponent<UIButtonSound>() == null)
+                    {
+                        controls[i].gameObject.AddComponent<UIButtonSound>();
+                    }
+                    (controls[i] as Button).onClick.AddListener(() =>
+                    {
+                        OnClick(objName);
+                    });
+                }
+            }
+        }
+    }
 }
 public class UIEventInfo: IUIEventInfo
 {

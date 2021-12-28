@@ -122,12 +122,14 @@ public class GameClient : Singleton<GameClient>
             socket.Connect(m_Host, m_Port);
             StartReceive();
             Status = GameClientStatus.StatusConnect;
+            UISys.ShowTipMsg("连接成功！！！");
         }
         catch (Exception e)
         {
             Debug.LogFormat("socket connect {0}:{1} failed!!!", m_Host, m_Port);
             Debug.LogError(e);
             ChangeStateOnEnterFail();
+            UISys.ShowTipMsg("连接失败，服务器未开启");
         }
     }
 
@@ -203,7 +205,7 @@ public class GameClient : Singleton<GameClient>
         catch (Exception e)
         {
             Debug.LogError(e);
-            throw;
+            //throw;
         }
     }
 

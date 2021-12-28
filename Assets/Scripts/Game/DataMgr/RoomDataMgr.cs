@@ -32,6 +32,8 @@ class RoomDataMgr : DataCenterModule<RoomDataMgr>
         }
         Debug.Log(mainPack);
 
+        var playerNum = mainPack.Playerpack.Count;
+        var gameState = mainPack.Roompack[0].State;
         var ui = UISys.Mgr.ShowWindow<GameOnlineUI>();
     }
 
@@ -89,6 +91,10 @@ class RoomDataMgr : DataCenterModule<RoomDataMgr>
     {
         if (Utils.CheckHaveError(mainPack))
         {
+            if (mainPack!=null&&string.IsNullOrEmpty(mainPack.Str))
+            {
+                UISys.ShowTipMsg(mainPack.Str);
+            }
             return;
         }
         UISys.Mgr.CloseWindow<GameUI>();

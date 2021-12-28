@@ -68,6 +68,7 @@ func JoinRoom(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (
 
 					roomPack := &GameProto.RoomPack{}
 					roomPack = room.RoomPack
+					roomPack.RoomID = room.RoomPack.RoomID
 					mainpack.Roompack = append(mainpack.Roompack, roomPack)
 				}
 				room.BroadcastTCP(client, mainpack)
@@ -93,6 +94,7 @@ func FindRoom(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (
 		roompack.Maxnum = room.RoomPack.Maxnum
 		roompack.Gamestate = room.RoomPack.Gamestate
 		roompack.Curnum = room.RoomPack.Curnum
+		roompack.RoomID = room.RoomPack.RoomID
 		mainpack.Roompack = append(mainpack.Roompack, roompack)
 	}
 
@@ -110,9 +112,10 @@ func StartGame(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) 
 	for i := 0; i < count; i++ {
 		room := server.RoomList[i]
 		if room.RoomPack.RoomID == mainpack.Roompack[0].RoomID {
-			room.Starting(client)
-			mainpack.Returncode = GameProto.ReturnCode_Success
-			return mainpack, nil
+
+			room.StartGame(client)
+			// mainpack.Returncode = GameProto.ReturnCode_Success
+			return nil, nil
 		}
 	}
 
