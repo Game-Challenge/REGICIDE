@@ -1,9 +1,53 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using RegicideProtocol;
 using UnityEngine;
 
 class GameOnlineMgr:Singleton<GameOnlineMgr>
 {
+    #region 协议
+    public void Init()
+    {
+        GameClient.Instance.RegActionHandle((int)ActionCode.Attack, AttackRes);
+        GameClient.Instance.RegActionHandle((int)ActionCode.Skill, SkillRes);
+        GameClient.Instance.RegActionHandle((int)ActionCode.Damage, DamageRes);
+        GameClient.Instance.RegActionHandle((int)ActionCode.Hurt, HurtRes);
+    }
+
+    private void HurtRes(MainPack mainPack)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void DamageRes(MainPack mainPack)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void SkillRes(MainPack mainPack)
+    {
+        throw new NotImplementedException();
+    }
+
+    #region Attack
+    public void AttackReq()
+    {
+        MainPack mainPack = ProtoUtil.BuildMainPack(RequestCode.Game, ActionCode.Attack);
+
+        GameClient.Instance.SendCSMsg(mainPack);
+    }
+
+    private void AttackRes(MainPack mainPack)
+    {
+        throw new NotImplementedException();
+    }
+    #endregion
+
+    #endregion
+
+
+
     public int MyGameIndex { private set; get; }
     public int PlayerNum { private set; get; }
     public uint GameId { private set; get; }

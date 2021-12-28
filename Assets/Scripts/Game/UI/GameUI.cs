@@ -6,7 +6,7 @@ class GameUI : UIWindow
 {
     private InventoryUI m_inventoryUI;
     private ItemCard m_bossCard;
-    private List<ItemCard> cardLilst = new List<ItemCard>();
+    private List<ItemCard> m_cardLilst = new List<ItemCard>();
     #region 脚本工具生成的代码
     private GameObject m_goContent;
     private GameObject m_goMiddle;
@@ -84,15 +84,12 @@ class GameUI : UIWindow
     {
         var data = GameMgr.Instance.CurrentCards;
 
-        AdjustIconNum(cardLilst, data.Count, m_tfCardContent, m_itemCard);
+        AdjustIconNum(m_cardLilst, data.Count, m_tfCardContent, m_itemCard);
         m_itemCard.gameObject.SetActive(false);
-        for (int i = 0; i < cardLilst.Count; i++)
+        for (int i = 0; i < m_cardLilst.Count; i++)
         {
-            cardLilst[i].Init(data[i]);
+            m_cardLilst[i].Init(data[i]);
         }
-
-        //var rect = m_tfContent as RectTransform;
-        //rect.SetCenter();
     }
     #endregion
 

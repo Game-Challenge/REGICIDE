@@ -58,11 +58,26 @@ func JoinRoom(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (
 			if room.RoomPack.RoomID == int32_ {
 				room.Join(client)
 				mainpack.Returncode = GameProto.ReturnCode_Success
-				break
+
+				for i := 0; i < len(room.ClientList); i++ {
+					_client := room.ClientList[i]
+					playerpack := &GameProto.PlayerPack{}
+					playerpack.Playername = strconv.Itoa(int(_client.Uniid)) //todo_client.Username
+					playerpack.PlayerID = strconv.Itoa(int(_client.Uniid))
+					mainpack.Playerpack = append(mainpack.Playerpack, playerpack)
+
+					roomPack := &GameProto.RoomPack{}
+					roomPack = room.RoomPack
+					mainpack.Roompack = append(mainpack.Roompack, roomPack)
+				}
+				room.BroadcastTCP(client, mainpack)
+				return mainpack, nil
 			}
 		}
 	}
 
+	mainpack.Returncode = GameProto.ReturnCode_Fail
+	mainpack.Str = "没有该房间"
 	return mainpack, nil
 }
 
@@ -96,9 +111,12 @@ func StartGame(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) 
 		room := server.RoomList[i]
 		if room.RoomPack.RoomID == mainpack.Roompack[0].RoomID {
 			room.Starting(client)
+			mainpack.Returncode = GameProto.ReturnCode_Success
+			return mainpack, nil
 		}
 	}
 
-	mainpack.Returncode = GameProto.ReturnCode_Success
+	mainpack.Returncode = GameProto.ReturnCode_Fail
+	mainpack.Str = "没有该房间"
 	return mainpack, nil
 }

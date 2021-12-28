@@ -56,6 +56,7 @@ func (room *Room) RemoveClient(client *Client) error {
 	room.Broadcast(mainPack)
 
 	room.ClientList = RemoveC(ClientList, client)
+	room.RoomPack.Curnum = room.RoomPack.Curnum - 1
 	logger.Debug("Rmv client from Room =>", client.Addr, "Uniid :=>", client.Uniid, "  ClientCount =>", len(room.ClientList))
 	return nil
 }
@@ -70,13 +71,16 @@ func (room *Room) Join(client *Client) {
 	}
 
 	room.ClientList = append(room.ClientList, client)
-	// room.Starting(client)
-
-	room.InitCards()
-	room.InitMyCards()
+	room.RoomPack.Curnum = room.RoomPack.Curnum + 1
+	// room.InitCards()
+	// room.InitMyCards()
 }
 
 func (room *Room) Starting(client *Client) {
+	gameState := &GameProto.GameStatePack{}
+	gameState.State = GameProto.GAMESTATE_STATE1
+	room.RoomPack.Gamestate = gameState
+
 	mainPack := &GameProto.MainPack{}
 	mainPack.Requestcode = GameProto.RequestCode_Room
 	mainPack.Actioncode = GameProto.ActionCode_Starting
@@ -135,6 +139,10 @@ func (room *Room) InitMyCards() {
 	logger.Debug(MyCardList)
 }
 
+func (room *Room) TurnCards(client *Client) {
+
+}
+
 func RandomSort(cardDatas []*CardData) {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	count := len(cardDatas)
@@ -178,6 +186,6 @@ func InstanceCardData(cardInt int) CardData {
 	isBoss := cardValue > 10 && !isJoker
 	isPet := cardValue == 1
 
-	cardData := CardData{CardInt: cardInt, CardType: cardType, IsJoker: isJoker, IsBoss: isBoss, IsPet: isPet}
+	cardData := CardData{CardValue: cardValue, CardInt: cardInt, CardType: cardType, IsJoker: isJoker, IsBoss: isBoss, IsPet: isPet}
 	return cardData
 }

@@ -1,5 +1,6 @@
 ﻿using RegicideProtocol;
 using System.Collections.Generic;
+using Google.Protobuf.Collections;
 using UnityEngine;
 
 public static class Utils
@@ -56,5 +57,17 @@ public static class Utils
         }
 
         return listW;
+    }
+
+    public static List<T> ToList<T>(this RepeatedField<T> repeatedField)
+    {
+        List<T> list = new List<T>();
+
+        foreach (var value in repeatedField)
+        {
+            list.Add(value);
+        }
+
+        return list;
     }
 }

@@ -26,7 +26,6 @@ type Client struct {
 	PosPack  *GameProto.PosPack
 	Uniid    uint32
 	RoleId   uint32
-	Actor    *Actor
 }
 
 func InstanceClient(conn net.Conn, uniid uint32) *Client {

@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using RegicideProtocol;
 using UnityEngine;
 
 class RoomDataMgr : DataCenterModule<RoomDataMgr>
 {
+    private int RoomID = 0;
     private List<RoomPack> m_roomPacks = new List<RoomPack>();
     public override void Init()
     {
@@ -11,6 +13,26 @@ class RoomDataMgr : DataCenterModule<RoomDataMgr>
         GameClient.Instance.RegActionHandle((int)ActionCode.CreateRoom, CreateRoomRes);
         GameClient.Instance.RegActionHandle((int)ActionCode.JoinRoom, JoinRoomRes);
         GameClient.Instance.RegActionHandle((int)ActionCode.Exit, ExitRoomRes);
+        GameClient.Instance.RegActionHandle((int)ActionCode.StartGame, StartGameRes);
+    }
+    public void StartGameReq()
+    {
+        MainPack mainPack = ProtoUtil.BuildMainPack(RequestCode.Room, ActionCode.StartGame);
+        RoomPack roomPack = new RoomPack();
+        roomPack.RoomID = RoomID;
+        mainPack.Roompack.Add(roomPack);
+        GameClient.Instance.SendCSMsg(mainPack);
+    }
+
+    private void StartGameRes(MainPack mainPack)
+    {
+        if (Utils.CheckHaveError(mainPack))
+        {
+            return;
+        }
+        Debug.Log(mainPack);
+
+        var ui = UISys.Mgr.ShowWindow<GameOnlineUI>();
     }
 
     public void FindRoomReq()
@@ -30,10 +52,7 @@ class RoomDataMgr : DataCenterModule<RoomDataMgr>
 
         m_roomPacks.Clear();
 
-        foreach (var room in mainPack.Roompack)
-        {
-            m_roomPacks.Add(room);
-        }
+        m_roomPacks = mainPack.Roompack.ToList();
 
         EventCenter.Instance.EventTrigger("RoomPack", m_roomPacks);
     }
@@ -56,9 +75,10 @@ class RoomDataMgr : DataCenterModule<RoomDataMgr>
         }
 
         Debug.Log(mainPack);
+        RoomID = mainPack.Roompack[0].RoomID;
     }
 
-    public void JoinRoomReq(int roomID)
+    public void JoinRoomReq(int roomID,string password = "")
     {
         MainPack mainPack = ProtoUtil.BuildMainPack(RequestCode.Room, ActionCode.JoinRoom);
         mainPack.Str = roomID.ToString();
@@ -71,8 +91,11 @@ class RoomDataMgr : DataCenterModule<RoomDataMgr>
         {
             return;
         }
-
+        UISys.Mgr.CloseWindow<GameUI>();
         Debug.Log(mainPack);
+        RoomID = mainPack.Roompack[0].RoomID;
+        var ui = UISys.Mgr.ShowWindow<RoomWaitUI>();
+        ui.Refresh(mainPack);
     }
 
     public void ExitRoomReq()
