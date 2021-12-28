@@ -37,54 +37,52 @@ namespace RegicideProtocol
                   "Cghyb29tcGFjaxgGIAMoCzIaLlJlZ2ljaWRlUHJvdG9jb2wuUm9vbVBhY2sS",
                   "MAoKcGxheWVycGFjaxgHIAMoCzIcLlJlZ2ljaWRlUHJvdG9jb2wuUGxheWVy",
                   "UGFjaxIMCgR1c2VyGAggASgJIi8KCUxvZ2luUGFjaxIQCgh1c2VybmFtZRgB",
-                  "IAEoCRIQCghwYXNzd29yZBgCIAEoCSKPAQoIUm9vbVBhY2sSEAoIcm9vbW5h",
+                  "IAEoCRIQCghwYXNzd29yZBgCIAEoCSK9AgoIUm9vbVBhY2sSEAoIcm9vbW5h",
                   "bWUYASABKAkSDgoGbWF4bnVtGAIgASgFEg4KBmN1cm51bRgDIAEoBRINCgVz",
                   "dGF0ZRgEIAEoBRIyCglnYW1lc3RhdGUYBSABKAsyHy5SZWdpY2lkZVByb3Rv",
-                  "Y29sLkdhbWVTdGF0ZVBhY2sSDgoGcm9vbUlEGAYgASgFIrMBCgpQbGF5ZXJQ",
-                  "YWNrEhIKCnBsYXllcm5hbWUYASABKAkSEAoIcGxheWVySUQYAiABKAkSCgoC",
-                  "aHAYAyABKAUSKgoHcG9zUGFjaxgEIAEoCzIZLlJlZ2ljaWRlUHJvdG9jb2wu",
-                  "UG9zUGFjaxIRCglwbGF5ZXJKb2IYBSABKAUSNAoKYXBwZWFyYW5jZRgGIAEo",
-                  "CzIgLlJlZ2ljaWRlUHJvdG9jb2wuQXBwZWFyYW5jZVBhY2siSwoNR2FtZVN0",
-                  "YXRlUGFjaxIqCgVzdGF0ZRgBIAEoDjIbLlJlZ2ljaWRlUHJvdG9jb2wuR0FN",
-                  "RVNUQVRFEg4KBkJvc3NJZBgCIAEoBSKHAQoFQWN0b3ISDwoHQWN0b3JJZBgB",
-                  "IAEoBRITCgtDYXJkVmFsdWVJZBgCIAEoBRIKCgJIcBgDIAEoBRILCgNBVEsY",
-                  "BCABKAUSDQoFSW5kZXgYBSABKAUSMAoMY3V0dHJudENhcmRzGAYgAygLMhou",
-                  "UmVnaWNpZGVQcm90b2NvbC5DYXJkRGF0YSJcCghDYXJkRGF0YRIPCgdjYXJk",
-                  "SW50GAEgASgFEhEKCWNhcmRWYWx1ZRgCIAEoBRIsCghjYXJkVHlwZRgDIAEo",
-                  "DjIaLlJlZ2ljaWRlUHJvdG9jb2wuQ2FyZFR5cGUirAEKDkFwcGVhcmFuY2VQ",
-                  "YWNrEgwKBEhhaXIYASABKAkSDAoERmFjZRgCIAEoCRIMCgRIZWFkGAMgASgJ",
-                  "Eg0KBUNsb3RoGAQgASgJEg0KBVBhbnRzGAUgASgJEg0KBUFybW9yGAYgASgJ",
-                  "EgwKBEJhY2sYByABKAkSEwoLUmlnaHRXZWFwb24YCCABKAkSEgoKTGVmdFdl",
-                  "YXBvbhgJIAEoCRIMCgRCb2R5GAogASgJIr8BCgdQb3NQYWNrEgwKBFBvc1gY",
-                  "ASABKAUSDAoEUG9zWRgCIAEoBRIMCgRQb3NaGAMgASgFEg0KBVJvdGFYGAQg",
-                  "ASgFEg0KBVJvdGFZGAUgASgFEg0KBVJvdGFaGAYgASgFEg8KB0d1blJvdFoY",
-                  "ByABKAISEQoJQW5pbWF0aW9uGAggASgFEgwKBERpcnQYCSABKAUSDQoFTW92",
-                  "ZVgYCiABKAISDQoFTW92ZVkYCyABKAISDQoFTW92ZVoYDCABKAIqRwoLUmVx",
-                  "dWVzdENvZGUSDwoLUmVxdWVzdE5vbmUQABIICgRVc2VyEAESCAoEUm9vbRAC",
-                  "EggKBEdhbWUQAxIJCgVIZWFydBAEKs4CCgpBY3Rpb25Db2RlEg4KCkFjdGlv",
-                  "bk5vbmUQABIMCghSZWdpc3RlchABEgkKBUxvZ2luEAISDgoKQ3JlYXRlUm9v",
-                  "bRADEgwKCEZpbmRSb29tEAQSDgoKUGxheWVyTGlzdBAFEgwKCEpvaW5Sb29t",
-                  "EAYSCAoERXhpdBAHEggKBENoYXQQCBINCglTdGFydEdhbWUQCRIMCghTdGFy",
-                  "dGluZxAKEg8KC1VwZGF0ZVN0YXRlEAsSDAoIRXhpdEdhbWUQDBITCg9VcENo",
-                  "YXJhY3Rlckxpc3QQDRIJCgVVcFBvcxAOEggKBEZpcmUQDxINCglIZWFydEJl",
-                  "YXQQEBIQCgxBZGRDaGFyYWN0ZXIQERITCg9SZW1vdmVDaGFyYWN0ZXIQEhIK",
-                  "CgZBVFRBQ0sQExIJCgVTS0lMTBAUEgoKBkRBTUFHRRAVEggKBEhVUlQQFioz",
-                  "CgpSZXR1cm5Db2RlEg4KClJldHVybk5vbmUQABILCgdTdWNjZXNzEAESCAoE",
-                  "RmFpbBACKjsKCUdBTUVTVEFURRIKCgZTVEFURTEQABIKCgZTVEFURTIQARIK",
-                  "CgZTVEFURTMQAhIKCgZTVEFURTQQAypMCghDYXJkVHlwZRIICgROT05FEAAS",
-                  "CAoEQ0xVQhABEgsKB0RJQU1PTkQQAhIJCgVIRUFSVBADEgkKBVNQQURFEAQS",
-                  "CQoFSk9LRVIQBWIGcHJvdG8z"));
+                  "Y29sLkdhbWVTdGF0ZVBhY2sSDgoGcm9vbUlEGAYgASgFEhQKDGN1cnJlbnRJ",
+                  "bmRleBgHIAEoBRIuCglhY3RvclBhY2sYCCADKAsyGy5SZWdpY2lkZVByb3Rv",
+                  "Y29sLkFjdG9yUGFjaxIPCgd2aXNhYmxlGAkgASgFEhMKC3VzZVBhc3N3b3Jk",
+                  "GAogASgFEhAKCHBhc3N3b3JkGAsgASgJEi4KCWJvc3NBY3RvchgMIAEoCzIb",
+                  "LlJlZ2ljaWRlUHJvdG9jb2wuQWN0b3JQYWNrIn0KClBsYXllclBhY2sSEgoK",
+                  "cGxheWVybmFtZRgBIAEoCRIQCghwbGF5ZXJJRBgCIAEoCRIKCgJocBgDIAEo",
+                  "BRIqCgdwb3NQYWNrGAQgASgLMhkuUmVnaWNpZGVQcm90b2NvbC5Qb3NQYWNr",
+                  "EhEKCXBsYXllckpvYhgFIAEoBSJLCg1HYW1lU3RhdGVQYWNrEioKBXN0YXRl",
+                  "GAEgASgOMhsuUmVnaWNpZGVQcm90b2NvbC5HQU1FU1RBVEUSDgoGQm9zc0lk",
+                  "GAIgASgFIp0BCglBY3RvclBhY2sSDwoHQWN0b3JJZBgBIAEoBRITCgtDYXJk",
+                  "VmFsdWVJZBgCIAEoBRIKCgJIcBgDIAEoBRILCgNBVEsYBCABKAUSDQoFSW5k",
+                  "ZXgYBSABKAUSEAoIQWN0b3JKb2IYBiABKAUSMAoMQ3V0dHJudENhcmRzGAcg",
+                  "AygLMhouUmVnaWNpZGVQcm90b2NvbC5DYXJkRGF0YSJcCghDYXJkRGF0YRIP",
+                  "CgdjYXJkSW50GAEgASgFEhEKCWNhcmRWYWx1ZRgCIAEoBRIsCghjYXJkVHlw",
+                  "ZRgDIAEoDjIaLlJlZ2ljaWRlUHJvdG9jb2wuQ2FyZFR5cGUivwEKB1Bvc1Bh",
+                  "Y2sSDAoEUG9zWBgBIAEoBRIMCgRQb3NZGAIgASgFEgwKBFBvc1oYAyABKAUS",
+                  "DQoFUm90YVgYBCABKAUSDQoFUm90YVkYBSABKAUSDQoFUm90YVoYBiABKAUS",
+                  "DwoHR3VuUm90WhgHIAEoAhIRCglBbmltYXRpb24YCCABKAUSDAoERGlydBgJ",
+                  "IAEoBRINCgVNb3ZlWBgKIAEoAhINCgVNb3ZlWRgLIAEoAhINCgVNb3ZlWhgM",
+                  "IAEoAipHCgtSZXF1ZXN0Q29kZRIPCgtSZXF1ZXN0Tm9uZRAAEggKBFVzZXIQ",
+                  "ARIICgRSb29tEAISCAoER2FtZRADEgkKBUhlYXJ0EAQqzgIKCkFjdGlvbkNv",
+                  "ZGUSDgoKQWN0aW9uTm9uZRAAEgwKCFJlZ2lzdGVyEAESCQoFTG9naW4QAhIO",
+                  "CgpDcmVhdGVSb29tEAMSDAoIRmluZFJvb20QBBIOCgpQbGF5ZXJMaXN0EAUS",
+                  "DAoISm9pblJvb20QBhIICgRFeGl0EAcSCAoEQ2hhdBAIEg0KCVN0YXJ0R2Ft",
+                  "ZRAJEgwKCFN0YXJ0aW5nEAoSDwoLVXBkYXRlU3RhdGUQCxIMCghFeGl0R2Ft",
+                  "ZRAMEhMKD1VwQ2hhcmFjdGVyTGlzdBANEgkKBVVwUG9zEA4SCAoERmlyZRAP",
+                  "Eg0KCUhlYXJ0QmVhdBAQEhAKDEFkZENoYXJhY3RlchAREhMKD1JlbW92ZUNo",
+                  "YXJhY3RlchASEgoKBkFUVEFDSxATEgkKBVNLSUxMEBQSCgoGREFNQUdFEBUS",
+                  "CAoESFVSVBAWKjMKClJldHVybkNvZGUSDgoKUmV0dXJuTm9uZRAAEgsKB1N1",
+                  "Y2Nlc3MQARIICgRGYWlsEAIqOwoJR0FNRVNUQVRFEgoKBlNUQVRFMRAAEgoK",
+                  "BlNUQVRFMhABEgoKBlNUQVRFMxACEgoKBlNUQVRFNBADKkwKCENhcmRUeXBl",
+                  "EggKBE5PTkUQABIICgRDTFVCEAESCwoHRElBTU9ORBACEgkKBUhFQVJUEAMS",
+                  "CQoFU1BBREUQBBIJCgVKT0tFUhAFYgZwcm90bzM="));
             descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
                 new pbr::FileDescriptor[] { },
                 new pbr::GeneratedClrTypeInfo(new[] { typeof(global::RegicideProtocol.RequestCode), typeof(global::RegicideProtocol.ActionCode), typeof(global::RegicideProtocol.ReturnCode), typeof(global::RegicideProtocol.GAMESTATE), typeof(global::RegicideProtocol.CardType), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::RegicideProtocol.MainPack), global::RegicideProtocol.MainPack.Parser, new[]{ "Requestcode", "Actioncode", "Returncode", "LoginPack", "Str", "Roompack", "Playerpack", "User" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::RegicideProtocol.LoginPack), global::RegicideProtocol.LoginPack.Parser, new[]{ "Username", "Password" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::RegicideProtocol.RoomPack), global::RegicideProtocol.RoomPack.Parser, new[]{ "Roomname", "Maxnum", "Curnum", "State", "Gamestate", "RoomID" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::RegicideProtocol.PlayerPack), global::RegicideProtocol.PlayerPack.Parser, new[]{ "Playername", "PlayerID", "Hp", "PosPack", "PlayerJob", "Appearance" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::RegicideProtocol.RoomPack), global::RegicideProtocol.RoomPack.Parser, new[]{ "Roomname", "Maxnum", "Curnum", "State", "Gamestate", "RoomID", "CurrentIndex", "ActorPack", "Visable", "UsePassword", "Password", "BossActor" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::RegicideProtocol.PlayerPack), global::RegicideProtocol.PlayerPack.Parser, new[]{ "Playername", "PlayerID", "Hp", "PosPack", "PlayerJob" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::RegicideProtocol.GameStatePack), global::RegicideProtocol.GameStatePack.Parser, new[]{ "State", "BossId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::RegicideProtocol.Actor), global::RegicideProtocol.Actor.Parser, new[]{ "ActorId", "CardValueId", "Hp", "ATK", "Index", "CuttrntCards" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::RegicideProtocol.ActorPack), global::RegicideProtocol.ActorPack.Parser, new[]{ "ActorId", "CardValueId", "Hp", "ATK", "Index", "ActorJob", "CuttrntCards" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::RegicideProtocol.CardData), global::RegicideProtocol.CardData.Parser, new[]{ "CardInt", "CardValue", "CardType" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::RegicideProtocol.AppearancePack), global::RegicideProtocol.AppearancePack.Parser, new[]{ "Hair", "Face", "Head", "Cloth", "Pants", "Armor", "Back", "RightWeapon", "LeftWeapon", "Body" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::RegicideProtocol.PosPack), global::RegicideProtocol.PosPack.Parser, new[]{ "PosX", "PosY", "PosZ", "RotaX", "RotaY", "RotaZ", "GunRotZ", "Animation", "Dirt", "MoveX", "MoveY", "MoveZ" }, null, null, null, null)
                 }));
         }
@@ -866,6 +864,12 @@ namespace RegicideProtocol
             state_ = other.state_;
             gamestate_ = other.gamestate_ != null ? other.gamestate_.Clone() : null;
             roomID_ = other.roomID_;
+            currentIndex_ = other.currentIndex_;
+            actorPack_ = other.actorPack_.Clone();
+            visable_ = other.visable_;
+            usePassword_ = other.usePassword_;
+            password_ = other.password_;
+            bossActor_ = other.bossActor_ != null ? other.bossActor_.Clone() : null;
             _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
         }
 
@@ -967,6 +971,85 @@ namespace RegicideProtocol
             }
         }
 
+        /// <summary>Field number for the "currentIndex" field.</summary>
+        public const int CurrentIndexFieldNumber = 7;
+        private int currentIndex_;
+        /// <summary>
+        ///当前几号玩家
+        /// </summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CurrentIndex
+        {
+            get { return currentIndex_; }
+            set
+            {
+                currentIndex_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "actorPack" field.</summary>
+        public const int ActorPackFieldNumber = 8;
+        private static readonly pb::FieldCodec<global::RegicideProtocol.ActorPack> _repeated_actorPack_codec
+            = pb::FieldCodec.ForMessage(66, global::RegicideProtocol.ActorPack.Parser);
+        private readonly pbc::RepeatedField<global::RegicideProtocol.ActorPack> actorPack_ = new pbc::RepeatedField<global::RegicideProtocol.ActorPack>();
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public pbc::RepeatedField<global::RegicideProtocol.ActorPack> ActorPack
+        {
+            get { return actorPack_; }
+        }
+
+        /// <summary>Field number for the "visable" field.</summary>
+        public const int VisableFieldNumber = 9;
+        private int visable_;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int Visable
+        {
+            get { return visable_; }
+            set
+            {
+                visable_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "usePassword" field.</summary>
+        public const int UsePasswordFieldNumber = 10;
+        private int usePassword_;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int UsePassword
+        {
+            get { return usePassword_; }
+            set
+            {
+                usePassword_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "password" field.</summary>
+        public const int PasswordFieldNumber = 11;
+        private string password_ = "";
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public string Password
+        {
+            get { return password_; }
+            set
+            {
+                password_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        /// <summary>Field number for the "bossActor" field.</summary>
+        public const int BossActorFieldNumber = 12;
+        private global::RegicideProtocol.ActorPack bossActor_;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::RegicideProtocol.ActorPack BossActor
+        {
+            get { return bossActor_; }
+            set
+            {
+                bossActor_ = value;
+            }
+        }
+
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public override bool Equals(object other)
         {
@@ -990,6 +1073,12 @@ namespace RegicideProtocol
             if (State != other.State) return false;
             if (!object.Equals(Gamestate, other.Gamestate)) return false;
             if (RoomID != other.RoomID) return false;
+            if (CurrentIndex != other.CurrentIndex) return false;
+            if (!actorPack_.Equals(other.actorPack_)) return false;
+            if (Visable != other.Visable) return false;
+            if (UsePassword != other.UsePassword) return false;
+            if (Password != other.Password) return false;
+            if (!object.Equals(BossActor, other.BossActor)) return false;
             return Equals(_unknownFields, other._unknownFields);
         }
 
@@ -1003,6 +1092,12 @@ namespace RegicideProtocol
             if (State != 0) hash ^= State.GetHashCode();
             if (gamestate_ != null) hash ^= Gamestate.GetHashCode();
             if (RoomID != 0) hash ^= RoomID.GetHashCode();
+            if (CurrentIndex != 0) hash ^= CurrentIndex.GetHashCode();
+            hash ^= actorPack_.GetHashCode();
+            if (Visable != 0) hash ^= Visable.GetHashCode();
+            if (UsePassword != 0) hash ^= UsePassword.GetHashCode();
+            if (Password.Length != 0) hash ^= Password.GetHashCode();
+            if (bossActor_ != null) hash ^= BossActor.GetHashCode();
             if (_unknownFields != null)
             {
                 hash ^= _unknownFields.GetHashCode();
@@ -1049,6 +1144,32 @@ namespace RegicideProtocol
                 output.WriteRawTag(48);
                 output.WriteInt32(RoomID);
             }
+            if (CurrentIndex != 0)
+            {
+                output.WriteRawTag(56);
+                output.WriteInt32(CurrentIndex);
+            }
+            actorPack_.WriteTo(output, _repeated_actorPack_codec);
+            if (Visable != 0)
+            {
+                output.WriteRawTag(72);
+                output.WriteInt32(Visable);
+            }
+            if (UsePassword != 0)
+            {
+                output.WriteRawTag(80);
+                output.WriteInt32(UsePassword);
+            }
+            if (Password.Length != 0)
+            {
+                output.WriteRawTag(90);
+                output.WriteString(Password);
+            }
+            if (bossActor_ != null)
+            {
+                output.WriteRawTag(98);
+                output.WriteMessage(BossActor);
+            }
             if (_unknownFields != null)
             {
                 _unknownFields.WriteTo(output);
@@ -1082,6 +1203,27 @@ namespace RegicideProtocol
             if (RoomID != 0)
             {
                 size += 1 + pb::CodedOutputStream.ComputeInt32Size(RoomID);
+            }
+            if (CurrentIndex != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeInt32Size(CurrentIndex);
+            }
+            size += actorPack_.CalculateSize(_repeated_actorPack_codec);
+            if (Visable != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeInt32Size(Visable);
+            }
+            if (UsePassword != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeInt32Size(UsePassword);
+            }
+            if (Password.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(Password);
+            }
+            if (bossActor_ != null)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeMessageSize(BossActor);
             }
             if (_unknownFields != null)
             {
@@ -1124,6 +1266,31 @@ namespace RegicideProtocol
             if (other.RoomID != 0)
             {
                 RoomID = other.RoomID;
+            }
+            if (other.CurrentIndex != 0)
+            {
+                CurrentIndex = other.CurrentIndex;
+            }
+            actorPack_.Add(other.actorPack_);
+            if (other.Visable != 0)
+            {
+                Visable = other.Visable;
+            }
+            if (other.UsePassword != 0)
+            {
+                UsePassword = other.UsePassword;
+            }
+            if (other.Password.Length != 0)
+            {
+                Password = other.Password;
+            }
+            if (other.bossActor_ != null)
+            {
+                if (bossActor_ == null)
+                {
+                    BossActor = new global::RegicideProtocol.ActorPack();
+                }
+                BossActor.MergeFrom(other.BossActor);
             }
             _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
         }
@@ -1173,6 +1340,40 @@ namespace RegicideProtocol
                             RoomID = input.ReadInt32();
                             break;
                         }
+                    case 56:
+                        {
+                            CurrentIndex = input.ReadInt32();
+                            break;
+                        }
+                    case 66:
+                        {
+                            actorPack_.AddEntriesFrom(input, _repeated_actorPack_codec);
+                            break;
+                        }
+                    case 72:
+                        {
+                            Visable = input.ReadInt32();
+                            break;
+                        }
+                    case 80:
+                        {
+                            UsePassword = input.ReadInt32();
+                            break;
+                        }
+                    case 90:
+                        {
+                            Password = input.ReadString();
+                            break;
+                        }
+                    case 98:
+                        {
+                            if (bossActor_ == null)
+                            {
+                                BossActor = new global::RegicideProtocol.ActorPack();
+                            }
+                            input.ReadMessage(BossActor);
+                            break;
+                        }
                 }
             }
         }
@@ -1214,7 +1415,6 @@ namespace RegicideProtocol
             hp_ = other.hp_;
             posPack_ = other.posPack_ != null ? other.posPack_.Clone() : null;
             playerJob_ = other.playerJob_;
-            appearance_ = other.appearance_ != null ? other.appearance_.Clone() : null;
             _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
         }
 
@@ -1304,22 +1504,6 @@ namespace RegicideProtocol
             }
         }
 
-        /// <summary>Field number for the "appearance" field.</summary>
-        public const int AppearanceFieldNumber = 6;
-        private global::RegicideProtocol.AppearancePack appearance_;
-        /// <summary>
-        ///玩家外观
-        /// </summary>
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::RegicideProtocol.AppearancePack Appearance
-        {
-            get { return appearance_; }
-            set
-            {
-                appearance_ = value;
-            }
-        }
-
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public override bool Equals(object other)
         {
@@ -1342,7 +1526,6 @@ namespace RegicideProtocol
             if (Hp != other.Hp) return false;
             if (!object.Equals(PosPack, other.PosPack)) return false;
             if (PlayerJob != other.PlayerJob) return false;
-            if (!object.Equals(Appearance, other.Appearance)) return false;
             return Equals(_unknownFields, other._unknownFields);
         }
 
@@ -1355,7 +1538,6 @@ namespace RegicideProtocol
             if (Hp != 0) hash ^= Hp.GetHashCode();
             if (posPack_ != null) hash ^= PosPack.GetHashCode();
             if (PlayerJob != 0) hash ^= PlayerJob.GetHashCode();
-            if (appearance_ != null) hash ^= Appearance.GetHashCode();
             if (_unknownFields != null)
             {
                 hash ^= _unknownFields.GetHashCode();
@@ -1397,11 +1579,6 @@ namespace RegicideProtocol
                 output.WriteRawTag(40);
                 output.WriteInt32(PlayerJob);
             }
-            if (appearance_ != null)
-            {
-                output.WriteRawTag(50);
-                output.WriteMessage(Appearance);
-            }
             if (_unknownFields != null)
             {
                 _unknownFields.WriteTo(output);
@@ -1431,10 +1608,6 @@ namespace RegicideProtocol
             if (PlayerJob != 0)
             {
                 size += 1 + pb::CodedOutputStream.ComputeInt32Size(PlayerJob);
-            }
-            if (appearance_ != null)
-            {
-                size += 1 + pb::CodedOutputStream.ComputeMessageSize(Appearance);
             }
             if (_unknownFields != null)
             {
@@ -1473,14 +1646,6 @@ namespace RegicideProtocol
             if (other.PlayerJob != 0)
             {
                 PlayerJob = other.PlayerJob;
-            }
-            if (other.appearance_ != null)
-            {
-                if (appearance_ == null)
-                {
-                    Appearance = new global::RegicideProtocol.AppearancePack();
-                }
-                Appearance.MergeFrom(other.Appearance);
             }
             _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
         }
@@ -1523,15 +1688,6 @@ namespace RegicideProtocol
                     case 40:
                         {
                             PlayerJob = input.ReadInt32();
-                            break;
-                        }
-                    case 50:
-                        {
-                            if (appearance_ == null)
-                            {
-                                Appearance = new global::RegicideProtocol.AppearancePack();
-                            }
-                            input.ReadMessage(Appearance);
                             break;
                         }
                 }
@@ -1731,12 +1887,12 @@ namespace RegicideProtocol
 
     }
 
-    public sealed partial class Actor : pb::IMessage<Actor>
+    public sealed partial class ActorPack : pb::IMessage<ActorPack>
     {
-        private static readonly pb::MessageParser<Actor> _parser = new pb::MessageParser<Actor>(() => new Actor());
+        private static readonly pb::MessageParser<ActorPack> _parser = new pb::MessageParser<ActorPack>(() => new ActorPack());
         private pb::UnknownFieldSet _unknownFields;
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public static pb::MessageParser<Actor> Parser { get { return _parser; } }
+        public static pb::MessageParser<ActorPack> Parser { get { return _parser; } }
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public static pbr::MessageDescriptor Descriptor
@@ -1751,7 +1907,7 @@ namespace RegicideProtocol
         }
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public Actor()
+        public ActorPack()
         {
             OnConstruction();
         }
@@ -1759,21 +1915,22 @@ namespace RegicideProtocol
         partial void OnConstruction();
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public Actor(Actor other) : this()
+        public ActorPack(ActorPack other) : this()
         {
             actorId_ = other.actorId_;
             cardValueId_ = other.cardValueId_;
             hp_ = other.hp_;
             aTK_ = other.aTK_;
             index_ = other.index_;
+            actorJob_ = other.actorJob_;
             cuttrntCards_ = other.cuttrntCards_.Clone();
             _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
         }
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public Actor Clone()
+        public ActorPack Clone()
         {
-            return new Actor(this);
+            return new ActorPack(this);
         }
 
         /// <summary>Field number for the "ActorId" field.</summary>
@@ -1841,10 +1998,23 @@ namespace RegicideProtocol
             }
         }
 
-        /// <summary>Field number for the "cuttrntCards" field.</summary>
-        public const int CuttrntCardsFieldNumber = 6;
+        /// <summary>Field number for the "ActorJob" field.</summary>
+        public const int ActorJobFieldNumber = 6;
+        private int actorJob_;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int ActorJob
+        {
+            get { return actorJob_; }
+            set
+            {
+                actorJob_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "CuttrntCards" field.</summary>
+        public const int CuttrntCardsFieldNumber = 7;
         private static readonly pb::FieldCodec<global::RegicideProtocol.CardData> _repeated_cuttrntCards_codec
-            = pb::FieldCodec.ForMessage(50, global::RegicideProtocol.CardData.Parser);
+            = pb::FieldCodec.ForMessage(58, global::RegicideProtocol.CardData.Parser);
         private readonly pbc::RepeatedField<global::RegicideProtocol.CardData> cuttrntCards_ = new pbc::RepeatedField<global::RegicideProtocol.CardData>();
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public pbc::RepeatedField<global::RegicideProtocol.CardData> CuttrntCards
@@ -1855,11 +2025,11 @@ namespace RegicideProtocol
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public override bool Equals(object other)
         {
-            return Equals(other as Actor);
+            return Equals(other as ActorPack);
         }
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public bool Equals(Actor other)
+        public bool Equals(ActorPack other)
         {
             if (ReferenceEquals(other, null))
             {
@@ -1874,6 +2044,7 @@ namespace RegicideProtocol
             if (Hp != other.Hp) return false;
             if (ATK != other.ATK) return false;
             if (Index != other.Index) return false;
+            if (ActorJob != other.ActorJob) return false;
             if (!cuttrntCards_.Equals(other.cuttrntCards_)) return false;
             return Equals(_unknownFields, other._unknownFields);
         }
@@ -1887,6 +2058,7 @@ namespace RegicideProtocol
             if (Hp != 0) hash ^= Hp.GetHashCode();
             if (ATK != 0) hash ^= ATK.GetHashCode();
             if (Index != 0) hash ^= Index.GetHashCode();
+            if (ActorJob != 0) hash ^= ActorJob.GetHashCode();
             hash ^= cuttrntCards_.GetHashCode();
             if (_unknownFields != null)
             {
@@ -1929,6 +2101,11 @@ namespace RegicideProtocol
                 output.WriteRawTag(40);
                 output.WriteInt32(Index);
             }
+            if (ActorJob != 0)
+            {
+                output.WriteRawTag(48);
+                output.WriteInt32(ActorJob);
+            }
             cuttrntCards_.WriteTo(output, _repeated_cuttrntCards_codec);
             if (_unknownFields != null)
             {
@@ -1960,6 +2137,10 @@ namespace RegicideProtocol
             {
                 size += 1 + pb::CodedOutputStream.ComputeInt32Size(Index);
             }
+            if (ActorJob != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeInt32Size(ActorJob);
+            }
             size += cuttrntCards_.CalculateSize(_repeated_cuttrntCards_codec);
             if (_unknownFields != null)
             {
@@ -1969,7 +2150,7 @@ namespace RegicideProtocol
         }
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public void MergeFrom(Actor other)
+        public void MergeFrom(ActorPack other)
         {
             if (other == null)
             {
@@ -1994,6 +2175,10 @@ namespace RegicideProtocol
             if (other.Index != 0)
             {
                 Index = other.Index;
+            }
+            if (other.ActorJob != 0)
+            {
+                ActorJob = other.ActorJob;
             }
             cuttrntCards_.Add(other.cuttrntCards_);
             _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -2035,7 +2220,12 @@ namespace RegicideProtocol
                             Index = input.ReadInt32();
                             break;
                         }
-                    case 50:
+                    case 48:
+                        {
+                            ActorJob = input.ReadInt32();
+                            break;
+                        }
+                    case 58:
                         {
                             cuttrntCards_.AddEntriesFrom(input, _repeated_cuttrntCards_codec);
                             break;
@@ -2271,477 +2461,6 @@ namespace RegicideProtocol
 
     }
 
-    public sealed partial class AppearancePack : pb::IMessage<AppearancePack>
-    {
-        private static readonly pb::MessageParser<AppearancePack> _parser = new pb::MessageParser<AppearancePack>(() => new AppearancePack());
-        private pb::UnknownFieldSet _unknownFields;
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public static pb::MessageParser<AppearancePack> Parser { get { return _parser; } }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public static pbr::MessageDescriptor Descriptor
-        {
-            get { return global::RegicideProtocol.RegicideProtocolReflection.Descriptor.MessageTypes[7]; }
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        pbr::MessageDescriptor pb::IMessage.Descriptor
-        {
-            get { return Descriptor; }
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public AppearancePack()
-        {
-            OnConstruction();
-        }
-
-        partial void OnConstruction();
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public AppearancePack(AppearancePack other) : this()
-        {
-            hair_ = other.hair_;
-            face_ = other.face_;
-            head_ = other.head_;
-            cloth_ = other.cloth_;
-            pants_ = other.pants_;
-            armor_ = other.armor_;
-            back_ = other.back_;
-            rightWeapon_ = other.rightWeapon_;
-            leftWeapon_ = other.leftWeapon_;
-            body_ = other.body_;
-            _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public AppearancePack Clone()
-        {
-            return new AppearancePack(this);
-        }
-
-        /// <summary>Field number for the "Hair" field.</summary>
-        public const int HairFieldNumber = 1;
-        private string hair_ = "";
-        /// <summary>
-        /// </summary>
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public string Hair
-        {
-            get { return hair_; }
-            set
-            {
-                hair_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-            }
-        }
-
-        /// <summary>Field number for the "Face" field.</summary>
-        public const int FaceFieldNumber = 2;
-        private string face_ = "";
-        /// <summary>
-        /// </summary>
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public string Face
-        {
-            get { return face_; }
-            set
-            {
-                face_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-            }
-        }
-
-        /// <summary>Field number for the "Head" field.</summary>
-        public const int HeadFieldNumber = 3;
-        private string head_ = "";
-        /// <summary>
-        /// </summary>
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public string Head
-        {
-            get { return head_; }
-            set
-            {
-                head_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-            }
-        }
-
-        /// <summary>Field number for the "Cloth" field.</summary>
-        public const int ClothFieldNumber = 4;
-        private string cloth_ = "";
-        /// <summary>
-        /// </summary>
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public string Cloth
-        {
-            get { return cloth_; }
-            set
-            {
-                cloth_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-            }
-        }
-
-        /// <summary>Field number for the "Pants" field.</summary>
-        public const int PantsFieldNumber = 5;
-        private string pants_ = "";
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public string Pants
-        {
-            get { return pants_; }
-            set
-            {
-                pants_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-            }
-        }
-
-        /// <summary>Field number for the "Armor" field.</summary>
-        public const int ArmorFieldNumber = 6;
-        private string armor_ = "";
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public string Armor
-        {
-            get { return armor_; }
-            set
-            {
-                armor_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-            }
-        }
-
-        /// <summary>Field number for the "Back" field.</summary>
-        public const int BackFieldNumber = 7;
-        private string back_ = "";
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public string Back
-        {
-            get { return back_; }
-            set
-            {
-                back_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-            }
-        }
-
-        /// <summary>Field number for the "RightWeapon" field.</summary>
-        public const int RightWeaponFieldNumber = 8;
-        private string rightWeapon_ = "";
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public string RightWeapon
-        {
-            get { return rightWeapon_; }
-            set
-            {
-                rightWeapon_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-            }
-        }
-
-        /// <summary>Field number for the "LeftWeapon" field.</summary>
-        public const int LeftWeaponFieldNumber = 9;
-        private string leftWeapon_ = "";
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public string LeftWeapon
-        {
-            get { return leftWeapon_; }
-            set
-            {
-                leftWeapon_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-            }
-        }
-
-        /// <summary>Field number for the "Body" field.</summary>
-        public const int BodyFieldNumber = 10;
-        private string body_ = "";
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public string Body
-        {
-            get { return body_; }
-            set
-            {
-                body_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-            }
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public override bool Equals(object other)
-        {
-            return Equals(other as AppearancePack);
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public bool Equals(AppearancePack other)
-        {
-            if (ReferenceEquals(other, null))
-            {
-                return false;
-            }
-            if (ReferenceEquals(other, this))
-            {
-                return true;
-            }
-            if (Hair != other.Hair) return false;
-            if (Face != other.Face) return false;
-            if (Head != other.Head) return false;
-            if (Cloth != other.Cloth) return false;
-            if (Pants != other.Pants) return false;
-            if (Armor != other.Armor) return false;
-            if (Back != other.Back) return false;
-            if (RightWeapon != other.RightWeapon) return false;
-            if (LeftWeapon != other.LeftWeapon) return false;
-            if (Body != other.Body) return false;
-            return Equals(_unknownFields, other._unknownFields);
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public override int GetHashCode()
-        {
-            int hash = 1;
-            if (Hair.Length != 0) hash ^= Hair.GetHashCode();
-            if (Face.Length != 0) hash ^= Face.GetHashCode();
-            if (Head.Length != 0) hash ^= Head.GetHashCode();
-            if (Cloth.Length != 0) hash ^= Cloth.GetHashCode();
-            if (Pants.Length != 0) hash ^= Pants.GetHashCode();
-            if (Armor.Length != 0) hash ^= Armor.GetHashCode();
-            if (Back.Length != 0) hash ^= Back.GetHashCode();
-            if (RightWeapon.Length != 0) hash ^= RightWeapon.GetHashCode();
-            if (LeftWeapon.Length != 0) hash ^= LeftWeapon.GetHashCode();
-            if (Body.Length != 0) hash ^= Body.GetHashCode();
-            if (_unknownFields != null)
-            {
-                hash ^= _unknownFields.GetHashCode();
-            }
-            return hash;
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public override string ToString()
-        {
-            return pb::JsonFormatter.ToDiagnosticString(this);
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public void WriteTo(pb::CodedOutputStream output)
-        {
-            if (Hair.Length != 0)
-            {
-                output.WriteRawTag(10);
-                output.WriteString(Hair);
-            }
-            if (Face.Length != 0)
-            {
-                output.WriteRawTag(18);
-                output.WriteString(Face);
-            }
-            if (Head.Length != 0)
-            {
-                output.WriteRawTag(26);
-                output.WriteString(Head);
-            }
-            if (Cloth.Length != 0)
-            {
-                output.WriteRawTag(34);
-                output.WriteString(Cloth);
-            }
-            if (Pants.Length != 0)
-            {
-                output.WriteRawTag(42);
-                output.WriteString(Pants);
-            }
-            if (Armor.Length != 0)
-            {
-                output.WriteRawTag(50);
-                output.WriteString(Armor);
-            }
-            if (Back.Length != 0)
-            {
-                output.WriteRawTag(58);
-                output.WriteString(Back);
-            }
-            if (RightWeapon.Length != 0)
-            {
-                output.WriteRawTag(66);
-                output.WriteString(RightWeapon);
-            }
-            if (LeftWeapon.Length != 0)
-            {
-                output.WriteRawTag(74);
-                output.WriteString(LeftWeapon);
-            }
-            if (Body.Length != 0)
-            {
-                output.WriteRawTag(82);
-                output.WriteString(Body);
-            }
-            if (_unknownFields != null)
-            {
-                _unknownFields.WriteTo(output);
-            }
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public int CalculateSize()
-        {
-            int size = 0;
-            if (Hair.Length != 0)
-            {
-                size += 1 + pb::CodedOutputStream.ComputeStringSize(Hair);
-            }
-            if (Face.Length != 0)
-            {
-                size += 1 + pb::CodedOutputStream.ComputeStringSize(Face);
-            }
-            if (Head.Length != 0)
-            {
-                size += 1 + pb::CodedOutputStream.ComputeStringSize(Head);
-            }
-            if (Cloth.Length != 0)
-            {
-                size += 1 + pb::CodedOutputStream.ComputeStringSize(Cloth);
-            }
-            if (Pants.Length != 0)
-            {
-                size += 1 + pb::CodedOutputStream.ComputeStringSize(Pants);
-            }
-            if (Armor.Length != 0)
-            {
-                size += 1 + pb::CodedOutputStream.ComputeStringSize(Armor);
-            }
-            if (Back.Length != 0)
-            {
-                size += 1 + pb::CodedOutputStream.ComputeStringSize(Back);
-            }
-            if (RightWeapon.Length != 0)
-            {
-                size += 1 + pb::CodedOutputStream.ComputeStringSize(RightWeapon);
-            }
-            if (LeftWeapon.Length != 0)
-            {
-                size += 1 + pb::CodedOutputStream.ComputeStringSize(LeftWeapon);
-            }
-            if (Body.Length != 0)
-            {
-                size += 1 + pb::CodedOutputStream.ComputeStringSize(Body);
-            }
-            if (_unknownFields != null)
-            {
-                size += _unknownFields.CalculateSize();
-            }
-            return size;
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public void MergeFrom(AppearancePack other)
-        {
-            if (other == null)
-            {
-                return;
-            }
-            if (other.Hair.Length != 0)
-            {
-                Hair = other.Hair;
-            }
-            if (other.Face.Length != 0)
-            {
-                Face = other.Face;
-            }
-            if (other.Head.Length != 0)
-            {
-                Head = other.Head;
-            }
-            if (other.Cloth.Length != 0)
-            {
-                Cloth = other.Cloth;
-            }
-            if (other.Pants.Length != 0)
-            {
-                Pants = other.Pants;
-            }
-            if (other.Armor.Length != 0)
-            {
-                Armor = other.Armor;
-            }
-            if (other.Back.Length != 0)
-            {
-                Back = other.Back;
-            }
-            if (other.RightWeapon.Length != 0)
-            {
-                RightWeapon = other.RightWeapon;
-            }
-            if (other.LeftWeapon.Length != 0)
-            {
-                LeftWeapon = other.LeftWeapon;
-            }
-            if (other.Body.Length != 0)
-            {
-                Body = other.Body;
-            }
-            _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-        }
-
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public void MergeFrom(pb::CodedInputStream input)
-        {
-            uint tag;
-            while ((tag = input.ReadTag()) != 0)
-            {
-                switch (tag)
-                {
-                    default:
-                        _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-                        break;
-                    case 10:
-                        {
-                            Hair = input.ReadString();
-                            break;
-                        }
-                    case 18:
-                        {
-                            Face = input.ReadString();
-                            break;
-                        }
-                    case 26:
-                        {
-                            Head = input.ReadString();
-                            break;
-                        }
-                    case 34:
-                        {
-                            Cloth = input.ReadString();
-                            break;
-                        }
-                    case 42:
-                        {
-                            Pants = input.ReadString();
-                            break;
-                        }
-                    case 50:
-                        {
-                            Armor = input.ReadString();
-                            break;
-                        }
-                    case 58:
-                        {
-                            Back = input.ReadString();
-                            break;
-                        }
-                    case 66:
-                        {
-                            RightWeapon = input.ReadString();
-                            break;
-                        }
-                    case 74:
-                        {
-                            LeftWeapon = input.ReadString();
-                            break;
-                        }
-                    case 82:
-                        {
-                            Body = input.ReadString();
-                            break;
-                        }
-                }
-            }
-        }
-
-    }
-
     public sealed partial class PosPack : pb::IMessage<PosPack>
     {
         private static readonly pb::MessageParser<PosPack> _parser = new pb::MessageParser<PosPack>(() => new PosPack());
@@ -2752,7 +2471,7 @@ namespace RegicideProtocol
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public static pbr::MessageDescriptor Descriptor
         {
-            get { return global::RegicideProtocol.RegicideProtocolReflection.Descriptor.MessageTypes[8]; }
+            get { return global::RegicideProtocol.RegicideProtocolReflection.Descriptor.MessageTypes[7]; }
         }
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

@@ -10,10 +10,9 @@ import (
 )
 
 type Actor struct {
-	RoleId         uint32
-	RoomInfo       *Room
-	PosPack        *GameProto.PosPack
-	AppearancePack *GameProto.AppearancePack
+	RoleId   uint32
+	RoomInfo *Room
+	PosPack  *GameProto.PosPack
 }
 
 type Client struct {

@@ -102,6 +102,7 @@ func FindRoom(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (
 	return mainpack, nil
 }
 
+//开始游戏
 func StartGame(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*GameProto.MainPack, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")

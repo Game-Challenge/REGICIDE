@@ -92,6 +92,24 @@ func (room *Room) Join(client *Client) {
 	// room.InitMyCards()
 }
 
+//boss
+func (room *Room) InitBoss() *GameProto.ActorPack {
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	count := len(BossList)
+	index := r.Intn(count - 1)
+
+	var atk int32
+	var hp int32
+
+	cardData := BossList[index]
+	if cardData.CardValue == 11 {
+
+	}
+
+	bossActor := &GameProto.ActorPack{ATK: atk, Hp: hp}
+	return bossActor
+}
+
 func (room *Room) StartGame(client *Client) {
 	gameState := &GameProto.GameStatePack{}
 	gameState.State = GameProto.GAMESTATE_STATE1
@@ -108,6 +126,7 @@ func (room *Room) StartGame(client *Client) {
 		playerpack.PlayerID = strconv.Itoa(int(_client.Uniid))
 		mainPack.Playerpack = append(mainPack.Playerpack, playerpack)
 	}
+	mainPack.Roompack = append(mainPack.Roompack, room.RoomPack)
 	room.Broadcast(mainPack)
 }
 
