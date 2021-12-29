@@ -16,8 +16,9 @@ public class ActorMgr : Singleton<ActorMgr>
         }
         else
         {
-            var actor = GameMgr.Instance.BossActor;
-            actor.ReInit(cardData);
+            GameMgr.Instance.BossActor = null;
+            var actor = new BossActor(cardData);
+            GameMgr.Instance.BossActor = actor;
             return actor;
         }
     }

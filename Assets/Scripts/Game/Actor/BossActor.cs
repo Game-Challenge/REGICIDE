@@ -149,7 +149,10 @@ public class BossActor: GameActor
             MonoManager.Instance.StartCoroutine(BossAttack());
         }
         Debug.Log("Boss Hp:" + Hp);
-        EventCenter.Instance.EventTrigger("BossDataRefresh", this);
+        if (Hp != 0)
+        {
+            EventCenter.Instance.EventTrigger("BossDataRefresh", this);
+        }
     }
 
     private IEnumerator BossAttack()

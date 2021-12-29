@@ -5,9 +5,12 @@ using UnityEngine.UI;
 
 class GameUI : UIWindow
 {
+    private ItemCard m_jokerCard;
     private InventoryUI m_inventoryUI;
     private ItemCard m_bossCard;
     private List<ItemCard> m_cardLilst = new List<ItemCard>();
+    private Transform m_tfJoker;
+    private Text m_textJoker;
     #region 脚本工具生成的代码
     private GameObject m_goContent;
     private GameObject m_goMiddle;
@@ -24,6 +27,7 @@ class GameUI : UIWindow
     private Text m_textLeftKill;
     private Text m_textCurrentKill;
     private Text m_textCurrentLevel;
+    private Button m_btnNewMode;
     protected override void ScriptGenerator()
     {
         m_goContent = FindChild("m_goContent").gameObject;
@@ -41,10 +45,15 @@ class GameUI : UIWindow
         m_textLeftKill = FindChildComponent<Text>("m_goContent/m_goTop/m_textLeftKill");
         m_textCurrentKill = FindChildComponent<Text>("m_goContent/m_goTop/m_textCurrentKill");
         m_textCurrentLevel = FindChildComponent<Text>("m_goContent/m_goTop/m_textCurrentLevel");
+        m_textJoker = FindChildComponent<Text>("m_goContent/m_textJoker");
+        m_tfJoker = FindChild("m_goContent/m_tfJoker");
+        m_btnNewMode = FindChildComponent<Button>("m_goContent/m_btnNewMode");
         m_btnAttack.onClick.AddListener(Attack);
         m_btnAbord.onClick.AddListener(Abord);
         m_btnUsed.onClick.AddListener(ShowUsed);
+        m_btnNewMode.onClick.AddListener((() => { GameMgr.Instance.StartNewMode();}));
         m_inventoryUI = CreateWidgetByType<InventoryUI>(m_goInventoryRoot);
+        m_jokerCard = CreateWidgetByType<ItemCard>(m_tfJoker);
     }
     #endregion
 
@@ -139,7 +148,11 @@ class GameUI : UIWindow
             }
         }
 
-        m_textCurrentLevel.text = String.Format("当前难度：{0}", value); ;
+        m_textCurrentLevel.text = String.Format("当前难度：{0}", value);
+
+        m_jokerCard.Init(53);
+
+        m_textJoker.text = string.Format("{0}/{1}",GameMgr.Instance.LeftJokerCount, GameMgr.Instance.TotalJokerCount);
     }
     #endregion
 

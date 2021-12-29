@@ -83,11 +83,21 @@ class ItemCard : UIWindowWidget
         if(sprite!= null){
             m_imgIcon.sprite = sprite;
         }
+
+        if (index == 53)
+        {
+            m_choice = false;
+            m_goCardInfo.gameObject.SetActive(false);
+            m_cardData = CardMgr.Instance.InstanceData(index);
+            Refresh();
+        }
     }
 
+    private bool m_isRandomCard;
     private bool IsBoss = false;
-    public void Init(CardData data)
+    public void Init(CardData data,bool isRandomCard = false)
     {
+        m_isRandomCard = isRandomCard;
         m_cardData = data;
         m_imgIcon.sprite = m_cardData.sprite;
         m_choice = false;
@@ -151,15 +161,30 @@ class ItemCard : UIWindowWidget
         {
             return;
         }
+
         if (m_choice)
         {
-            EventCenter.Instance.EventTrigger<CardData>("Choice", m_cardData);
+            if (m_isRandomCard)
+            {
+                EventCenter.Instance.EventTrigger<CardData>("ChoiceRandom", m_cardData);
+            }
+            else
+            {
+                EventCenter.Instance.EventTrigger<CardData>("Choice", m_cardData);
+            }
             this.gameObject.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
             m_goSelect?.gameObject.SetActive(true);
         }
         else
         {
-            EventCenter.Instance.EventTrigger<CardData>("DeChoice", m_cardData);
+            if (m_isRandomCard)
+            {
+                EventCenter.Instance.EventTrigger<CardData>("DeChoiceRandom", m_cardData);
+            }
+            else
+            {
+                EventCenter.Instance.EventTrigger<CardData>("DeChoice", m_cardData);
+            }
             this.gameObject.transform.localScale = new Vector3(1, 1, 1);
             m_goSelect?.gameObject.SetActive(false);
         }

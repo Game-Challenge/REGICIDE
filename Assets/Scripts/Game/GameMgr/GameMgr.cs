@@ -8,6 +8,16 @@ partial class GameMgr : Singleton<GameMgr>
     #region 属性
     public int PlayerNum;
 
+    /// <summary>
+    /// 是否是横屏
+    /// </summary>
+    public bool IsLandScape
+    {
+        get
+        {
+            return ((float)Screen.width / (float)Screen.height) > 1;
+        }
+    }
     public int CurrentCardsNum
     {
         get
@@ -43,6 +53,8 @@ partial class GameMgr : Singleton<GameMgr>
         }
     }
 
+    public int LeftJokerCount = 2;
+    public int TotalJokerCount = 2;
     public int TotalKillBossCount;
     public int NeedKillBossCount = 4;
     public int LeftCount
@@ -59,6 +71,7 @@ partial class GameMgr : Singleton<GameMgr>
     public List<CardData> m_useList = new List<CardData>(TotalCardNum);    //墓地
     private List<CardData> m_bossList = new List<CardData>();                       //boss堆
     private List<CardData> m_choiceList = new List<CardData>();                     //当前回合选择的卡
+    private List<CardData> m_choiceRandomList = new List<CardData>();
     #endregion
 
     #region 生命周期
@@ -81,6 +94,9 @@ partial class GameMgr : Singleton<GameMgr>
         EventCenter.Instance.AddEventListener<CardData>("DeChoice", DeChoice);
         EventCenter.Instance.AddEventListener<bool>("BossDie", BossDie);
         EventCenter.Instance.AddEventListener<int>("AddHp", AddHp);
+
+        EventCenter.Instance.AddEventListener<CardData>("ChoiceRandom", ChoiceRandom);
+        EventCenter.Instance.AddEventListener<CardData>("DeChoiceRandom", DeChoiceRandom);
     }
 
     private void Update()
@@ -90,6 +106,92 @@ partial class GameMgr : Singleton<GameMgr>
     #endregion
 
     #region 战斗中卡排操作
+
+    public void RandChangeCards()
+    {
+        var choiceCount = m_choiceList.Count;
+        var choiceRandCount = m_choiceRandomList.Count;
+        if (choiceRandCount == 0 && choiceCount == 0)
+        {
+            UISys.Mgr.CloseWindow<GameChoiceUI>();
+            return;
+        }
+
+        if (choiceRandCount != choiceCount)
+        {
+            UISys.ShowTipMsg("随机牌库与我的手牌数目需要相同！");
+            return;
+        }
+
+        for (int i = 0; i < m_choiceRandomList.Count; i++)
+        {
+            var card = m_choiceRandomList[i];
+            m_myList.Remove(card);
+            m_curList.Add(card);
+        }
+
+        for (int i = 0; i < m_choiceList.Count; i++)
+        {
+            var card = m_choiceList[i];
+            m_curList.Remove(card);
+            m_myList.Add(card);
+        }
+        UISys.Mgr.CloseWindow<GameChoiceUI>();
+        EventCenter.Instance.EventTrigger("RefreshGameUI");
+    }
+
+    public List<CardData> RandTurnCards()
+    {
+        var count = m_myList.Count < 4 ? m_myList.Count : 4;
+        var temp = new List<CardData>();
+        bool complete = false;
+        int randCount = 0;
+        while (!complete)
+        {
+            Random ran = new Random((int)DateTime.Now.Ticks + randCount);
+            var idx = ran.Next(0, m_myList.Count - 1);
+            var card = m_myList[idx];
+            bool hadCard = false;
+            for (int i = 0; i < temp.Count; i++)
+            {
+                if (temp[i].CardInt == card.CardInt)
+                {
+                    hadCard = true;
+                    break;
+                }
+            }
+
+            if (!hadCard)
+            {
+                temp.Add(card);
+            }
+            randCount++;
+            if (temp.Count >= count)
+            {
+                complete = true;
+            }
+        }
+
+        //for (int i = 0; i < count; i++)
+        //{
+        //    Random ran = new Random((int)DateTime.Now.Ticks+i);
+        //    var idx = ran.Next(0, m_myList.Count - 1);
+        //    var card = m_myList[idx];
+        //    temp.Add(card);
+        //}
+
+        return temp;
+    }
+
+    private void ChoiceRandom(CardData cardData)
+    {
+        m_choiceRandomList.Add(cardData);
+    }
+
+    private void DeChoiceRandom(CardData cardData)
+    {
+        m_choiceRandomList.Remove(cardData);
+    }
     private void Choice(CardData cardData)
     {
         m_choiceList.Add(cardData);
@@ -97,10 +199,7 @@ partial class GameMgr : Singleton<GameMgr>
 
     private void DeChoice(CardData cardData)
     {
-        for (int i = 0; i < m_choiceList.Count; i++)
-        {
-            m_choiceList.Remove(cardData);
-        }
+        m_choiceList.Remove(cardData);
     }
 
     private void AbordCard()
@@ -120,7 +219,7 @@ partial class GameMgr : Singleton<GameMgr>
 
         if (myValue < m_needAbordValue)
         {
-            UISys.ShowTipMsg(string.Format("您需要遗弃:{0}点数的牌" + m_needAbordValue));
+            UISys.ShowTipMsg(string.Format("您需要遗弃:{0}点数的牌",m_needAbordValue));
             return;
         }
 
@@ -165,9 +264,63 @@ partial class GameMgr : Singleton<GameMgr>
     }
     #endregion
 
+    private bool startNewMode;
+    public void StartNewMode()
+    {
+        startNewMode = !startNewMode;
+        if (startNewMode)
+        {
+            UISys.ShowTipMsg("开启新模式");
+        }
+        else
+        {
+            UISys.ShowTipMsg("回到传统模式");
+        }
+    }
+
     #region Boss 接口
     public void InitBoss()
     {
+        var currentBoss = TotalKillBossCount;
+
+        if (GameLevel == 0)
+        {
+            var temp = new List<CardData>();
+
+            if (currentBoss <=3)
+            {
+                for (int i = 0; i < m_bossList.Count; i++)
+                {
+                    if (m_bossList[i].CardValue == currentBoss + 11)
+                    {
+                        temp.Add(m_bossList[i]);
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < m_bossList.Count; i++)
+                {
+                    if (m_bossList[i].CardValue == 13)
+                    {
+                        temp.Add(m_bossList[i]);
+                    }
+                }
+            }
+            
+
+            Random ran = new Random((int)DateTime.Now.Ticks);
+            var idx = ran.Next(0, temp.Count - 1);
+            var card = temp[idx];
+            BossActor = ActorMgr.Instance.InstanceBossActor(card);
+            EventCenter.Instance.EventTrigger("RefreshBoss", BossActor);
+            EventCenter.Instance.EventTrigger("BossDataRefresh", BossActor);
+            SetState(GameState.STATEONE);
+            return;
+        }
+
+        
+
         Random random = new Random((int)DateTime.Now.Ticks);
         var index = random.Next(0, m_bossList.Count - 1);
         var cardData = m_bossList[index];
@@ -207,6 +360,11 @@ partial class GameMgr : Singleton<GameMgr>
             var ui = UISys.Mgr.ShowWindow<GameWinUI>();
             ui.InitUI(string.Format("游戏胜利，您已经弑杀了{0}位君主！！！", TotalKillBossCount));
             return;
+        }
+
+        if (startNewMode)
+        {
+            UISys.Mgr.ShowWindow<GameChoiceUI>();
         }
 
         if (beFriend)
@@ -304,15 +462,30 @@ partial class GameMgr : Singleton<GameMgr>
             return;
         }
 
+        if (m_choiceList.Count > 0 && m_choiceList[0].IsJoker)
+        {
+            if (LeftJokerCount <= 0)
+            {
+                UISys.ShowTipMsg("Joker数目不足");
+                return;
+            }
+        }
+
         var attackData = BattleMgr.Instance.GenAttackData(m_choiceList);
 
         for (int i = 0; i < m_choiceList.Count; i++)
         {
             var card = m_choiceList[i];
 
-            m_useList.Add(card);
-
-            m_curList.Remove(card);
+            if (card.IsJoker)
+            {
+                LeftJokerCount--;
+            }
+            else
+            {
+                m_useList.Add(card);
+                m_curList.Remove(card);
+            }
         }
 
         m_choiceList.Clear();
@@ -327,7 +500,7 @@ partial class GameMgr : Singleton<GameMgr>
     {
         SetState(GameState.STATEFOUR);
         UISys.ShowTipMsg("受到君主的伤害:"+value);
-        UISys.ShowTipMsg(string.Format("您需要遗弃:{0}点数的牌" + value));
+        UISys.ShowTipMsg(string.Format("您需要遗弃:{0}点数的牌",value));
         Debug.Log("Hurt:" + value);
         m_needAbordValue = value;
     }
@@ -337,7 +510,7 @@ partial class GameMgr : Singleton<GameMgr>
     private void InitTotalCards()
     {
         m_totalList.Clear();
-        for (int cardInt = 0; cardInt < TotalCardNum; cardInt++)
+        for (int cardInt = 0; cardInt < TotalCardNum -2; cardInt++)
         {
             var cardData = CardMgr.Instance.InstanceData(cardInt);
 
@@ -381,6 +554,11 @@ partial class GameMgr : Singleton<GameMgr>
         m_curList.AddRange(temp);
     }
 
+    public void TurnJokerCard()
+    {
+        m_curList.Clear();
+        TurnCard();
+    }
     public void TurnCard(int turnCount)
     {
         List<CardData> temp = new List<CardData>();
@@ -476,6 +654,7 @@ partial class GameMgr : Singleton<GameMgr>
     {
         GameLevel = index;
         TotalKillBossCount = 0;
+        LeftJokerCount = 2;
         NeedKillBossCount = (index + 1) * 4;
         UISys.ShowTipMsg("重新开始！！");
         InitTotalCards();

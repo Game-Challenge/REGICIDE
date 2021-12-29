@@ -28,12 +28,20 @@ class StartUI : UIWindow
 
     private void OnClickRuleBtn()
     {
-
+        UISys.ShowTipMsg("敬请期待~");
     }
     private void OnClickStartGameBtn()
     {
         Close();
-        UISys.Mgr.ShowWindow<GameUI>();
+        if (GameMgr.Instance.IsLandScape)
+        {
+            UISys.Mgr.ShowWindow<GameUI>();
+        }
+        else
+        {
+            UISys.Mgr.ShowWindow<GameUILand>();
+        }
+        
     }
     private void OnClickConnectBtn()
     {

@@ -1,4 +1,6 @@
-﻿sealed partial class GameApp : UnitySingleton<GameApp>
+﻿using UnityEngine;
+
+sealed partial class GameApp : UnitySingleton<GameApp>
 {
     public int TargetFrameRate = 300;
 
@@ -26,7 +28,17 @@
         RegistAllSystem();
 
         GameMgr.Instance.Init();
-        UISys.Mgr.ShowWindow<StartUI>();
+        if (GameMgr.Instance.IsLandScape)
+        {
+            Debug.Log("是横屏");
+            UISys.Mgr.ShowWindow<StartUI>();
+        }
+        else
+        {
+            Debug.Log("是竖屏");
+            UISys.Mgr.ShowWindow<StartUILand>();
+        }
+
 
         if (ConnectAuto)
         {
