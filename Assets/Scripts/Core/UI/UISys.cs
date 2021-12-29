@@ -61,5 +61,16 @@ class UISys:BaseLogicSys<UISys>
             tipUI.ShowNewTip(tex, diyTime);
         }
     }
+
+    public static void ShowTipMsg(string msg, params object[] args)
+    {
+        var tipUI = Mgr.ShowWindow<TipUI>(UI_Layer.System);
+        if (tipUI != null)
+        {
+            var Message = string.Format(msg, args);
+            tipUI.ShowNewTip(Message, 0);
+        }
+    }
+    
 }
 

@@ -42,6 +42,16 @@ partial class GameMgr : Singleton<GameMgr>
             return 8 - PlayerNum + 1;
         }
     }
+
+    public int TotalKillBossCount;
+    public int NeedKillBossCount = 4;
+    public int LeftCount
+    {
+        get
+        {
+            return m_myList.Count;
+        }
+    }
     public BossActor BossActor;
     private List<CardData> m_totalList = new List<CardData>(TotalCardNum);  //总牌堆
     private List<CardData> m_curList = new List<CardData>();                        //手卡
@@ -110,7 +120,7 @@ partial class GameMgr : Singleton<GameMgr>
 
         if (myValue < m_needAbordValue)
         {
-            UISys.ShowTipMsg("您需遗弃的牌点数不足");
+            UISys.ShowTipMsg(string.Format("您需要遗弃:{0}点数的牌" + m_needAbordValue));
             return;
         }
 
@@ -179,6 +189,26 @@ partial class GameMgr : Singleton<GameMgr>
 
     private void BossDie(bool beFriend = false)
     {
+        TotalKillBossCount++;
+
+        if (TotalKillBossCount >= NeedKillBossCount)
+        {
+            SetState(GameState.STATEWIN);
+            UISys.ShowTipMsg("游戏胜利，您已经弑杀了{0}位君主！！！", TotalKillBossCount);
+            var ui = UISys.Mgr.ShowWindow<GameWinUI>();
+            ui.InitUI(string.Format("游戏胜利，您已经弑杀了{0}位君主！！！", TotalKillBossCount));
+            return;
+        }
+
+        if (m_bossList.Count <= 0)
+        {
+            SetState(GameState.STATEWIN);
+            UISys.ShowTipMsg("游戏胜利！！！，您已经弑杀了12位君主");
+            var ui = UISys.Mgr.ShowWindow<GameWinUI>();
+            ui.InitUI(string.Format("游戏胜利，您已经弑杀了{0}位君主！！！", TotalKillBossCount));
+            return;
+        }
+
         if (beFriend)
         {
             m_curList.Add(BossActor.cardData);
@@ -188,6 +218,8 @@ partial class GameMgr : Singleton<GameMgr>
         {
             InitBoss();
         }
+
+        m_bossList.Remove(BossActor.cardData);
     }
     #endregion
 
@@ -295,6 +327,7 @@ partial class GameMgr : Singleton<GameMgr>
     {
         SetState(GameState.STATEFOUR);
         UISys.ShowTipMsg("受到君主的伤害:"+value);
+        UISys.ShowTipMsg(string.Format("您需要遗弃:{0}点数的牌" + value));
         Debug.Log("Hurt:" + value);
         m_needAbordValue = value;
     }
@@ -401,6 +434,7 @@ partial class GameMgr : Singleton<GameMgr>
         STATETWO,   //阶段二，激活技能
         STATETHREE, //阶段三，造成伤害
         STATEFOUR,  //阶段四，承受伤害
+        STATEWIN,
     }
 
     public Dictionary<GameState, string> stateMsgDic = new Dictionary<GameState, string>()
@@ -437,8 +471,12 @@ partial class GameMgr : Singleton<GameMgr>
         SetState(GameState.NONE);
     }
 
-    public void RestartGame()
+    public int GameLevel = 0;
+    public void RestartGame(int index = 0)
     {
+        GameLevel = index;
+        TotalKillBossCount = 0;
+        NeedKillBossCount = (index + 1) * 4;
         UISys.ShowTipMsg("重新开始！！");
         InitTotalCards();
         InitMyCards();

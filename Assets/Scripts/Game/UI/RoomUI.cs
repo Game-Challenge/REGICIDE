@@ -25,6 +25,12 @@ class RoomUI : UIWindow
         EventCenter.Instance.AddEventListener<List<RoomPack>>("RoomPack", OnRefresh);
     }
 
+    protected override void DeRegisterEvent()
+    {
+        base.DeRegisterEvent();
+        EventCenter.Instance.RemoveEventListener<List<RoomPack>>("RoomPack", OnRefresh);
+    }
+
     protected override void OnCreate()
     {
         base.OnCreate();

@@ -85,6 +85,7 @@ class ItemCard : UIWindowWidget
         }
     }
 
+    private bool IsBoss = false;
     public void Init(CardData data)
     {
         m_cardData = data;
@@ -96,6 +97,7 @@ class ItemCard : UIWindowWidget
 
     public void Init(BossActor actor)
     {
+        IsBoss = true;
         m_cardData = actor.cardData;
         m_imgIcon.sprite = m_cardData.sprite;
         m_choice = false;
@@ -120,6 +122,10 @@ class ItemCard : UIWindowWidget
 
     private void BossDataRefresh(BossActor actor)
     {
+        if (gameObject == null)
+        {
+            return;
+        }
         //AdjustIconNum(m_listHeart, actor.Hp, m_tfHeart, m_goHeart);
         m_goHeart.SetActive(false);
         m_textAtk.text = "攻击：" + actor.Atk;
@@ -131,7 +137,7 @@ class ItemCard : UIWindowWidget
 
     private void Choice()
     {
-        if (m_cardData.IsBoss)
+        if (IsBoss)
         {
             return;
         }
@@ -141,6 +147,10 @@ class ItemCard : UIWindowWidget
 
     private void Refresh()
     {
+        if (gameObject == null)
+        {
+            return;
+        }
         if (m_choice)
         {
             EventCenter.Instance.EventTrigger<CardData>("Choice", m_cardData);

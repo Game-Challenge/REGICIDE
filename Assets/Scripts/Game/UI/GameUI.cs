@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +20,10 @@ class GameUI : UIWindow
     private Button m_btnAbord;
     private Transform m_goInventoryRoot;
     private Button m_btnUsed;
+    private Text m_textLeft;
+    private Text m_textLeftKill;
+    private Text m_textCurrentKill;
+    private Text m_textCurrentLevel;
     protected override void ScriptGenerator()
     {
         m_goContent = FindChild("m_goContent").gameObject;
@@ -32,6 +37,10 @@ class GameUI : UIWindow
         m_btnAbord = FindChildComponent<Button>("m_goContent/m_goMiddle/m_btnAbord");
         m_goInventoryRoot = FindChild("m_goContent/m_goMiddle/m_goInventoryRoot");
         m_btnUsed = FindChildComponent<Button>("m_goContent/m_goMiddle/m_btnUsed");
+        m_textLeft = FindChildComponent<Text>("m_goContent/m_goMiddle/m_btnLeft/m_textLeft");
+        m_textLeftKill = FindChildComponent<Text>("m_goContent/m_goTop/m_textLeftKill");
+        m_textCurrentKill = FindChildComponent<Text>("m_goContent/m_goTop/m_textCurrentKill");
+        m_textCurrentLevel = FindChildComponent<Text>("m_goContent/m_goTop/m_textCurrentLevel");
         m_btnAttack.onClick.AddListener(Attack);
         m_btnAbord.onClick.AddListener(Abord);
         m_btnUsed.onClick.AddListener(ShowUsed);
@@ -44,6 +53,13 @@ class GameUI : UIWindow
         base.RegisterEvent();
         EventCenter.Instance.AddEventListener<BossActor>("RefreshBoss", RefreshBoss);
         EventCenter.Instance.AddEventListener("RefreshGameUI", RefreshGameUI);
+    }
+
+    protected override void DeRegisterEvent()
+    {
+        base.DeRegisterEvent();
+        EventCenter.Instance.RemoveEventListener<BossActor>("RefreshBoss", RefreshBoss);
+        EventCenter.Instance.RemoveEventListener("RefreshGameUI", RefreshGameUI);
     }
 
     private void RefreshBoss(BossActor bossActor)
@@ -90,6 +106,40 @@ class GameUI : UIWindow
         {
             m_cardLilst[i].Init(data[i]);
         }
+
+        m_textLeft.text = String.Format("酒馆剩余:{0}", GameMgr.Instance.LeftCount);
+
+        m_textLeftKill.text = String.Format("当前击杀君主数目：{0}", GameMgr.Instance.TotalKillBossCount);
+
+        m_textCurrentKill.text = String.Format("剩余击杀君主数目：{0}", GameMgr.Instance.NeedKillBossCount - GameMgr.Instance.TotalKillBossCount);
+
+        string value = string.Empty;
+
+        switch (GameMgr.Instance.GameLevel)
+        {
+            case 0:
+            {
+                value = "初级";
+                break;
+            }
+            case 1:
+            {
+                value = "中级";
+                break;
+            }
+            case 2:
+            {
+                value = "高级";
+                break;
+            }
+            case 3:
+            {
+                value = "噩梦";
+                break;
+            }
+        }
+
+        m_textCurrentLevel.text = String.Format("当前难度：{0}", value); ;
     }
     #endregion
 

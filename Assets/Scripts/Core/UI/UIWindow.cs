@@ -245,6 +245,8 @@ public partial class UIWindow
 
         ClearAllRegistEvent();
 
+        DeRegisterEvent();
+
         OnDestroy();
 
         if (m_go != null)
@@ -434,6 +436,11 @@ public partial class UIWindow
     }
 
     protected virtual void RegisterEvent()
+    {
+
+    }
+
+    protected virtual void DeRegisterEvent()
     {
 
     }

@@ -57,6 +57,11 @@ class GameOnlineUI : UIWindow
         base.RegisterEvent();
     }
 
+    protected override void DeRegisterEvent()
+    {
+        base.DeRegisterEvent();
+    }
+
     private void RefreshCards(int index = 0)
     {
         if (index >= 4)
