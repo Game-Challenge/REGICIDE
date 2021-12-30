@@ -558,8 +558,9 @@ partial class GameMgr : Singleton<GameMgr>
                 UISys.ShowTipMsg("您已无法承受君主的伤害。");
             }
         }
-        
+#if UNITY_EDITOR
         Debug.Log("Hurt:" + value);
+#endif
         m_needAbordValue = value;
     }
     #endregion

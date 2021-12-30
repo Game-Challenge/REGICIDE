@@ -148,7 +148,9 @@ public class BossActor: GameActor
         {
             MonoManager.Instance.StartCoroutine(BossAttack());
         }
+#if UNITY_EDITOR
         Debug.Log("Boss Hp:" + Hp);
+#endif
         if (Hp != 0)
         {
             EventCenter.Instance.EventTrigger("BossDataRefresh", this);

@@ -58,7 +58,12 @@ class UISys:BaseLogicSys<UISys>
     {
         if (waitTime != 0)
         {
-            MonoManager.Instance.StartCoroutine(ShowTip(tex, waitTime));
+            //MonoManager.Instance.StartCoroutine(ShowTip(tex, waitTime));
+            var tipUI = Mgr.ShowWindow<TipUI>(UI_Layer.System);
+            if (tipUI != null)
+            {
+                tipUI.ShowNewTip(tex, diyTime);
+            }
         }
         else
         {
