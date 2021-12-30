@@ -74,8 +74,14 @@ class GameUI : UIWindow
         EventCenter.Instance.AddEventListener<BossActor>("RefreshBoss", RefreshBoss);
         EventCenter.Instance.AddEventListener("RefreshGameUI", RefreshGameUI);
         EventCenter.Instance.AddEventListener("UpdateGameState", UpdateGameState);
-    }
+        EventCenter.Instance.AddEventListener("gameStart", gameStart);
 
+    }
+    private void gameStart()
+    {
+        m_btnNewMode.gameObject.transform.localScale = Vector2.one;
+    }
+    
     protected override void DeRegisterEvent()
     {
         base.DeRegisterEvent();
