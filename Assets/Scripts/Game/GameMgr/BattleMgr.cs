@@ -11,6 +11,23 @@ public struct AttackData
     public int Damage;
     public bool HadPet;
     public bool HadJoker;
+
+    public AttackData(bool gm)
+    {
+        CouldTurnCard = false;
+        CouldDoubleAtk = false;
+        CouldDownBossAtk = false;
+        CouldAddHp = false;
+        Damage = 0;
+        HadPet = false;
+        HadJoker = false;
+
+        if (gm)
+        {
+            Damage = 999;
+        }
+    }
+
     public AttackData(List<CardData> list)
     {
         CouldTurnCard = false;

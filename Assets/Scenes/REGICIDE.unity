@@ -250,4 +250,5 @@ MonoBehaviour:
   TargetFrameRate: 300
   payerNum: 0
   ConnectAuto: 0
+  IsGmMode: 0
   hostPoint: 0

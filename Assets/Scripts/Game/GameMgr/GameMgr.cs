@@ -137,6 +137,7 @@ partial class GameMgr : Singleton<GameMgr>
             m_myList.Add(card);
         }
         m_choiceList.Clear();
+        m_choiceRandomList.Clear();
         UISys.Mgr.CloseWindow<GameChoiceUI>();
         EventCenter.Instance.EventTrigger("RefreshGameUI");
     }
@@ -304,7 +305,7 @@ partial class GameMgr : Singleton<GameMgr>
         {
             var temp = new List<CardData>();
 
-            if (currentBoss <=3)
+            if (currentBoss <3)
             {
                 for (int i = 0; i < m_bossList.Count; i++)
                 {
@@ -324,7 +325,9 @@ partial class GameMgr : Singleton<GameMgr>
                     }
                 }
             }
-            
+            Debug.Log(m_bossList.Count);
+
+            Debug.Log(temp.Count);
 
             Random ran = new Random((int)DateTime.Now.Ticks);
             var idx = ran.Next(0, temp.Count - 1);
@@ -468,6 +471,18 @@ partial class GameMgr : Singleton<GameMgr>
 
     public void Attack()
     {
+        if (GameApp.Instance.IsGmMode)
+        {
+            var attackDataGM = new AttackData(GameApp.Instance.IsGmMode);
+
+            m_choiceList.Clear();
+
+            BattleMgr.Instance.ImpactSkill(attackDataGM, BossActor);
+
+            EventCenter.Instance.EventTrigger("RefreshGameUI");
+            return;
+        }
+
         if (gameState != GameState.STATEONE)
         {
             UISys.ShowTipMsg(string.Format("当前阶段是：{0}，无法攻击", stateMsgDic[gameState]));
