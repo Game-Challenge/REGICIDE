@@ -51,7 +51,8 @@ class StartUI : UIWindow
         }
         else
         {
-            GameClient.Instance.Connect();
+            UISys.ShowTipMsg("亲，这个还没有做，快加群来催我(╯▔皿▔)╯！");
+            //GameClient.Instance.Connect();
         }
     }
 
