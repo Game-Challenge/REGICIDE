@@ -9,6 +9,8 @@ sealed partial class GameApp : UnitySingleton<GameApp>
     public PlayerNum payerNum = PlayerNum.One;
 
     public bool ConnectAuto;
+
+    public bool UseBuggly;
     public enum PlayerNum
     {
         One,
@@ -26,7 +28,11 @@ sealed partial class GameApp : UnitySingleton<GameApp>
 
     private void Init()
     {
-        BugglyMgr.Instance.OnInit();
+        if (UseBuggly)
+        {
+            BugglyMgr.Instance.OnInit();
+        }
+
         SetTargetFrameRate();
         InitLibImp();
         RegistAllSystem();

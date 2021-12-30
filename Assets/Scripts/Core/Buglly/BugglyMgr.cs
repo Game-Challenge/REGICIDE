@@ -20,7 +20,7 @@ public class BugglyMgr : Singleton<BugglyMgr>
 
     public void OnInit()
     {
-
+        Debug.Log("Use Buggly!!!");
     }
 
     private Stack<string> m_errorMsgs = new Stack<string>();
