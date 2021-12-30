@@ -5,6 +5,14 @@ using UnityEngine;
 
 public static class Utils
 {
+    public static void Show(this GameObject gameObject,bool show)
+    {
+        if (gameObject!= null)
+        {
+            gameObject.transform.localScale = show ? Vector3.one : Vector3.zero;
+        }
+    }
+
     public static bool CheckHaveError(MainPack mainPack)
     {
         bool hasError = false;
