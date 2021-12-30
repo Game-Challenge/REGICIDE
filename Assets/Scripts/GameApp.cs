@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 sealed partial class GameApp : UnitySingleton<GameApp>
@@ -19,18 +20,18 @@ sealed partial class GameApp : UnitySingleton<GameApp>
     public override void Awake()
     {
         base.Awake();
+
         Init();
     }
 
     private void Init()
     {
+        BugglyMgr.Instance.OnInit();
         SetTargetFrameRate();
         InitLibImp();
         RegistAllSystem();
 
         GameMgr.Instance.Init();
-
-
         MonoManager.Instance.StartCoroutine(StartGame());
 
         //var str = ResourcesManager.Instance.Load<TextAsset>("regicide");
