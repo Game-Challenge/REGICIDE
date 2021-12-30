@@ -7,7 +7,8 @@ using System;
 using BestHTTP.Examples;
 using UnityEngine.UI;
 using System.Text;
- 
+using RegicideProtocol;
+
 public class WebSocketMgr : UnitySingleton<WebSocketMgr>
 {
     public string url = "ws://localhost:12345/ping";
@@ -18,26 +19,66 @@ public class WebSocketMgr : UnitySingleton<WebSocketMgr>
 
     private void Start()
     {
-        init();
+        Init();
     }
 
-    private void init()
+    private void Init()
     {
         webSocket = new WebSocket(new Uri(url));
         webSocket.OnOpen += OnOpen;
         webSocket.OnMessage += OnMessageReceived;
+        webSocket.OnBinary += RecivePack;
         webSocket.OnError += OnError;
         webSocket.OnClosed += OnClosed;
         Connect();
     }
 
-    private void antiInit()
+    private void DeInit()
     {
         webSocket.OnOpen = null;
         webSocket.OnMessage = null;
         webSocket.OnError = null;
         webSocket.OnClosed = null;
         webSocket = null;
+    }
+
+    private void RecivePack(WebSocket webSocket, byte[] bufBytes)
+    {
+        var length = bufBytes.Length;
+
+        int count = length - 4;
+
+        int bufferAllCount = count + 4;    //整条消息的长度
+
+        while (true)
+        {
+            if (4 >= (count + 4))
+            {
+                MainPack pack = (MainPack)MainPack.Descriptor.Parser.ParseFrom(bufBytes, 4, count);
+
+                //if (handleResponse != null)
+                //{
+                //    handleResponse(pack);
+                //}
+                Debug.Log(pack);
+
+                Array.Copy(bufBytes, bufferAllCount, bufBytes, 0, 4 - bufferAllCount);
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+
+    public void Send(MainPack pack)
+    {
+        if (webSocket == null || webSocket.IsOpen)
+        {
+            Debug.LogError("Socket Connect => false");
+            return;
+        }
+        webSocket.Send(Message.PackData(pack));
     }
 
     private void setConsoleMsg(string msg)
@@ -99,8 +140,8 @@ public class WebSocketMgr : UnitySingleton<WebSocketMgr>
     {
         Debug.Log(message);
         setConsoleMsg(message);
-        antiInit();
-        init();
+        DeInit();
+        Init();
     }
 
     private void OnDestroy()
@@ -108,7 +149,7 @@ public class WebSocketMgr : UnitySingleton<WebSocketMgr>
         if (webSocket != null && webSocket.IsOpen)
         {
             webSocket.Close();
-            antiInit();
+            DeInit();
         }
     }
 
@@ -125,8 +166,8 @@ public class WebSocketMgr : UnitySingleton<WebSocketMgr>
         Debug.Log(errorMsg);
         Debug.Log(reason);
         setConsoleMsg(errorMsg);
-        antiInit();
-        init();
+        DeInit();
+        Init();
     }
 
     #endregion
