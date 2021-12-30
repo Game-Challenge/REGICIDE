@@ -516,7 +516,7 @@ partial class GameMgr : Singleton<GameMgr>
 
             if (card.IsJoker)
             {
-                LeftJokerCount--;
+                //LeftJokerCount--;
             }
             else
             {
