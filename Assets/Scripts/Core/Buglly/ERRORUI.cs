@@ -23,6 +23,7 @@ class ERRORUI : UIWindow
     private void OnClickCloseBtn()
     {
         Close();
+        EventCenter.Instance.EventTrigger("BugglyUnVisiable");
     }
     #endregion
 
