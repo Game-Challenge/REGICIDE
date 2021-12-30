@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -53,12 +54,29 @@ class UISys:BaseLogicSys<UISys>
         controller.ResigterUIEvent();
     }
 
-    public static void ShowTipMsg(string tex, int diyTime = 0)
+    public static void ShowTipMsg(string tex,float waitTime = 0, int diyTime = 0)
     {
+        if (waitTime != 0)
+        {
+            MonoManager.Instance.StartCoroutine(ShowTip(tex, waitTime));
+        }
+        else
+        {
+            var tipUI = Mgr.ShowWindow<TipUI>(UI_Layer.System);
+            if (tipUI != null)
+            {
+                tipUI.ShowNewTip(tex, diyTime);
+            }
+        }
+    }
+
+    static IEnumerator ShowTip(string tex, float waitTime = 0f)
+    {
+        yield return new WaitForSeconds(waitTime);
         var tipUI = Mgr.ShowWindow<TipUI>(UI_Layer.System);
         if (tipUI != null)
         {
-            tipUI.ShowNewTip(tex, diyTime);
+            tipUI.ShowNewTip(tex);
         }
     }
 

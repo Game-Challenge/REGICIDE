@@ -1,0 +1,23 @@
+{
+    "companyName": "DefaultCompany",
+    "productName": "REGICIDE_OutPut",
+    "productVersion": "0.1",
+    "dataUrl": "https://tcloud-1258327636.cos.ap-guangzhou.myqcloud.com/regidice/WebBuild.data.unityweb",
+    "wasmCodeUrl": "https://tcloud-1258327636.cos.ap-guangzhou.myqcloud.com/regidice/WebBuild.wasm.code.unityweb",
+    "wasmFrameworkUrl": "https://tcloud-1258327636.cos.ap-guangzhou.myqcloud.com/regidice/WebBuild.wasm.framework.unityweb",
+    "graphicsAPI": [
+        "WebGL 2.0",
+        "WebGL 1.0"
+    ],
+    "webglContextAttributes": {
+        "preserveDrawingBuffer": false
+    },
+    "splashScreenStyle": "Dark",
+    "backgroundColor": "#231F20",
+    "cacheControl": {
+        "default": "must-revalidate"
+    },
+    "developmentBuild": false,
+    "multithreading": false,
+    "unityVersion": "2019.4.12f1"
+}

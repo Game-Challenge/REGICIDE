@@ -2088,7 +2088,7 @@ GameObject:
   - component: {fileID: 2721907453291015690}
   - component: {fileID: 91793947515323035}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: m_textMuDi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

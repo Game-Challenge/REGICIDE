@@ -23,6 +23,7 @@ class GameUI : UIWindow
     private Button m_btnAbord;
     private Transform m_goInventoryRoot;
     private Button m_btnUsed;
+    private Text m_textMuDi;
     private Text m_textLeft;
     private Text m_textLeftKill;
     private Text m_textCurrentKill;
@@ -46,6 +47,7 @@ class GameUI : UIWindow
         m_textCurrentKill = FindChildComponent<Text>("m_goContent/m_goTop/m_textCurrentKill");
         m_textCurrentLevel = FindChildComponent<Text>("m_goContent/m_goTop/m_textCurrentLevel");
         m_textJoker = FindChildComponent<Text>("m_goContent/m_textJoker");
+        m_textMuDi = FindChildComponent<Text>("m_goContent/m_goMiddle/m_btnUsed/m_textMuDi");
         m_tfJoker = FindChild("m_goContent/m_tfJoker");
         m_btnNewMode = FindChildComponent<Button>("m_goContent/m_btnNewMode");
         m_btnAttack.onClick.AddListener(Attack);
@@ -153,6 +155,8 @@ class GameUI : UIWindow
         m_jokerCard.Init(53);
 
         m_textJoker.text = string.Format("{0}/{1}",GameMgr.Instance.LeftJokerCount, GameMgr.Instance.TotalJokerCount);
+
+        m_textMuDi.text = string.Format("墓地：{0}", GameMgr.Instance.m_useList.Count);
     }
     #endregion
 

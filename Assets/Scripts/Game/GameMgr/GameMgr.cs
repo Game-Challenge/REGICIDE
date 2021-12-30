@@ -136,6 +136,7 @@ partial class GameMgr : Singleton<GameMgr>
             m_curList.Remove(card);
             m_myList.Add(card);
         }
+        m_choiceList.Clear();
         UISys.Mgr.CloseWindow<GameChoiceUI>();
         EventCenter.Instance.EventTrigger("RefreshGameUI");
     }
@@ -208,6 +209,18 @@ partial class GameMgr : Singleton<GameMgr>
         {
             UISys.ShowTipMsg(string.Format("当前阶段是：{0}，无法遗弃卡牌", stateMsgDic[gameState]));
             return;
+        }
+
+        if (m_choiceList.Count > 0 )
+        {
+            for (int i = 0; i < m_choiceList.Count; i++)
+            {
+                if (m_choiceList[i].IsJoker)
+                {
+                    UISys.ShowTipMsg("Joker无法遗弃！！！");
+                    return;
+                }
+            }
         }
 
         int myValue = 0;
@@ -476,7 +489,10 @@ partial class GameMgr : Singleton<GameMgr>
 
         var attackData = BattleMgr.Instance.GenAttackData(m_choiceList);
 
-        BattleMgr.Instance.ImpactSkill(attackData, BossActor);
+        if (attackData.HadJoker)
+        {
+            LeftJokerCount--;
+        }
 
         for (int i = 0; i < m_choiceList.Count; i++)
         {
@@ -495,6 +511,8 @@ partial class GameMgr : Singleton<GameMgr>
 
         m_choiceList.Clear();
 
+        BattleMgr.Instance.ImpactSkill(attackData, BossActor);
+
         EventCenter.Instance.EventTrigger("RefreshGameUI");
     }
 
@@ -503,6 +521,12 @@ partial class GameMgr : Singleton<GameMgr>
     {
         SetState(GameState.STATEFOUR);
         UISys.ShowTipMsg("受到君主的伤害:"+value);
+        if (BossActor.Atk == 0)
+        {
+            SetState(GameState.STATEONE);
+            UISys.ShowTipMsg("君主攻击失效",0.2f);
+            return;
+        }
         UISys.ShowTipMsg(string.Format("您需要遗弃:{0}点数的牌",value));
         Debug.Log("Hurt:" + value);
         m_needAbordValue = value;
@@ -551,14 +575,17 @@ partial class GameMgr : Singleton<GameMgr>
         turnCount = m_myList.Count > turnCount ? turnCount : m_myList.Count;
         for (int i = 0; i < turnCount; i++)
         {
-            temp.Add(m_myList[i]);
-            m_myList.RemoveAt(0);
+            var card = m_myList[i];
+            temp.Add(card);
+            m_myList.Remove(card);
         }
         m_curList.AddRange(temp);
+        RandomSort(m_myList);
     }
 
     public void TurnJokerCard()
     {
+        m_useList.AddRange(m_curList);
         m_curList.Clear();
         TurnCard();
     }
@@ -577,8 +604,9 @@ partial class GameMgr : Singleton<GameMgr>
         turnCount = couldTurnCount > turnCount ? turnCount : couldTurnCount;
         for (int i = 0; i < turnCount; i++)
         {
-            temp.Add(m_myList[i]);
-            m_myList.RemoveAt(0);
+            var card = m_myList[i];
+            temp.Add(card);
+            m_myList.Remove(card);
         }
         m_curList.AddRange(temp);
         RandomSort(m_myList);
