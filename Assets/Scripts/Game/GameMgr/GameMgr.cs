@@ -66,7 +66,7 @@ partial class GameMgr : Singleton<GameMgr>
     }
     public BossActor BossActor;
     private List<CardData> m_totalList = new List<CardData>(TotalCardNum);  //总牌堆
-    private List<CardData> m_curList = new List<CardData>();                        //手卡
+    private List<CardData> m_curList = new List<CardData>();                //手卡
     private List<CardData> m_myList = new List<CardData>(TotalCardNum);     //可抽卡
     public List<CardData> m_useList = new List<CardData>(TotalCardNum);    //墓地
     private List<CardData> m_bossList = new List<CardData>();                       //boss堆
@@ -536,14 +536,29 @@ partial class GameMgr : Singleton<GameMgr>
     private void Hurt(int value)
     {
         SetState(GameState.STATEFOUR);
-        UISys.ShowTipMsg("受到君主的伤害:"+value);
         if (BossActor.Atk == 0)
         {
             SetState(GameState.STATEONE);
-            UISys.ShowTipMsg("君主攻击失效",0.2f);
+            UISys.ShowTipMsg("君主攻击无效");
             return;
         }
-        UISys.ShowTipMsg(string.Format("您需要遗弃:{0}点数的牌",value));
+        else
+        {
+            int total = 0;
+            foreach(CardData dt in m_curList){
+                total += dt.CardPower;
+            }
+            if (total >= value)
+            {
+                UISys.ShowTipMsg("受到君主的伤害:" + value);
+                UISys.ShowTipMsg(string.Format("您需要遗弃:{0}点数的牌", value));
+            }
+            else
+            {
+                UISys.ShowTipMsg("您已无法承受君主的伤害。");
+            }
+        }
+        
         Debug.Log("Hurt:" + value);
         m_needAbordValue = value;
     }
@@ -717,6 +732,7 @@ partial class GameMgr : Singleton<GameMgr>
         TurnCard();
         SetState(GameState.STATEONE);
         EventCenter.Instance.EventTrigger("RefreshGameUI");
+        EventCenter.Instance.EventTrigger("GameStart");
     }
     #endregion
 }

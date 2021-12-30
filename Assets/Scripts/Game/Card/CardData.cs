@@ -26,6 +26,7 @@ public struct CardData
     public CardType cardType;
     public int CardInt { private set; get; }
     public int CardValue { private set; get; }
+    public int CardPower { private set; get; }
 
     public Sprite sprite;
 
@@ -59,5 +60,10 @@ public struct CardData
         CardValue = (cardInt == 52 || cardInt == 53) ? 0 : (cardInt % 13) + 1;
         cardType =(CardValue == 0)?CardType.JOKER:(CardType)(((cardInt) / 13)+1);
         sprite = CardMgr.Instance.GetCardSprite(cardInt);
+        CardPower = CardValue;
+        if (CardValue > 10)
+        {
+            CardPower += 4 * CardValue - 45;
+        }
     }
 }
