@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
+	"github.com/wonderivan/logger"
 )
 
 //设置websocket
@@ -38,7 +39,8 @@ func ping(c *gin.Context) {
 }
 
 func main() {
-	print("START REGICIDE SERVER")
+
+	logger.Error("START REGICIDE SERVER")
 	r := gin.Default()
 	r.GET("/ping", ping)
 	r.Run(":12345")
