@@ -203,6 +203,7 @@ partial class GameMgr : Singleton<GameMgr>
         m_choiceList.Remove(cardData);
     }
 
+    
     private void AbordCard()
     {
         if (gameState != GameState.STATEFOUR)
@@ -660,6 +661,7 @@ partial class GameMgr : Singleton<GameMgr>
             m_stateIndex = 1;
         }
         gameState = (GameState)m_stateIndex;
+        EventCenter.Instance.EventTrigger("UpdateGameState");
     }
 
     public void SetState(GameState state)
@@ -667,6 +669,7 @@ partial class GameMgr : Singleton<GameMgr>
         gameState = state;
         m_stateIndex = (int)state;
         UISys.ShowTipMsg("当前阶段:" + GetCurrentStateStr());
+        EventCenter.Instance.EventTrigger("UpdateGameState");
     }
 
     public string GetCurrentStateStr()
