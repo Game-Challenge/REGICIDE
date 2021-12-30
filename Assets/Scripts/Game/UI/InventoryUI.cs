@@ -39,7 +39,14 @@ class InventoryUI : UIWindowWidget
     private void OnClickBackBtn()
     {
         Close();
-        UISys.Mgr.CloseWindow<GameUI>();
+        if (GameMgr.Instance.IsLandScape)
+        {
+            UISys.Mgr.CloseWindow<GameUI>();
+        }
+        else
+        {
+            UISys.Mgr.CloseWindow<GameUILand>();
+        }
         UISys.Mgr.ShowWindow<StartUI>();
     }
     private void OnClickSettingBtn()

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 sealed partial class GameApp : UnitySingleton<GameApp>
 {
@@ -28,6 +29,19 @@ sealed partial class GameApp : UnitySingleton<GameApp>
         RegistAllSystem();
 
         GameMgr.Instance.Init();
+
+
+        MonoManager.Instance.StartCoroutine(StartGame());
+
+        //var str = ResourcesManager.Instance.Load<TextAsset>("regicide");
+        //Debug.Log(str);
+        //var jsonData = JsonHelper.Instance.Deserialize(str.text);
+        //Debug.Log(jsonData);
+    }
+
+    IEnumerator StartGame()
+    {
+        yield return new WaitForSeconds(0.3f);
         if (GameMgr.Instance.IsLandScape)
         {
             Debug.Log("是横屏");
@@ -39,18 +53,10 @@ sealed partial class GameApp : UnitySingleton<GameApp>
             UISys.Mgr.ShowWindow<StartUILand>();
         }
 
-
         if (ConnectAuto)
         {
             GameClient.Instance.Connect();
         }
-
-
-
-        //var str = ResourcesManager.Instance.Load<TextAsset>("regicide");
-        //Debug.Log(str);
-        //var jsonData = JsonHelper.Instance.Deserialize(str.text);
-        //Debug.Log(jsonData);
     }
 }
 

@@ -264,6 +264,8 @@ partial class GameMgr : Singleton<GameMgr>
     }
     #endregion
 
+    #region 新模式
+
     private bool startNewMode;
     public void StartNewMode()
     {
@@ -277,6 +279,7 @@ partial class GameMgr : Singleton<GameMgr>
             UISys.ShowTipMsg("回到传统模式");
         }
     }
+    #endregion
 
     #region Boss 接口
     public void InitBoss()
@@ -473,6 +476,8 @@ partial class GameMgr : Singleton<GameMgr>
 
         var attackData = BattleMgr.Instance.GenAttackData(m_choiceList);
 
+        BattleMgr.Instance.ImpactSkill(attackData, BossActor);
+
         for (int i = 0; i < m_choiceList.Count; i++)
         {
             var card = m_choiceList[i];
@@ -489,8 +494,6 @@ partial class GameMgr : Singleton<GameMgr>
         }
 
         m_choiceList.Clear();
-
-        BattleMgr.Instance.ImpactSkill(attackData, BossActor);
 
         EventCenter.Instance.EventTrigger("RefreshGameUI");
     }
@@ -578,6 +581,7 @@ partial class GameMgr : Singleton<GameMgr>
             m_myList.RemoveAt(0);
         }
         m_curList.AddRange(temp);
+        RandomSort(m_myList);
         //EventCenter.Instance.EventTrigger("RefreshGameUI");
     }
 

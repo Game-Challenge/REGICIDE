@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>REGICIDE弑君者 BiliBili熊biabia 自制</title>
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta name="application-name" content="REGICIDE弑君者">
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="Build/bitbug_favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- 用来定义顶部状态栏的形式默认是default为白色 black为黑色 black-translucent为灰色半透明（会占据屏幕的约20px，不同的设备可能会有差异）-->
+    <!-- 在定义了apple-mobile-web-app-capable的前提下，设置状态栏的属性值apple-mobile-web-app-status-bar-style才有效； -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <script src="Build/UnityLoader.js"></script>
+    <script>
+        var gameInstance = UnityLoader.instantiate("gameContainer", "Build/Build.json");
+    </script>
+</head>
+
+<body style="background: black;margin: unset;">
+    <div id="gameContainer" scrolling=no style="width:100%; height:100%; margin: auto;"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var div = document.getElementById('gameContainer');
+            div.style.width = window.innerWidth + "px";
+            div.style.height = window.innerHeight + "px";
+            window.canvas = document.getElementsByTagName('canvas')[0];
+        });
+    </script>
+</body>
+
+<script>
+    gameInstance.SetFullscreen(1)
+
+    document.addEventListener("touchmove", function(event) {
+        event.preventDefault() //不产生作用
+    }, {
+        passive: true
+    });
+</script>
+
+</html>
