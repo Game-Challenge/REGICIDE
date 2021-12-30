@@ -19,8 +19,11 @@ class GameUI : UIWindow
     private Transform m_tfContent;
     private Transform m_tfCardContent;
     private Transform m_tfBossContent;
+
+    private GameObject m_AttackOrAbort;
     private Button m_btnAttack;
     private Button m_btnAbord;
+
     private Transform m_goInventoryRoot;
     private Button m_btnUsed;
     private Text m_textMuDi;
@@ -38,8 +41,11 @@ class GameUI : UIWindow
         m_tfContent = FindChild("m_goContent/m_goBottom/ScrollView/Viewport/m_tfContent");
         m_tfCardContent = FindChild("m_goContent/m_goBottom/m_tfCardContent");
         m_tfBossContent = FindChild("m_goContent/m_goMiddle/m_tfBossContent");
-        m_btnAttack = FindChildComponent<Button>("m_goContent/m_goMiddle/m_btnAttack");
-        m_btnAbord = FindChildComponent<Button>("m_goContent/m_goMiddle/m_btnAbord");
+
+        m_AttackOrAbort = FindChild("m_goContent/m_goMiddle/m_AttackOrAbort").gameObject;
+        m_btnAttack = FindChildComponent<Button>("m_goContent/m_goMiddle/m_AttackOrAbort/m_btnAttack");
+        m_btnAbord = FindChildComponent<Button>("m_goContent/m_goMiddle/m_AttackOrAbort/m_btnAbord");
+
         m_goInventoryRoot = FindChild("m_goContent/m_goMiddle/m_goInventoryRoot");
         m_btnUsed = FindChildComponent<Button>("m_goContent/m_goMiddle/m_btnUsed");
         m_textLeft = FindChildComponent<Text>("m_goContent/m_goMiddle/m_btnLeft/m_textLeft");
@@ -50,6 +56,7 @@ class GameUI : UIWindow
         m_textMuDi = FindChildComponent<Text>("m_goContent/m_goMiddle/m_btnUsed/m_textMuDi");
         m_tfJoker = FindChild("m_goContent/m_tfJoker");
         m_btnNewMode = FindChildComponent<Button>("m_goContent/m_btnNewMode");
+
         m_btnAttack.onClick.AddListener(Attack);
         m_btnAbord.onClick.AddListener(Abord);
         m_btnUsed.onClick.AddListener(ShowUsed);
@@ -64,6 +71,7 @@ class GameUI : UIWindow
         base.RegisterEvent();
         EventCenter.Instance.AddEventListener<BossActor>("RefreshBoss", RefreshBoss);
         EventCenter.Instance.AddEventListener("RefreshGameUI", RefreshGameUI);
+        EventCenter.Instance.AddEventListener("UpdateGameState", UpdateGameState);
     }
 
     protected override void DeRegisterEvent()
@@ -71,6 +79,28 @@ class GameUI : UIWindow
         base.DeRegisterEvent();
         EventCenter.Instance.RemoveEventListener<BossActor>("RefreshBoss", RefreshBoss);
         EventCenter.Instance.RemoveEventListener("RefreshGameUI", RefreshGameUI);
+        EventCenter.Instance.RemoveEventListener("UpdateGameState", UpdateGameState);
+    }
+
+    private void UpdateGameState()
+    {
+        if (m_AttackOrAbort != null)
+        {
+            if (GameMgr.Instance.gameState == GameMgr.GameState.STATEFOUR)
+            {
+                m_AttackOrAbort.GetComponent<Animator>().SetInteger("attack", 0);
+            }
+            else
+            if (GameMgr.Instance.gameState == GameMgr.GameState.STATEONE)
+            {
+                m_AttackOrAbort.GetComponent<Animator>().SetInteger("attack", 1);
+            }
+        }
+        if (GameMgr.Instance.gameState == GameMgr.GameState.STATETHREE)
+        {
+            m_btnNewMode.gameObject.transform.localScale = Vector2.zero;
+        }
+
     }
 
     private void RefreshBoss(BossActor bossActor)
@@ -104,7 +134,9 @@ class GameUI : UIWindow
         base.OnCreate();
         GameMgr.Instance.InitBoss();
         GameMgr.Instance.TurnCard();
+        GameMgr.Instance.StartNewMode();
         RefreshGameUI();
+
     }
 
     private void RefreshGameUI()
