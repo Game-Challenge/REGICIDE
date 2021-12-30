@@ -1997,7 +1997,7 @@ GameObject:
   - component: {fileID: 5852370053795870596}
   - component: {fileID: 2062462152606140757}
   m_Layer: 5
-  m_Name: m_AttackOrAbort
+  m_Name: m_goAttackOrAbort
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

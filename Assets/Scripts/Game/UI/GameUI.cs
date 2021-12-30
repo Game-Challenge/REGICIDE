@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 class GameUI : UIWindow
 {
+    private Animator m_AttackOrAbordAnim;
     private ItemCard m_jokerCard;
     private InventoryUI m_inventoryUI;
     private ItemCard m_bossCard;
@@ -20,7 +21,7 @@ class GameUI : UIWindow
     private Transform m_tfCardContent;
     private Transform m_tfBossContent;
 
-    private GameObject m_AttackOrAbort;
+    private GameObject m_goAttackOrAbort;
     private Button m_btnAttack;
     private Button m_btnAbord;
 
@@ -42,9 +43,9 @@ class GameUI : UIWindow
         m_tfCardContent = FindChild("m_goContent/m_goBottom/m_tfCardContent");
         m_tfBossContent = FindChild("m_goContent/m_goMiddle/m_tfBossContent");
 
-        m_AttackOrAbort = FindChild("m_goContent/m_goMiddle/m_AttackOrAbort").gameObject;
-        m_btnAttack = FindChildComponent<Button>("m_goContent/m_goMiddle/m_AttackOrAbort/m_btnAttack");
-        m_btnAbord = FindChildComponent<Button>("m_goContent/m_goMiddle/m_AttackOrAbort/m_btnAbord");
+        m_goAttackOrAbort = FindChild("m_goContent/m_goMiddle/m_goAttackOrAbort").gameObject;
+        m_btnAttack = FindChildComponent<Button>("m_goContent/m_goMiddle/m_goAttackOrAbort/m_btnAttack");
+        m_btnAbord = FindChildComponent<Button>("m_goContent/m_goMiddle/m_goAttackOrAbort/m_btnAbord");
 
         m_goInventoryRoot = FindChild("m_goContent/m_goMiddle/m_goInventoryRoot");
         m_btnUsed = FindChildComponent<Button>("m_goContent/m_goMiddle/m_btnUsed");
@@ -63,6 +64,7 @@ class GameUI : UIWindow
         m_btnNewMode.onClick.AddListener((() => { GameMgr.Instance.StartNewMode();}));
         m_inventoryUI = CreateWidgetByType<InventoryUI>(m_goInventoryRoot);
         m_jokerCard = CreateWidgetByType<ItemCard>(m_tfJoker);
+        m_AttackOrAbordAnim = m_goAttackOrAbort.GetComponent<Animator>();
     }
     #endregion
 
@@ -84,16 +86,16 @@ class GameUI : UIWindow
 
     private void UpdateGameState()
     {
-        if (m_AttackOrAbort != null)
+        if (m_goAttackOrAbort != null)
         {
             if (GameMgr.Instance.gameState == GameMgr.GameState.STATEFOUR)
             {
-                m_AttackOrAbort.GetComponent<Animator>().SetInteger("attack", 0);
+                m_AttackOrAbordAnim.SetInteger("attack", 0);
             }
             else
             if (GameMgr.Instance.gameState == GameMgr.GameState.STATEONE)
             {
-                m_AttackOrAbort.GetComponent<Animator>().SetInteger("attack", 1);
+                m_AttackOrAbordAnim.SetInteger("attack", 1);
             }
         }
         if (GameMgr.Instance.gameState == GameMgr.GameState.STATETHREE)
