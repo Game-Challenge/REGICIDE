@@ -106,7 +106,7 @@ class GameUI : UIWindow
         }
         if (GameMgr.Instance.gameState == GameMgr.GameState.STATETHREE)
         {
-            m_btnNewMode.gameObject.transform.localScale = Vector2.zero;
+            m_btnNewMode.gameObject.Show(false); //.transform.localScale = Vector2.zero;
         }
 
     }

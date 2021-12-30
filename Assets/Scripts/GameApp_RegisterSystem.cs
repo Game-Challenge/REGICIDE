@@ -4,6 +4,7 @@ using UnityEngine;
 
 sealed partial class GameApp
 {
+    public bool IsGmMode;
     public enum HostPoint
     {
         LocalHost,
