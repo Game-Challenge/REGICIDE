@@ -325,10 +325,10 @@ partial class GameMgr : Singleton<GameMgr>
                     }
                 }
             }
+#if UNITY_EDITOR
             Debug.Log(m_bossList.Count);
-
             Debug.Log(temp.Count);
-
+#endif
             Random ran = new Random((int)DateTime.Now.Ticks);
             var idx = ran.Next(0, temp.Count - 1);
             var card = temp[idx];
@@ -647,7 +647,9 @@ partial class GameMgr : Singleton<GameMgr>
     public void RandomSort<T>(List<T> list)
     {
         Random random = new Random((int)DateTime.Now.Ticks);
+#if UNITY_EDITOR
         Debug.Log((int)DateTime.Now.Ticks);
+#endif
         int index = 0;
         for (int i = 0; i < list.Count; i++)
         {

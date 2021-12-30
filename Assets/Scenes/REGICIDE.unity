@@ -250,6 +250,6 @@ MonoBehaviour:
   TargetFrameRate: 300
   payerNum: 0
   ConnectAuto: 0
-  UseBuggly: 1
+  UseBuggly: 0
   IsGmMode: 0
   hostPoint: 0
