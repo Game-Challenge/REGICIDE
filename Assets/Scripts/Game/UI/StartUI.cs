@@ -45,8 +45,17 @@ class StartUI : UIWindow
     }
     private void OnClickConnectBtn()
     {
+        WebSocketMgr.Instance.Init((() =>
+        {
+            Close();
+            UISys.Mgr.ShowWindow<RoomUI>();
+        }));
+      
         if (GameClient.Instance.Status == GameClientStatus.StatusConnect)
         {
+            //WebSocketMgr.Instance.Init();
+            //Close();
+            //UISys.Mgr.ShowWindow<RoomUI>();
             UISys.ShowTipMsg("您已经连接到了服务器");
         }
         else

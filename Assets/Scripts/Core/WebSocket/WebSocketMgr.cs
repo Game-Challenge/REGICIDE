@@ -8,14 +8,10 @@ public class WebSocketMgr : UnitySingleton<WebSocketMgr>
     //string address = "wss://echo.websocket.org";
     public string address = "ws://127.0.0.1:12345/ws";
     WebSocket webSocket;
-
-    void Start()
+    private Action m_Action = null;
+    public void Init(Action callback = null)
     {
-        Init();
-    }
-
-    public void Init()
-    {
+        m_Action = callback;
         if (webSocket == null)
         {
             webSocket = new WebSocket(new Uri(address));
@@ -46,7 +42,15 @@ public class WebSocketMgr : UnitySingleton<WebSocketMgr>
 
     void OnOpen(WebSocket ws)
     {
-        Debug.Log("OnOpen: ");
+        Debug.Log("WebSocket open ");
+        UISys.ShowTipMsg("服务器连接成功~");
+        if (m_Action!= null)
+        {
+            m_Action();
+
+            m_Action = null;
+        }
+        //GameClient.Instance.RegActionHandle((int)ActionCode.StartGame, (pack =>{Debug.Log(pack.Str);} ));
         //RoomDataMgr.Instance.StartGameReq();
     }
 
@@ -54,12 +58,17 @@ public class WebSocketMgr : UnitySingleton<WebSocketMgr>
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
+            //MainPack mainPack = ProtoUtil.BuildMainPack(RequestCode.Room, ActionCode.StartGame);
+            //RoomPack roomPack = new RoomPack();
+            //roomPack.RoomID = 123;
+            //mainPack.Roompack.Add(roomPack);
+            //Send(mainPack);
 
             MainPack mainPack = ProtoUtil.BuildMainPack(RequestCode.Room, ActionCode.StartGame);
             RoomPack roomPack = new RoomPack();
             roomPack.RoomID = 123;
             mainPack.Roompack.Add(roomPack);
-            Send(mainPack);
+            GameClient.Instance.SendCSMsg(mainPack);
         }
     }
 
@@ -84,23 +93,23 @@ public class WebSocketMgr : UnitySingleton<WebSocketMgr>
 
         MainPack pack = (MainPack)MainPack.Descriptor.Parser.ParseFrom(bufBytes, 4, count);
 
-        //if (handleResponse != null)
-        //{
-        //    handleResponse(pack);
-        //}
+
+        GameClient.Instance.HandleResponse(pack);
+
         Debug.Log(pack);
 
         Array.Copy(bufBytes, bufferAllCount, bufBytes, 0, 4 - bufferAllCount);
     }
 
-    public void Send(MainPack pack)
+    public bool Send(MainPack pack)
     {
         if (webSocket == null || !webSocket.IsOpen)
         {
             Debug.LogError("Socket Connect => false");
-            return;
+            return false;
         }
         webSocket.Send(Message.PackData(pack));
+        return true;
     }
 
     void OnClosed(WebSocket ws, UInt16 code, string message)

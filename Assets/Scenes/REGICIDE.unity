@@ -247,9 +247,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 456e333423bb537468b602481e95171f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetFrameRate: 300
+  TargetFrameRate: 60
   payerNum: 0
   ConnectAuto: 0
-  UseBuggly: 1
+  UseWebSocket: 1
   IsGmMode: 0
   hostPoint: 0

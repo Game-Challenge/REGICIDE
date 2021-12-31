@@ -13,13 +13,16 @@ type Client struct {
 	RoleId   uint32
 	Conn     *websocket.Conn
 	RoomInfo *Room
+	Actor    *GameProto.ActorPack
 }
 
 func InstanceClient(conn *websocket.Conn, uniid uint32) *Client {
 
 	rAddr := conn.RemoteAddr()
 
-	client := Client{Addr: rAddr.String(), Conn: conn, Uniid: uniid}
+	actor := &GameProto.ActorPack{ActorId: int32(uniid)}
+
+	client := Client{Addr: rAddr.String(), Conn: conn, Uniid: uniid, Actor: actor}
 
 	return &client
 }

@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"Regicide/App/tserver"
 	server "Regicide/App/tserver"
 	GameProto "Regicide/GameProto"
 	"errors"
@@ -16,6 +17,7 @@ func InitRoomController() {
 	controller.Funcs, _ = controller.AddFunction("Chat", Chat)
 	controller.Funcs, _ = controller.AddFunction("FindRoom", FindRoom)
 	controller.Funcs, _ = controller.AddFunction("StartGame", StartGame)
+	controller.Funcs, _ = controller.AddFunction("CreateRoom", CreateRoom)
 	server.RegisterController(GameProto.RequestCode_Room, controller)
 }
 
@@ -33,8 +35,24 @@ func Chat(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*Gam
 	return nil, nil
 }
 
+var roomID int32 = 1000
+
 func CreateRoom(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*GameProto.MainPack, error) {
+	if client == nil {
+		return nil, errors.New("client is nil")
+	}
+	roomID = roomID + 1
+
+	roompack := &GameProto.RoomPack{}
+	roompack.Roomname = mainpack.Roompack[0].Roomname
+	roompack.Maxnum = mainpack.Roompack[0].Maxnum
+	roompack.RoomID = roomID
+	room := tserver.InstanceRoom(roompack)
+	tserver.RoomList = append(tserver.RoomList, &room)
 	mainpack.Returncode = GameProto.ReturnCode_Success
+
+	room.Join(client)
+
 	return mainpack, nil
 }
 

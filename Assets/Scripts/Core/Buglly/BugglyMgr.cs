@@ -19,7 +19,6 @@ public class BugglyMgr : Singleton<BugglyMgr>
             {
                 return;
             }
-            Debug.LogError("Push");
             Push(string.Format("报错啦,请截图发QQ群761857971{0}\n{1}", condition, stackTrace));
         }
     }

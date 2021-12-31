@@ -31,7 +31,7 @@ func Start(server Server) {
 	// }
 	// gin.SetMode(gin.DebugMode)
 	// gin.DefaultWriter = io.MultiWriter(logfile)
-
+	CreateRoom("断剑重铸之日")
 	print("START REGICIDE SERVER")
 	r := gin.Default()
 	r.GET("/ws", Ws)

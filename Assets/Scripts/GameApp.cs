@@ -10,6 +10,8 @@ sealed partial class GameApp : UnitySingleton<GameApp>
 
     public bool ConnectAuto;
 
+    public bool UseWebSocket;
+
     public enum PlayerNum
     {
         One,

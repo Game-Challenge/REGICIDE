@@ -11,8 +11,9 @@ import (
 )
 
 type Room struct {
-	ClientList []*Client
-	RoomPack   *GameProto.RoomPack
+	ClientList  []*Client
+	RoomPack    *GameProto.RoomPack
+	CurrentBoss *GameProto.ActorPack
 }
 
 type BossActor struct {
@@ -106,7 +107,8 @@ func (room *Room) InitBoss() *GameProto.ActorPack {
 
 	}
 
-	bossActor := &GameProto.ActorPack{ATK: atk, Hp: hp}
+	bossActor := &GameProto.ActorPack{ATK: atk, Hp: hp, ActorId: int32(cardData.CardInt)}
+	room.CurrentBoss = bossActor
 	return bossActor
 }
 
@@ -115,12 +117,20 @@ func (room *Room) StartGame(client *Client) {
 	gameState.State = GameProto.GAMESTATE_STATE1
 	room.RoomPack.Gamestate = gameState
 
+	room.InitCards()
+	room.InitMyCards()
+	room.InitBoss()
+
+	room.RoomPack.BossActor = room.CurrentBoss
+
 	mainPack := &GameProto.MainPack{}
 	mainPack.Requestcode = GameProto.RequestCode_Room
 	mainPack.Actioncode = GameProto.ActionCode_StartGame
 
 	for i := 0; i < len(room.ClientList); i++ {
 		_client := room.ClientList[i]
+		room.TurnCards(_client)
+		room.RoomPack.ActorPack = append(room.RoomPack.ActorPack, _client.Actor)
 		playerpack := &GameProto.PlayerPack{}
 		playerpack.Playername = strconv.Itoa(int(_client.Uniid)) //todo _client.Username
 		playerpack.PlayerID = strconv.Itoa(int(_client.Uniid))
@@ -171,76 +181,4 @@ func (room *Room) BroadcastTCP(client *Client, mainPack *GameProto.MainPack) {
 		}
 		room.ClientList[i].SendTCP(mainPack)
 	}
-}
-
-//Cards
-func (room *Room) InitCards() {
-	for i := 0; i < 54; i++ {
-		cardData := InstanceCardData(i)
-		ToTalCardList = append(ToTalCardList, &cardData)
-	}
-}
-
-func (room *Room) InitMyCards() {
-	for i := 0; i < len(ToTalCardList); i++ {
-		cardData := ToTalCardList[i]
-		if cardData.IsBoss {
-			BossList = append(BossList, cardData)
-		} else {
-			MyCardList = append(MyCardList, cardData)
-		}
-	}
-	RandomSort(MyCardList)
-	logger.Debug(MyCardList)
-}
-
-func (room *Room) TurnCards(client *Client) {
-
-}
-
-func RandomSort(cardDatas []*CardData) {
-	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-	count := len(cardDatas)
-	for i := 0; i < count; i++ {
-		index := r.Intn(count - 1)
-		temp := cardDatas[i]
-		cardDatas[i] = cardDatas[index]
-		cardDatas[index] = temp
-	}
-}
-
-var ToTalCardList []*CardData
-var MyCardList []*CardData
-var BossList []*CardData
-
-type CardData struct {
-	CardInt   int
-	CardValue int
-	CardType  int
-	IsBoss    bool
-	IsJoker   bool
-	IsPet     bool
-}
-
-func InstanceCardData(cardInt int) CardData {
-
-	cardValue := 0
-	if cardInt == 52 || cardInt == 53 {
-		cardValue = 0
-	} else {
-		cardValue = (cardInt % 13) + 1
-	}
-	cardType := 0
-	if cardValue == 0 {
-		cardType = 5
-	} else {
-		cardType = ((cardInt) / 13) + 1
-	}
-
-	isJoker := cardType == 5
-	isBoss := cardValue > 10 && !isJoker
-	isPet := cardValue == 1
-
-	cardData := CardData{CardValue: cardValue, CardInt: cardInt, CardType: cardType, IsJoker: isJoker, IsBoss: isBoss, IsPet: isPet}
-	return cardData
 }

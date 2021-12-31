@@ -106,7 +106,7 @@ func (room *Room) InitBoss() *GameProto.ActorPack {
 
 	}
 
-	bossActor := &GameProto.ActorPack{ATK: atk, Hp: hp}
+	bossActor := &GameProto.ActorPack{ATK: atk, Hp: hp, ActorId: int32(cardData.CardInt)}
 	return bossActor
 }
 
@@ -114,6 +114,9 @@ func (room *Room) StartGame(client *Client) {
 	gameState := &GameProto.GameStatePack{}
 	gameState.State = GameProto.GAMESTATE_STATE1
 	room.RoomPack.Gamestate = gameState
+
+	room.InitMyCards()
+	room.InitBoss()
 
 	mainPack := &GameProto.MainPack{}
 	mainPack.Requestcode = GameProto.RequestCode_Room
