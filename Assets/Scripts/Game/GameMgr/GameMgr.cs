@@ -536,6 +536,7 @@ partial class GameMgr : Singleton<GameMgr>
             }
             else
             {
+                UISys.Mgr.ShowWindow<GameLoseUI>().InitUI("游戏失败，你被君主击败了！");
                 UISys.ShowTipMsg("您已无法承受君主的伤害。");
             }
         }
