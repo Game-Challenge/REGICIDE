@@ -1,6 +1,7 @@
 package tserver
 
 import (
+	GameProto "Regicide/GameProto"
 	"errors"
 	"fmt"
 )
@@ -55,6 +56,23 @@ func RemoveC(values []*Client, val *Client) []*Client {
 
 	for i := 0; i < len(values); i++ {
 		if values[i] == val {
+			continue
+		}
+		v := values[i]
+		res = append(res, v)
+	}
+	return res
+}
+
+func RemoveActor(values []*GameProto.ActorPack, val *GameProto.ActorPack) []*GameProto.ActorPack {
+	if len(values) <= 0 {
+		return values
+	}
+
+	res := []*GameProto.ActorPack{}
+
+	for i := 0; i < len(values); i++ {
+		if values[i].ActorId == val.ActorId {
 			continue
 		}
 		v := values[i]

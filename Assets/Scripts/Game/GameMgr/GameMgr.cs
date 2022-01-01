@@ -664,9 +664,11 @@ partial class GameMgr : Singleton<GameMgr>
         //EventCenter.Instance.EventTrigger("RefreshGameUI");
     }
 
+    private int RandomCount = 0;
     public void RandomSort<T>(List<T> list)
     {
-        Random random = new Random((int)DateTime.Now.Ticks);
+        RandomCount++;
+        Random random = new Random((int)DateTime.Now.Ticks+ RandomCount);
         Debug.Log((int)DateTime.Now.Ticks);
         int index = 0;
         for (int i = 0; i < list.Count; i++)

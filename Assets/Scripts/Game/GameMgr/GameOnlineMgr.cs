@@ -59,6 +59,8 @@ class GameOnlineMgr:Singleton<GameOnlineMgr>
 
     private void InitCards()
     {
+        CardDictionary.Clear();
+
         var players = ActorPacks;
 
         if (players.Count > 4)
@@ -82,7 +84,10 @@ class GameOnlineMgr:Singleton<GameOnlineMgr>
                 temp.Add(cardData);
             }
 
-            CardDictionary.Add(players[i].ActorId,temp);
+            if (!CardDictionary.ContainsKey(players[i].ActorId))
+            {
+                CardDictionary.Add(players[i].ActorId,temp);
+            }
         }
     }
 

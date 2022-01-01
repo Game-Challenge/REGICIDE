@@ -81,9 +81,14 @@ func JoinRoom(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (
 		logger.Error("RoomList count is empty")
 	} else {
 		for i := 0; i < len(server.RoomList); i++ {
-
 			room := server.RoomList[i]
 			if room.RoomPack.RoomID == int32_ {
+				if room.RoomPack.State == 1 {
+					mainpack.Returncode = GameProto.ReturnCode_Fail
+					mainpack.Str = "房间已经开始游戏了~"
+					return mainpack, nil
+				}
+
 				if room.RoomPack.Curnum >= room.RoomPack.Maxnum {
 					mainpack.Returncode = GameProto.ReturnCode_Fail
 					mainpack.Str = "房间人数已满"
@@ -91,20 +96,18 @@ func JoinRoom(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (
 				}
 
 				room.Join(client)
-				mainpack.Returncode = GameProto.ReturnCode_Success
 
 				for i := 0; i < len(room.ClientList); i++ {
-					_client := room.ClientList[i]
-					playerpack := &GameProto.PlayerPack{}
-					playerpack.Playername = strconv.Itoa(int(_client.Uniid)) //todo_client.Username
-					playerpack.PlayerID = strconv.Itoa(int(_client.Uniid))
-					mainpack.Playerpack = append(mainpack.Playerpack, playerpack)
+					// _client := room.ClientList[i]
+					// playerpack := &GameProto.PlayerPack{}
+					// playerpack.Playername = strconv.Itoa(int(_client.Uniid)) //todo_client.Username
+					// playerpack.PlayerID = strconv.Itoa(int(_client.Uniid))
+					// mainpack.Playerpack = append(mainpack.Playerpack, playerpack)
 
-					roomPack := &GameProto.RoomPack{}
-					roomPack = room.RoomPack
-					roomPack.RoomID = room.RoomPack.RoomID
-					mainpack.Roompack = append(mainpack.Roompack, roomPack)
+					mainpack.Roompack = append(mainpack.Roompack, room.RoomPack)
 				}
+
+				mainpack.Returncode = GameProto.ReturnCode_Success
 				room.BroadcastTCP(client, mainpack)
 				return mainpack, nil
 			}
@@ -141,13 +144,12 @@ func StartGame(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) 
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-
 	count := len(server.RoomList)
 
 	for i := 0; i < count; i++ {
 		room := server.RoomList[i]
 		if room.RoomPack.RoomID == mainpack.Roompack[0].RoomID {
-
+			room.RoomPack.State = 1
 			room.StartGame(client)
 			// mainpack.Returncode = GameProto.ReturnCode_Success
 			return nil, nil

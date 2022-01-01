@@ -74,6 +74,12 @@ func (room *Room) RemoveClient(client *Client) error {
 
 	room.ClientList = RemoveC(ClientList, client)
 	room.RoomPack.Curnum = room.RoomPack.Curnum - 1
+
+	for i := 0; i < len(room.RoomPack.ActorPack); i++ {
+
+	}
+	room.RoomPack.ActorPack = RemoveActor(room.RoomPack.ActorPack, client.Actor)
+
 	logger.Debug("Rmv client from Room =>", client.Addr, "Uniid :=>", client.Uniid, "  ClientCount =>", len(room.ClientList))
 	return nil
 }
@@ -89,8 +95,7 @@ func (room *Room) Join(client *Client) {
 
 	room.ClientList = append(room.ClientList, client)
 	room.RoomPack.Curnum = room.RoomPack.Curnum + 1
-	// room.InitCards()
-	// room.InitMyCards()
+	room.RoomPack.ActorPack = append(room.RoomPack.ActorPack, client.Actor)
 }
 
 //boss

@@ -43,15 +43,17 @@ class RoomWaitUI : UIWindow
     public void Refresh(MainPack mainPack)
     {
         var roomPack = mainPack.Roompack[0];
-        var playerPack = mainPack.Playerpack;
+        //var playerPack = mainPack.Playerpack;
+
+        var actorPack = roomPack.ActorPack;
 
         m_textRoomName.text = "房间名:" + roomPack.Roomname;
         m_textRoomId.text = "房间号:" + roomPack.RoomID.ToString();
 
-        AdjustIconNum(m_items, playerPack.Count, m_tfPlayerContent,m_itemPlayer);
-        for (int i = 0; i < playerPack.Count; i++)
+        AdjustIconNum(m_items, actorPack.Count, m_tfPlayerContent,m_itemPlayer);
+        for (int i = 0; i < actorPack.Count; i++)
         {
-            m_items[i].Init(mainPack.Playerpack[i]);
+            m_items[i].Init(actorPack[i]);
         }
         m_itemPlayer.gameObject.SetActive(false);
     }
@@ -68,6 +70,8 @@ class RoomWaitUI : UIWindow
 class RoomPlayerItem : UIWindowWidget
 {
     #region 脚本工具生成的代码
+
+    private Image m_imgIsMe;
     private Text m_textName;
     private Text m_textID;
     private Image m_imgHeadIcon;
@@ -78,6 +82,7 @@ class RoomPlayerItem : UIWindowWidget
         m_textID = FindChildComponent<Text>("m_textID");
         m_imgHeadIcon = FindChildComponent<Image>("m_imgHeadIcon");
         m_btnNick = FindChildComponent<Button>("m_btnNick");
+        m_imgIsMe = FindChildComponent<Image>("m_imgIsMe");
         m_btnNick.onClick.AddListener(OnClickNickBtn);
     }
     #endregion
@@ -92,6 +97,24 @@ class RoomPlayerItem : UIWindowWidget
         m_textID.text = playerPack.PlayerID;
 
         m_btnNick.gameObject.SetActive(false);
+    }
+
+    public void Init(ActorPack actorPack)
+    {
+        if (actorPack == null)
+        {
+            return;
+        }
+
+        m_textName.text = actorPack.ActorId.ToString();
+        m_textID.text = actorPack.ActorId.ToString();
+
+        m_btnNick.gameObject.SetActive(false);
+
+        if (actorPack.ActorId == GameOnlineMgr.Instance.MyActorId)
+        {
+            m_imgIsMe.gameObject.SetActive(true);
+        }
     }
 
     #region 事件
