@@ -79,6 +79,7 @@ class GameUI : UIWindow
     }
     private void GameStart()
     {
+        
         m_btnNewMode.gameObject.transform.localScale = Vector2.one;
     }
     

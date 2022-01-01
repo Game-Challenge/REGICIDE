@@ -56,7 +56,7 @@ partial class GameMgr : Singleton<GameMgr>
     public int LeftJokerCount = 2;
     public int TotalJokerCount = 2;
     public int TotalKillBossCount;
-    public int NeedKillBossCount = 4;
+    public int NeedKillBossCount = 12;
     public int LeftCount
     {
         get
@@ -303,35 +303,35 @@ partial class GameMgr : Singleton<GameMgr>
 
         if (GameLevel == 0)
         {
-            var temp = new List<CardData>();
+            //var temp = new List<CardData>();
 
-            if (currentBoss <3)
-            {
-                for (int i = 0; i < m_bossList.Count; i++)
-                {
-                    if (m_bossList[i].CardValue == currentBoss + 11)
-                    {
-                        temp.Add(m_bossList[i]);
-                    }
-                }
-            }
-            else
-            {
-                for (int i = 0; i < m_bossList.Count; i++)
-                {
-                    if (m_bossList[i].CardValue == 13)
-                    {
-                        temp.Add(m_bossList[i]);
-                    }
-                }
-            }
-            Debug.Log(m_bossList.Count);
+            //if (currentBoss <3)
+            //{
+            //    for (int i = 0; i < m_bossList.Count; i++)
+            //    {
+            //        if (m_bossList[i].CardValue == currentBoss + 11)
+            //        {
+            //            temp.Add(m_bossList[i]);
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    for (int i = 0; i < m_bossList.Count; i++)
+            //    {
+            //        if (m_bossList[i].CardValue == 13)
+            //        {
+            //            temp.Add(m_bossList[i]);
+            //        }
+            //    }
+            //}
+            //Debug.Log(m_bossList.Count);
 
-            Debug.Log(temp.Count);
+            //Debug.Log(temp.Count);
 
-            Random ran = new Random((int)DateTime.Now.Ticks);
-            var idx = ran.Next(0, temp.Count - 1);
-            var card = temp[idx];
+            //Random ran = new Random((int)DateTime.Now.Ticks);
+
+            var card = m_bossList[0];
             BossActor = ActorMgr.Instance.InstanceBossActor(card);
             EventCenter.Instance.EventTrigger("RefreshBoss", BossActor);
             EventCenter.Instance.EventTrigger("BossDataRefresh", BossActor);
@@ -341,9 +341,11 @@ partial class GameMgr : Singleton<GameMgr>
 
         
 
-        Random random = new Random((int)DateTime.Now.Ticks);
-        var index = random.Next(0, m_bossList.Count - 1);
-        var cardData = m_bossList[index];
+        //Random random = new Random((int)DateTime.Now.Ticks);
+        //var index = random.Next(0, m_bossList.Count - 1);
+        //var cardData = m_bossList[index];
+        var cardData = m_bossList[0];
+
         BossActor = ActorMgr.Instance.InstanceBossActor(cardData);
         EventCenter.Instance.EventTrigger("RefreshBoss", BossActor);
         EventCenter.Instance.EventTrigger("BossDataRefresh", BossActor);
@@ -386,7 +388,7 @@ partial class GameMgr : Singleton<GameMgr>
         {
             UISys.Mgr.ShowWindow<GameChoiceUI>();
         }
-
+        m_bossList.Remove(BossActor.cardData);
         if (beFriend)
         {
             m_curList.Add(BossActor.cardData);
@@ -397,7 +399,7 @@ partial class GameMgr : Singleton<GameMgr>
             InitBoss();
         }
 
-        m_bossList.Remove(BossActor.cardData);
+        
     }
     #endregion
 
@@ -591,6 +593,9 @@ partial class GameMgr : Singleton<GameMgr>
                 m_myList.Add(cardData);
             }
         }
+        m_bossList.Sort((CardData a,CardData b) => {
+            return a.CardValue.CompareTo(b.CardValue);
+        });
     }
 
     public void RandomMyCards()

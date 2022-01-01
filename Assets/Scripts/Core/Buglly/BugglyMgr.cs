@@ -14,11 +14,11 @@ public class BugglyMgr : Singleton<BugglyMgr>
     {
         if (type == LogType.Exception || type == LogType.Error)
         {
-            Push(string.Format("报错啦,请截图发QQ群761857971{0}\n{1}", condition, stackTrace));
+            //Push(string.Format("报错啦,请截图发QQ群761857971{0}\n{1}", condition, stackTrace));
         }
     }
 
-    public void OnInit()
+    public new void OnInit()
     {
         Debug.Log("Use Buggly!!!");
     }
