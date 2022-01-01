@@ -67,6 +67,18 @@ class RoomUI : UIWindow
     }
     private void OnClickCreateRoomBtn()
     {
+        var roomName = m_inputRoomName.text;
+        if (string.IsNullOrEmpty(roomName))
+        {
+            UISys.ShowTipMsg("请输入房间名称哦~");
+            return;
+        }
+        else if (roomName.Length > 7)
+        {
+            UISys.ShowTipMsg("房间名字太长啦~");
+            return;
+        }
+      
         RoomDataMgr.Instance.CreateRoomReq(m_inputRoomName.text,4);
     }
 

@@ -58,6 +58,7 @@ class ItemCard : UIWindowWidget
     private GameObject m_goInfo;
     private Text m_textAtk;
     private Text m_textDefine;
+    private Text m_textInfo;
     private Image m_imgHp;
     private Text m_textCardCount;
     protected override void ScriptGenerator()
@@ -73,6 +74,7 @@ class ItemCard : UIWindowWidget
         m_goInfo = FindChild("m_goCardInfo/m_goInfo").gameObject;
         m_textAtk = FindChildComponent<Text>("m_goCardInfo/m_goInfo/m_InfoBlock/m_textAtk");
         m_textDefine = FindChildComponent<Text>("m_goCardInfo/m_goInfo/m_InfoBlock/m_textDefine");
+        m_textInfo = FindChildComponent<Text>("m_goCardInfo/m_goInfo/m_InfoBlock/m_textInfo");
         m_imgHp = FindChildComponent<Image>("m_goCardInfo/m_goHp/m_bg/m_imgHp");
         m_textCardCount = FindChildComponent<Text>("m_textCardCount");
     }
@@ -127,6 +129,31 @@ class ItemCard : UIWindowWidget
         m_choice = false;
         Refresh();
         gameObject.transform.localScale = new Vector3(2, 2, 2);
+
+        if (m_textInfo!=null)
+        {
+            switch (m_cardData.cardType)
+            {
+                case CardType.SPADE:
+                    m_textInfo.text = string.Format("当前黑桃 <color=#493A31>♠</color> 无效");
+                    break;
+                case CardType.DIAMOND:
+                    m_textInfo.text = string.Format("当前方块 <color=#AB4339>♦</color> 无效");
+                    break;
+                case CardType.CLUB:
+                    m_textInfo.text = string.Format("当前草花 <color=#493A31>♣</color> 无效");
+                    break;
+                case CardType.HEART:
+                    m_textInfo.text = string.Format("当前红桃 <color=#AB4339>♥</color> 无效");
+                    break;
+                case CardType.RED_JOKER:
+                    m_textInfo.text = string.Format("当前红桃和方块 <color=#AB4339>♥ ♦</color> 无效");
+                    break;
+                case CardType.BLACK_JOKER:
+                    m_textInfo.text = string.Format("当前黑桃和草花 <color=#493A31>♠ ♣</color> 无效");
+                    break;
+            }
+        }
 
         m_goCardInfo.gameObject.SetActive(true);
         BossDataRefresh(actor);

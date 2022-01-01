@@ -1,8 +1,10 @@
 package controllers
 
 import (
+	"Regicide/App/tserver"
 	server "Regicide/App/tserver"
 	GameProto "Regicide/GameProto"
+	"errors"
 )
 
 func InitGameController() {
@@ -16,7 +18,11 @@ func InitGameController() {
 }
 
 func Attack(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*GameProto.MainPack, error) {
-
+	if client == nil {
+		return nil, errors.New("client is nil")
+	}
+	room := client.RoomInfo
+	client.Actor.CuttrntCards = tserver.RemoveCardData
 	return nil, nil
 }
 

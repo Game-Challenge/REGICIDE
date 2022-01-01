@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 class LevelChoiceUI : UIWindow
@@ -77,6 +78,7 @@ class ItemLevel : UIWindowWidget
     #region 事件
 
     private int m_index;
+
     public void Init(int index)
     {
         m_index = index + 1;

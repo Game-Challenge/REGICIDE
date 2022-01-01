@@ -5,6 +5,15 @@ using UnityEngine;
 
 public static class Utils
 {
+    public static string ToColor(this string str, string colorStr)
+    {
+        if (string.IsNullOrEmpty(str))
+        {
+            str = string.Format("<color=#{0}>{1}</color >",colorStr,str);
+        }
+        return str; 
+    }
+
     public static void Show(this GameObject gameObject,bool show)
     {
         if (gameObject!= null)

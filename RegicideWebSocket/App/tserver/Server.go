@@ -13,6 +13,7 @@ var ClientList = []*Client{}
 var RoomList = []*Room{}
 var ConnMap = make(map[uint32]*websocket.Conn)
 var connid uint32 = 6000
+var RoomID int32 = 1000
 
 type Server struct {
 	Port string

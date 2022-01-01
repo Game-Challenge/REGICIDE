@@ -26,37 +26,23 @@ type BossActor struct {
 	CardType  int32
 }
 
-var roomID int32 = 1000
-
 func InstanceRoom(roomPack *GameProto.RoomPack) Room {
 	room := Room{RoomPack: roomPack}
 	return room
 }
 
 func CreateRoom(roomName string) Room {
-	roomID = roomID + 1
+	RoomID = RoomID + 1
 
 	mainPack := &GameProto.MainPack{}
 	mainPack.Requestcode = GameProto.RequestCode_Room
 	roompack := &GameProto.RoomPack{}
 	roompack.Roomname = roomName
 	roompack.Maxnum = 4
-	roompack.RoomID = roomID
+	roompack.RoomID = RoomID
 	room := InstanceRoom(roompack)
 	RoomList = append(RoomList, &room)
 	return room
-}
-
-func CreateRooms() {
-	for i := 0; i < 1; i++ {
-		mainPack := &GameProto.MainPack{}
-		mainPack.Requestcode = GameProto.RequestCode_Room
-		roompack := &GameProto.RoomPack{}
-		roompack.Roomname = "1"
-		roompack.Maxnum = 999
-		room := InstanceRoom(roompack)
-		RoomList = append(RoomList, &room)
-	}
 }
 
 func (room *Room) RemoveClient(client *Client) error {

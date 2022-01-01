@@ -53,15 +53,12 @@ func CreateRoom(client *server.Client, mainpack *GameProto.MainPack, isUdp bool)
 
 	room.RoomPack.RoomID = roomID
 	room.Join(client)
-	playerpack := &GameProto.PlayerPack{}
-	playerpack.Playername = strconv.Itoa(int(client.Uniid)) //todo_client.Username
-	playerpack.PlayerID = strconv.Itoa(int(client.Uniid))
-	mainpack.Playerpack = append(mainpack.Playerpack, playerpack)
+	// playerpack := &GameProto.PlayerPack{}
+	// playerpack.Playername = strconv.Itoa(int(client.Uniid)) //todo_client.Username
+	// playerpack.PlayerID = strconv.Itoa(int(client.Uniid))
+	// mainpack.Playerpack = append(mainpack.Playerpack, playerpack)
 
-	roomPack := &GameProto.RoomPack{}
-	roomPack = room.RoomPack
-	roomPack.RoomID = room.RoomPack.RoomID
-	mainpack.Roompack = append(mainpack.Roompack, roomPack)
+	mainpack.Roompack = append(mainpack.Roompack, room.RoomPack)
 
 	return mainpack, nil
 }
