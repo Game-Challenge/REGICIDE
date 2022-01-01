@@ -79,7 +79,7 @@ partial class GameMgr : Singleton<GameMgr>
     private List<CardData> m_myList = new List<CardData>(TotalCardNum);     //可抽卡
     public List<CardData> m_useList = new List<CardData>(TotalCardNum);    //墓地
     private List<CardData> m_bossList = new List<CardData>();                       //boss堆
-    private List<CardData> m_choiceList = new List<CardData>();                     //当前回合选择的卡
+    public List<CardData> m_choiceList = new List<CardData>();                     //当前回合选择的卡
     private List<CardData> m_choiceRandomList = new List<CardData>();
     #endregion
 

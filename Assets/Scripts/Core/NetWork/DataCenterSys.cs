@@ -20,7 +20,7 @@ class DataCenterSys : BaseLogicSys<DataCenterSys>
     {
         //InitModule(LoginDataMgr.Instance);
         InitModule(RoomDataMgr.Instance);
-        //InitModule(GameDataMgr.Instance);
+        InitModule(GameDataMgr.Instance);
         //InitModule(ChatDataMgr.Instance);
         //InitModule(ActorDataMgr.Instance);
     }

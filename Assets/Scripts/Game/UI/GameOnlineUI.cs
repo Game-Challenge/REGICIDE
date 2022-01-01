@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using RegicideProtocol;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,8 +8,13 @@ class GameOnlineUI : UIWindow
 {
     private InventoryUI m_inventoryUI;
     private ItemCard m_bossCard;
-    private List<List<ItemCard>> m_cardList = new List<List<ItemCard>>();
     private List<Text> m_textPlayerList = new List<Text>();
+    private List<ItemCard> m_cardList = new List<ItemCard>();
+
+
+    private ItemCard m_player2Cards;
+    private ItemCard m_player3Cards;
+    private ItemCard m_player4Cards;
 
     #region 脚本工具生成的代码
     private GameObject m_goContent;
@@ -44,17 +50,26 @@ class GameOnlineUI : UIWindow
     }
     #endregion
 
+    #region Create Destroy生命周期
     protected override void OnCreate()
     {
-        base.OnCreate();
         m_itemCard.gameObject.Show(false);
         for (int i = 0; i < 4; i++)
         {
-            List<ItemCard> list = new List<ItemCard>();
-            m_cardList.Add(list);
+            //List<ItemCard> list = new List<ItemCard>();
+            //m_cardList.Add(list);
             m_textPlayerList[i].gameObject.Show(false);
         }
+
+        GameOnlineMgr.Instance.IsOnlineGameIng = true;
     }
+
+    protected override void OnDestroy()
+    {
+        GameOnlineMgr.Instance.IsOnlineGameIng = false;
+    }
+
+    #endregion
 
     public void Init(MainPack mainPack)
     {
@@ -64,43 +79,85 @@ class GameOnlineUI : UIWindow
         }
 
         var players = GameOnlineMgr.Instance.ActorPacks;
-        if (players.Count <=4)
+
+        if (players.Count > 4)
         {
-            for (int i = 0; i < players.Count; i++)
+            return;
+        }
+
+        for (int i = 0; i < players.Count; i++)
+        {
+            m_textPlayerList[i].gameObject.Show(true);
+            m_textPlayerList[i].text = string.Format("玩家{0} {1}", players[i].ActorId, players[i].ActorId);
+            //Todo Ugly code
+            if (i == 1)
             {
-                m_textPlayerList[i].gameObject.Show(true);
-                m_textPlayerList[i].text = string.Format("玩家{0} {1}", players[i].ActorId, players[i].ActorId);
-                //m_tfCardContent[2].
-                //m_bossCard = CreateWidgetByPrefab<ItemCard>(m_itemCard, m_tfBossContent);
+                m_player2Cards = CreateWidgetByPrefab<ItemCard>(m_itemCard, m_tfCardContent[1]);
+                m_player2Cards.gameObject.Show(true);
+            }
+            else if (i == 2)
+            {
+                m_player3Cards = CreateWidgetByPrefab<ItemCard>(m_itemCard, m_tfCardContent[2]);
+                m_player3Cards.gameObject.Show(true);
+            }
+            else if (i == 3)
+            {
+                m_player4Cards = CreateWidgetByPrefab<ItemCard>(m_itemCard, m_tfCardContent[3]);
+                m_player4Cards.gameObject.Show(true);
             }
         }
 
-
         RefreshBoss(GameOnlineMgr.Instance.BossActor);
 
+        RefreshGameUI();
+    }
 
-        var temp = new List<CardData>();
-        foreach (var card in players[0].CuttrntCards)
-        {
-            var cardData = CardMgr.Instance.InstanceData(card.CardInt);
-            temp.Add(cardData);
-        }
+    private void RefreshMyCards()
+    {
+        var myCardData = GameOnlineMgr.Instance.GetMyCardData();
 
-        AdjustIconNum(m_cardList[0], temp.Count, m_tfCardContent[0], m_itemCard);
-        for (int i = 0; i < m_cardList[0].Count; i++)
+        AdjustIconNum(m_cardList, myCardData.Count, m_tfCardContent[0], m_itemCard);
+
+        for (int i = 0; i < m_cardList.Count; i++)
         {
-            m_cardList[0][i].Init(temp[i]);
+            m_cardList[i].Init(myCardData[i]);
         }
     }
 
-    private void InitPlayer()
+    private void RefeshOthersCard()
     {
+        var MainPlayerIndex = GameOnlineMgr.Instance.MyGameIndex;   //0,1,2,3
 
-    }
+        var players = GameOnlineMgr.Instance.ActorPacks;
 
-    private void RefreshCards()
-    {
+        for (int i = 0; i < players.Count; i++)
+        {
+            var player = players[i];
 
+            if (player.ActorId == GameOnlineMgr.Instance.MyActorId)
+            {
+                continue;
+            }
+
+            var cardData = GameOnlineMgr.Instance.GetCardDataByActorId(player.ActorId);
+
+            var currentIndex = 0;
+
+            currentIndex = MainPlayerIndex + i <= (players.Count-1) ? MainPlayerIndex + i : (players.Count-1) - MainPlayerIndex + i;
+
+            if (currentIndex == 1)
+            {
+                m_player2Cards.Init(cardData);
+            }
+            else if (currentIndex == 2)
+            {
+                m_player3Cards.Init(cardData);
+            }
+            else if (currentIndex == 3)
+            {
+                m_player4Cards.Init(cardData);
+            }
+        }
     }
 
     private void RefreshBoss(BossActor bossActor)
@@ -113,15 +170,38 @@ class GameOnlineUI : UIWindow
         m_bossCard.Init(bossActor);
     }
 
+    /// <summary>
+    /// 刷新UI事件
+    /// </summary>
+    private void RefreshGameUI()
+    {
+        RefreshMyCards();
+        RefeshOthersCard();
+    }
+
+    private void UpdateGameState()
+    {
+
+    }
+
+    #region 注册消息事件
     protected override void RegisterEvent()
     {
         base.RegisterEvent();
+        EventCenter.Instance.AddEventListener<BossActor>("RefreshBoss", RefreshBoss);
+        EventCenter.Instance.AddEventListener("RefreshGameUI", RefreshGameUI);
+        EventCenter.Instance.AddEventListener("UpdateGameState", UpdateGameState);
     }
 
     protected override void DeRegisterEvent()
     {
         base.DeRegisterEvent();
+        EventCenter.Instance.RemoveEventListener<BossActor>("RefreshBoss", RefreshBoss);
+        EventCenter.Instance.RemoveEventListener("RefreshGameUI", RefreshGameUI);
+        EventCenter.Instance.RemoveEventListener("UpdateGameState", UpdateGameState);
     }
+    #endregion
+
 
     private void RefreshCards(int index = 0)
     {
@@ -129,7 +209,7 @@ class GameOnlineUI : UIWindow
         {
             return;
         }
-        AdjustIconNum(m_cardList[index],8,m_tfCardContent[index], m_itemCard);
+        //AdjustIconNum(m_cardList[index],8,m_tfCardContent[index], m_itemCard);
     }
 
     #region 事件
@@ -139,7 +219,7 @@ class GameOnlineUI : UIWindow
     }
     private void OnClickAbordBtn()
     {
-
+        GameOnlineMgr.Instance.AbordReq();
     }
     private void OnClickUsedBtn()
     {

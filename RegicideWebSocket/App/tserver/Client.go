@@ -29,6 +29,10 @@ func InstanceClient(conn *websocket.Conn, uniid uint32) *Client {
 
 	mainpack.Str = fmt.Sprint(uniid) //string(uniid)
 
+	mainpack.Actioncode = GameProto.ActionCode_Login
+
+	client.Send(mainpack)
+
 	return &client
 }
 

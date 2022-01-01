@@ -19,7 +19,7 @@ public static class Utils
         if (mainPack == null)
         {
             var tip = string.Format("网络数据错误{0}", mainPack.Actioncode);
-            //UISys.Mgr.ShowTipMsg(tip);
+            UISys.ShowTipMsg(tip);
             Debug.LogFormat("package {0} null!", mainPack.Actioncode);
             hasError = true;
             return hasError;
@@ -27,6 +27,7 @@ public static class Utils
 
         if (mainPack.Returncode == ReturnCode.Fail)
         {
+            UISys.ShowTipMsg(mainPack.Str);
             hasError = true;
         }
 
