@@ -9,11 +9,18 @@ class LevelChoiceUI : UIWindow
     private GameObject m_itemLevel;
     private Button m_btnClose;
     private Transform m_tfLevel;
+    private Text m_textSpecial;
+    private Transform m_tfLevelSpecial;
+    private GameObject m_goTextNull;
     protected override void ScriptGenerator()
     {
         m_itemLevel = FindChild("m_itemLevel").gameObject;
         m_btnClose = FindChildComponent<Button>("m_btnClose");
         m_tfLevel = FindChild("m_tfLevel");
+        m_btnClose.onClick.AddListener(OnClickCloseBtn);
+        m_textSpecial = FindChildComponent<Text>("m_textSpecial");
+        m_tfLevelSpecial = FindChild("m_tfLevelSpecial");
+        m_goTextNull = FindChild("m_goTextNull").gameObject;
         m_btnClose.onClick.AddListener(OnClickCloseBtn);
     }
     #endregion
@@ -34,10 +41,9 @@ class LevelChoiceUI : UIWindow
     {
         Close();
     }
-	#endregion
+    #endregion
 
 }
-
 
 class ItemLevel : UIWindowWidget
 {

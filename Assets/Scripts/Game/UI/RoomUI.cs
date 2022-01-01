@@ -6,18 +6,28 @@ using UnityEngine.UI;
 class RoomUI : UIWindow
 {
     private List<RoomItem> m_roomList = new List<RoomItem>();
-    #region 脚本工具生成的代码
     private Transform m_tfContent;
     private GameObject m_itemRoom;
     private Button m_btnClose;
+    private GameObject m_goCreateRoom;
+    private InputField m_inputRoomName;
+    private Button m_btnCreateRoom;
+    private Button m_btnRefreshRoom;
+    private Text m_textCreateRoom;
     protected override void ScriptGenerator()
     {
         m_tfContent = FindChild("ScrollView/Viewport/m_tfContent");
         m_itemRoom = FindChild("m_itemRoom").gameObject;
         m_btnClose = FindChildComponent<Button>("m_btnClose");
+        m_goCreateRoom = FindChild("m_goCreateRoom").gameObject;
+        m_inputRoomName = FindChildComponent<InputField>("m_goCreateRoom/m_inputRoomName");
+        m_btnCreateRoom = FindChildComponent<Button>("m_goCreateRoom/m_btnCreateRoom");
+        m_btnRefreshRoom = FindChildComponent<Button>("m_btnRefreshRoom");
+        m_textCreateRoom = FindChildComponent<Text>("m_goCreateRoom/m_btnCreateRoom/m_textCreateRoom");
         m_btnClose.onClick.AddListener(OnClickCloseBtn);
+        m_btnCreateRoom.onClick.AddListener(OnClickCreateRoomBtn);
+        m_btnRefreshRoom.onClick.AddListener(Refresh);
     }
-    #endregion
 
     protected override void RegisterEvent()
     {
@@ -34,7 +44,7 @@ class RoomUI : UIWindow
     protected override void OnCreate()
     {
         base.OnCreate();
-        RoomDataMgr.Instance.FindRoomReq();
+        Refresh();
         AdjustIconNum(m_roomList,30,m_tfContent,m_itemRoom);
         m_itemRoom.gameObject.SetActive(false);
     }
@@ -54,6 +64,15 @@ class RoomUI : UIWindow
     private void OnClickCloseBtn()
     {
         Close();
+    }
+    private void OnClickCreateRoomBtn()
+    {
+    }
+
+    private void Refresh()
+    {
+        RoomDataMgr.Instance.FindRoomReq();
+        UISys.ShowTipMsg("刷新房间");
     }
     #endregion
 
@@ -97,7 +116,14 @@ class RoomItem : UIWindowWidget
 
     private void OnChoice()
     {
-        RoomDataMgr.Instance.JoinRoomReq(m_roomPack.RoomID);
+        if (m_roomPack != null)
+        {
+            RoomDataMgr.Instance.JoinRoomReq(m_roomPack.RoomID);
+        }
+        else
+        {
+            UISys.ShowTipMsg("这个房间有点问题");
+        }
     }
 
     #region 事件

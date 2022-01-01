@@ -60,6 +60,7 @@ class ItemCard : UIWindowWidget
     private Text m_textAtk;
     private Text m_textDefine;
     private Image m_imgHp;
+    private Text m_textCardCount;
     protected override void ScriptGenerator()
     {
         m_imgIcon = FindChildComponent<Image>("m_imgIcon");
@@ -74,10 +75,15 @@ class ItemCard : UIWindowWidget
         m_textAtk = FindChildComponent<Text>("m_goCardInfo/m_goInfo/m_InfoBlock/m_textAtk");
         m_textDefine = FindChildComponent<Text>("m_goCardInfo/m_goInfo/m_InfoBlock/m_textDefine");
         m_imgHp = FindChildComponent<Image>("m_goCardInfo/m_goHp/m_bg/m_imgHp");
+        m_textCardCount = FindChildComponent<Text>("m_textCardCount");
     }
     #endregion
 
     #region 事件
+    /// <summary>
+    /// Joker
+    /// </summary>
+    /// <param name="index"></param>
     public void Init(int index){
         var sprite = CardMgr.Instance.GetCardSprite("card_"+index);
         if(sprite!= null){
@@ -95,6 +101,11 @@ class ItemCard : UIWindowWidget
 
     private bool m_isRandomCard;
     private bool IsBoss = false;
+    /// <summary>
+    /// Cards
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="isRandomCard"></param>
     public void Init(CardData data,bool isRandomCard = false)
     {
         m_isRandomCard = isRandomCard;
@@ -105,6 +116,10 @@ class ItemCard : UIWindowWidget
         Refresh();
     }
 
+    /// <summary>
+    /// Boss
+    /// </summary>
+    /// <param name="actor"></param>
     public void Init(BossActor actor)
     {
         IsBoss = true;

@@ -32,9 +32,13 @@ class RoomDataMgr : DataCenterModule<RoomDataMgr>
         }
         Debug.Log(mainPack);
 
-        var playerNum = mainPack.Playerpack.Count;
-        var gameState = mainPack.Roompack[0].State;
+        GameOnlineMgr.Instance.InitGame(mainPack);
+
+        UISys.Mgr.CloseWindow<RoomWaitUI>();
+
         var ui = UISys.Mgr.ShowWindow<GameOnlineUI>();
+
+        ui.Init(mainPack);
     }
 
     public void FindRoomReq()
@@ -98,6 +102,9 @@ class RoomDataMgr : DataCenterModule<RoomDataMgr>
             return;
         }
         UISys.Mgr.CloseWindow<GameUI>();
+        UISys.Mgr.CloseWindow<GameUILand>();
+        UISys.Mgr.CloseWindow<RoomUI>();
+
         Debug.Log(mainPack);
         RoomID = mainPack.Roompack[0].RoomID;
         var ui = UISys.Mgr.ShowWindow<RoomWaitUI>();

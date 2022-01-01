@@ -10,7 +10,8 @@ sealed partial class GameApp : UnitySingleton<GameApp>
 
     public bool ConnectAuto;
 
-    public bool UseBuggly;
+    public bool UseWebSocket;
+
     public enum PlayerNum
     {
         One,
@@ -28,10 +29,9 @@ sealed partial class GameApp : UnitySingleton<GameApp>
 
     private void Init()
     {
-        if (UseBuggly)
-        {
-            BugglyMgr.Instance.OnInit();
-        }
+#if UNITY_EDITOR
+        BugglyMgr.Instance.OnInit();
+#endif
 
         SetTargetFrameRate();
         InitLibImp();

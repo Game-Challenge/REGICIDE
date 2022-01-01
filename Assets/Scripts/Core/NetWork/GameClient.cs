@@ -52,9 +52,10 @@ public class GameClient : Singleton<GameClient>
 
     #endregion
 
+    private bool m_UseWebSocket;
     public void Init()
     {
-
+        m_UseWebSocket = GameApp.Instance.UseWebSocket;
     }
 
     #region 构造函数
@@ -213,7 +214,7 @@ public class GameClient : Singleton<GameClient>
     /// 网络消息回调，非主线程
     /// </summary>
     /// <param name="pack"></param>
-    private void HandleResponse(MainPack pack)
+    public void HandleResponse(MainPack pack)
     {
         lock (cachelistHandle)
         {
@@ -269,6 +270,12 @@ public class GameClient : Singleton<GameClient>
 
     public void Send(MainPack pack)
     {
+        if (m_UseWebSocket)
+        {
+            WebSocketMgr.Instance.Send(pack);
+            return;
+        }
+
         if (socket.Connected == false || socket == null)
         {
             Debug.LogError("Socket Connect => false");
@@ -426,6 +433,7 @@ public class GameClient : Singleton<GameClient>
         {
             return false;
         }
+
         return DoSendData(pack);
     }
 
@@ -455,6 +463,12 @@ public class GameClient : Singleton<GameClient>
 
     private bool DoSendData(MainPack pack)
     {
+
+        if (m_UseWebSocket)
+        {
+            return WebSocketMgr.Instance.Send(pack);
+        }
+
         if (socket == null || socket.Connected == false)
         {
             return false;

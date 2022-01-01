@@ -95,12 +95,16 @@ public class BattleMgr : Singleton<BattleMgr>
 {
     public AttackData GenAttackData(List<CardData> list)
     {
-        return new AttackData(list);
+        var attackData = new AttackData(list);
+#if UNITY_EDITOR
+        Debug.LogFormat(string.Format("GenAttackData: 数值{0},抽卡{1},降低boss攻击{2},回复{3},双倍攻击{4}", attackData.Damage, attackData.CouldTurnCard, attackData.CouldDownBossAtk, attackData.CouldAddHp, attackData.CouldDoubleAtk));
+#endif
+        return attackData;
     }
 
     public void ImpactSkill(AttackData attackData,BossActor actor)
     {
-        Debug.LogFormat(string.Format("attackData: 数值{0},抽卡{1},降低boss攻击{2},回复{3},双倍攻击{4}",attackData.Damage,attackData.CouldTurnCard,attackData.CouldDownBossAtk,attackData.CouldAddHp,attackData.CouldDoubleAtk));
+        //Debug.LogFormat(string.Format("attackData: 数值{0},抽卡{1},降低boss攻击{2},回复{3},双倍攻击{4}",attackData.Damage,attackData.CouldTurnCard,attackData.CouldDownBossAtk,attackData.CouldAddHp,attackData.CouldDoubleAtk));
 
         if (attackData.HadJoker)
         {
