@@ -145,7 +145,6 @@ class GameUI : UIWindow
         GameMgr.Instance.TurnCard();
         GameMgr.Instance.StartNewMode();
         RefreshGameUI();
-
     }
 
     private void RefreshGameUI()
@@ -171,24 +170,29 @@ class GameUI : UIWindow
         {
             case 1:
             {
-                value = "初级";
+                value = "入门";
                 break;
             }
             case 2:
             {
-                value = "中级";
+                value = "简单";
                 break;
             }
             case 3:
             {
-                value = "高级";
+                value = "标准";
                 break;
             }
             case 4:
             {
-                value = "噩梦";
+                value = "困难";
                 break;
             }
+            case 5:
+                {
+                    value = "地狱";
+                    break;
+                }
         }
 
         m_textCurrentLevel.text = String.Format("当前难度：{0}", value);

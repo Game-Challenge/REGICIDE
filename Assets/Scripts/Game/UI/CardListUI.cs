@@ -19,7 +19,6 @@ class CardListUI : UIWindow
     {
         base.OnCreate();
 
-        GameMgr.Instance.RandomMyCards();
         GameMgr.Instance.TurnCard();
         var data = GameMgr.Instance.CurrentCards;
 

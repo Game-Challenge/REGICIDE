@@ -36,6 +36,7 @@ class StartUI : UIWindow
         if (GameMgr.Instance.IsLandScape)
         {
             UISys.Mgr.ShowWindow<GameUI>();
+            GameMgr.Instance.RestartGame();
         }
         else
         {

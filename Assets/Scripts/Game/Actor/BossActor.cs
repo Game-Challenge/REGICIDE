@@ -86,13 +86,13 @@ public class BossActor: GameActor
             case CardValue.SmallJoker:
             {
                 Hp = 50;
-                Atk = 25;
+                Atk = 20;
                 break;
             }
             case CardValue.Joker:
             {
-                Hp = 60;
-                Atk = 35;
+                Hp = 50;
+                Atk = 20;
                 break;
             }
         }

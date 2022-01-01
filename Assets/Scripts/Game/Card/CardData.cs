@@ -2,12 +2,13 @@ using UnityEngine;
 
 public enum CardType
 {
-    NONE,  
+    NONE,
     CLUB,   //草花
     DIAMOND,//方块
     HEART,  //红心
     SPADE,  //黑桃
-    JOKER,  //
+    BLACK_JOKER,
+    RED_JOKER
 }
 
 public enum CardValue
@@ -41,7 +42,7 @@ public struct CardData
     {
         get
         {
-            return CardValue > 10 && !IsJoker;
+            return CardValue > 10;
         }
     }
 
@@ -49,7 +50,7 @@ public struct CardData
     {
         get
         {
-            return cardType == CardType.JOKER;
+            return cardType == CardType.BLACK_JOKER || cardType == CardType.RED_JOKER;
         }
     }
     #endregion
@@ -57,8 +58,20 @@ public struct CardData
     public CardData(int cardInt)
     {
         CardInt = cardInt;
-        CardValue = (cardInt == 52 || cardInt == 53) ? 0 : (cardInt % 13) + 1;
-        cardType =(CardValue == 0)?CardType.JOKER:(CardType)(((cardInt) / 13)+1);
+        CardValue = (cardInt == 52 || cardInt == 53) ? 15 : (cardInt % 13) + 1;
+        if (CardInt == 52)
+        {
+            cardType = CardType.BLACK_JOKER;
+        }
+        else if (CardInt == 53)
+        {
+            cardType = CardType.RED_JOKER;
+        }
+        else
+        {
+            cardType = (CardType)(((cardInt) / 13) + 1);
+        }
+        
         sprite = CardMgr.Instance.GetCardSprite(cardInt);
         CardPower = CardValue;
         if (CardValue > 13)
