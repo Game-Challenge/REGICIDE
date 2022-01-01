@@ -135,22 +135,22 @@ class ItemCard : UIWindowWidget
             switch (m_cardData.cardType)
             {
                 case CardType.SPADE:
-                    m_textInfo.text = string.Format("当前黑桃 <color=#493A31>♠</color> 无效");
+                    m_textInfo.text = string.Format("当前黑桃 <color=#000000>♠</color> 无效");
                     break;
                 case CardType.DIAMOND:
-                    m_textInfo.text = string.Format("当前方块 <color=#AB4339>♦</color> 无效");
+                    m_textInfo.text = string.Format("当前方块 <color=#FF0000>♦</color> 无效");
                     break;
                 case CardType.CLUB:
-                    m_textInfo.text = string.Format("当前草花 <color=#493A31>♣</color> 无效");
+                    m_textInfo.text = string.Format("当前草花 <color=#000000>♣</color> 无效");
                     break;
                 case CardType.HEART:
-                    m_textInfo.text = string.Format("当前红桃 <color=#AB4339>♥</color> 无效");
+                    m_textInfo.text = string.Format("当前红桃 <color=#FF0000>♥</color> 无效");
                     break;
                 case CardType.RED_JOKER:
-                    m_textInfo.text = string.Format("当前红桃和方块 <color=#AB4339>♥ ♦</color> 无效");
+                    m_textInfo.text = string.Format("当前红桃和方块 <color=#FF0000>♥ ♦</color> 无效");
                     break;
                 case CardType.BLACK_JOKER:
-                    m_textInfo.text = string.Format("当前黑桃和草花 <color=#493A31>♠ ♣</color> 无效");
+                    m_textInfo.text = string.Format("当前黑桃和草花 <color=#000000>♠ ♣</color> 无效");
                     break;
             }
         }
