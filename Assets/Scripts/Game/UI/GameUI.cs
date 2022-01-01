@@ -110,7 +110,6 @@ class GameUI : UIWindow
         {
             m_btnNewMode.gameObject.Show(false); //.transform.localScale = Vector2.zero;
         }
-
     }
 
     private void RefreshBoss(BossActor bossActor)

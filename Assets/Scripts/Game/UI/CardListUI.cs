@@ -160,8 +160,34 @@ class ItemCard : UIWindowWidget
     }
     #endregion
 
+    #region 联机的初始化
+
+    private List<CardData> m_onlineCardDatas;
+    private bool m_isOnlieCards;
+    /// <summary>
+    /// 联机中其他人卡牌的初始化
+    /// </summary>
+    public void Init(List<CardData> list,bool other = true)
+    {
+        m_onlineCardDatas = list;
+
+        m_isOnlieCards = true;
+
+        m_textCardCount.gameObject.SetActive(true);
+
+        m_textCardCount.text = string.Format("剩余：{0}",list.Count);
+    }
+
+    #endregion
+
     private void Choice()
     {
+        if (m_isOnlieCards)
+        {
+            UISys.Mgr.ShowWindow<OtherListUI>().Init(m_onlineCardDatas);
+            return;
+        }
+
         if (IsBoss)
         {
             return;
