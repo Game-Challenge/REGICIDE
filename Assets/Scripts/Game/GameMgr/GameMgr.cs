@@ -12,10 +12,6 @@ partial class GameMgr : Singleton<GameMgr>
        {
            PlayerPrefs.SetInt("GameLevel",3);
        }
-       else
-       {
-           NeedKillBossCount = 4 * value;
-       }
     }
 
     #region 属性
@@ -92,9 +88,10 @@ partial class GameMgr : Singleton<GameMgr>
     {
         RegiserEvent();
         PlayerNum = (int)GameApp.Instance.payerNum + 1;
+
         InitTotalCards();
         InitMyCards();
-        GameMgr.Instance.RandomMyCards();
+        
     }
 
     private void RegiserEvent()
@@ -314,49 +311,6 @@ partial class GameMgr : Singleton<GameMgr>
     {
         var currentBoss = TotalKillBossCount;
 
-        if (GameLevel == 1)
-        {
-            //var temp = new List<CardData>();
-
-            //if (currentBoss <3)
-            //{
-            //    for (int i = 0; i < m_bossList.Count; i++)
-            //    {
-            //        if (m_bossList[i].CardValue == currentBoss + 11)
-            //        {
-            //            temp.Add(m_bossList[i]);
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    for (int i = 0; i < m_bossList.Count; i++)
-            //    {
-            //        if (m_bossList[i].CardValue == 13)
-            //        {
-            //            temp.Add(m_bossList[i]);
-            //        }
-            //    }
-            //}
-            //Debug.Log(m_bossList.Count);
-
-            //Debug.Log(temp.Count);
-
-            //Random ran = new Random((int)DateTime.Now.Ticks);
-
-            var card = m_bossList[0];
-            BossActor = ActorMgr.Instance.InstanceBossActor(card);
-            EventCenter.Instance.EventTrigger("RefreshBoss", BossActor);
-            EventCenter.Instance.EventTrigger("BossDataRefresh", BossActor);
-            SetState(GameState.STATEONE);
-            return;
-        }
-
-        
-
-        //Random random = new Random((int)DateTime.Now.Ticks);
-        //var index = random.Next(0, m_bossList.Count - 1);
-        //var cardData = m_bossList[index];
         var cardData = m_bossList[0];
 
         BossActor = ActorMgr.Instance.InstanceBossActor(cardData);
@@ -401,7 +355,18 @@ partial class GameMgr : Singleton<GameMgr>
         {
             UISys.Mgr.ShowWindow<GameChoiceUI>();
         }
-        m_bossList.Remove(BossActor.cardData);
+        
+        if (GameLevel <= 3)
+        {
+            for (int a = 0; a < 4 - GameLevel; a++)
+            {
+                m_bossList.RemoveAt(0);
+            }
+        }
+        else
+        {
+            m_bossList.RemoveAt(0);
+        }
         
         if (beFriend)
         {
@@ -584,18 +549,19 @@ partial class GameMgr : Singleton<GameMgr>
     private void InitTotalCards()
     {
         m_totalList.Clear();
-        for (int cardInt = 0; cardInt < TotalCardNum -2; cardInt++)
+        for (int cardInt = 0; cardInt < TotalCardNum; cardInt++)
         {
             var cardData = CardMgr.Instance.InstanceData(cardInt);
 
             m_totalList.Add(cardData);
         }
+        RandomSort<CardData>(m_totalList);
     }
 
     private void InitMyCards()
     {
-        RandomSort<CardData>(m_totalList);
         m_myList.Clear();
+        m_bossList.Clear();
         for (int i = 0; i < m_totalList.Count; i++)
         {
             var cardData = m_totalList[i];
@@ -613,11 +579,7 @@ partial class GameMgr : Singleton<GameMgr>
         });
     }
 
-    public void RandomMyCards()
-    {
-        RandomSort(m_myList);
-    }
-
+    
     public void TurnCard()
     {
         List<CardData> temp = new List<CardData>();
@@ -742,14 +704,32 @@ partial class GameMgr : Singleton<GameMgr>
 
         TotalKillBossCount = 0;
         LeftJokerCount = 2;
-        NeedKillBossCount = (GameLevel) * 4;
-        UISys.ShowTipMsg("重新开始！！");
+        switch (GameLevel)
+        {
+            case 1:
+                NeedKillBossCount = 4;
+                break;
+            case 2:
+                NeedKillBossCount = 6;
+                break;
+            case 3:
+                NeedKillBossCount = 12;
+                break;
+            case 4:
+                NeedKillBossCount = 13;
+                break;
+            case 5:
+                NeedKillBossCount = 14;
+                break;
+        }
+        //UISys.ShowTipMsg("重新开始！！");
+        
         InitTotalCards();
         InitMyCards();
         m_curList.Clear();
         m_useList.Clear();
         m_choiceList.Clear();
-        RandomMyCards();
+        
         InitBoss();
         TurnCard();
         SetState(GameState.STATEONE);

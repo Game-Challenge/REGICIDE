@@ -28,7 +28,7 @@ class LevelChoiceUI : UIWindow
     protected override void OnCreate()
     {
         base.OnCreate();
-        AdjustIconNum(m_list,4,m_tfLevel,m_itemLevel);
+        AdjustIconNum(m_list,5,m_tfLevel,m_itemLevel);
         for (int i = 0; i < m_list.Count; i++)
         {
             m_list[i].Init(i);
@@ -84,26 +84,37 @@ class ItemLevel : UIWindowWidget
         {
             case 1:
             {
-                m_textRoomInfo.text = "初级";
+                m_textRoomInfo.text = "入门";
+                m_textNum.text = (4).ToString();
                 break;
             }
             case 2:
             {
-                m_textRoomInfo.text = "中级";
+                m_textRoomInfo.text = "简单";
+                    m_textNum.text = (6).ToString();
                     break;
             }
             case 3:
             {
-                m_textRoomInfo.text = "高级";
+                m_textRoomInfo.text = "标准";
+                    m_textNum.text = (12).ToString();
                     break;
             }
             case 4:
             {
-                m_textRoomInfo.text = "噩梦";
+                m_textRoomInfo.text = "困难";
+                    m_textNum.text = (13).ToString();
                     break;
             }
+            case 5:
+                {
+                    m_textRoomInfo.text = "地狱";
+                    m_textNum.text = (14).ToString();
+                    break;
+                }
         }
-        m_textNum.text = ((index+1) * 4).ToString();
+
+        
     }
 
     private void Choice()

@@ -78,7 +78,7 @@ public struct AttackData
             {
                 CouldAddHp = true;
             }
-            else if(card.cardType == CardType.JOKER)
+            else if(card.cardType == CardType.RED_JOKER || card.cardType == CardType.BLACK_JOKER)
             {
                 HadJoker = true;
             }
@@ -115,19 +115,20 @@ public class BattleMgr : Singleton<BattleMgr>
             return;
         }
 
-        bool couldDouble = attackData.CouldDoubleAtk && actor.cardType != CardType.CLUB;
+        CardType boss_type = actor.cardType;
+        bool couldDouble = attackData.CouldDoubleAtk && (boss_type != CardType.CLUB && boss_type != CardType.BLACK_JOKER);
 
         int value = couldDouble ? attackData.Damage * 2 : attackData.Damage;
 
-        if (attackData.CouldDownBossAtk)
+        if (attackData.CouldDownBossAtk && (boss_type != CardType.SPADE && boss_type != CardType.BLACK_JOKER))
         {
             EventCenter.Instance.EventTrigger<int>("DownAtk", attackData.Damage);
         }
-        if (attackData.CouldTurnCard && actor.cardType != CardType.DIAMOND)
+        if (attackData.CouldTurnCard && (boss_type != CardType.DIAMOND && boss_type != CardType.RED_JOKER))
         {
             GameMgr.Instance.TurnCard(attackData.Damage);
         }
-        if (attackData.CouldAddHp && actor.cardType != CardType.HEART)
+        if (attackData.CouldAddHp && (boss_type != CardType.HEART && boss_type != CardType.RED_JOKER))
         {
             EventCenter.Instance.EventTrigger<int>("AddHp", attackData.Damage);
         }
