@@ -100,4 +100,11 @@ class GameOnlineMgr:Singleton<GameOnlineMgr>
 
         ActorEventHelper.Send(actor, "Hurt");
     }
+
+    public int GetMyIndex()
+    {
+        //我自己必须是index0
+
+        return 0;
+    }
 }

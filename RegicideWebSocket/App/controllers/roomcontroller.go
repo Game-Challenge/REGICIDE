@@ -51,7 +51,17 @@ func CreateRoom(client *server.Client, mainpack *GameProto.MainPack, isUdp bool)
 	tserver.RoomList = append(tserver.RoomList, &room)
 	mainpack.Returncode = GameProto.ReturnCode_Success
 
+	room.RoomPack.RoomID = roomID
 	room.Join(client)
+	playerpack := &GameProto.PlayerPack{}
+	playerpack.Playername = strconv.Itoa(int(client.Uniid)) //todo_client.Username
+	playerpack.PlayerID = strconv.Itoa(int(client.Uniid))
+	mainpack.Playerpack = append(mainpack.Playerpack, playerpack)
+
+	roomPack := &GameProto.RoomPack{}
+	roomPack = room.RoomPack
+	roomPack.RoomID = room.RoomPack.RoomID
+	mainpack.Roompack = append(mainpack.Roompack, roomPack)
 
 	return mainpack, nil
 }
@@ -74,6 +84,12 @@ func JoinRoom(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (
 
 			room := server.RoomList[i]
 			if room.RoomPack.RoomID == int32_ {
+				if room.RoomPack.Curnum >= room.RoomPack.Maxnum {
+					mainpack.Returncode = GameProto.ReturnCode_Fail
+					mainpack.Str = "房间人数已满"
+					return mainpack, nil
+				}
+
 				room.Join(client)
 				mainpack.Returncode = GameProto.ReturnCode_Success
 

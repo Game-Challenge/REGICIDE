@@ -6,11 +6,13 @@ using RegicideProtocol;
 public class WebSocketMgr : UnitySingleton<WebSocketMgr>
 {
     //string address = "wss://echo.websocket.org";
-    public string address = "ws://127.0.0.1:12345/ws";
+    //public string address = "ws://127.0.0.1:12345/ws";
     WebSocket webSocket;
     private Action m_Action = null;
     public void Init(Action callback = null)
     {
+        var address = GameApp.Instance.Host;
+
         m_Action = callback;
         if (webSocket == null)
         {

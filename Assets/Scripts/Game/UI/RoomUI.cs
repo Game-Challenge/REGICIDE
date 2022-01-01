@@ -67,6 +67,7 @@ class RoomUI : UIWindow
     }
     private void OnClickCreateRoomBtn()
     {
+        RoomDataMgr.Instance.CreateRoomReq(m_inputRoomName.text,4);
     }
 
     private void Refresh()

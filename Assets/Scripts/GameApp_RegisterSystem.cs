@@ -20,13 +20,13 @@ sealed partial class GameApp
             switch (hostPoint)
             {
                 case (HostPoint.LocalHost):
-                    return "127.0.0.1";
+                    return "ws://127.0.0.1:12345/ws";
                 case (HostPoint.LinuxServer):
-                    return "47.106.96.238";
+                    return "ws://47.106.96.238:12345/ws";
                 case (HostPoint.WinServer):
-                    return "1.14.132.143";
+                    return "ws://1.14.132.143:12345/ws";
             }
-            return "127.0.0.1";
+            return "ws://127.0.0.1:12345/ws";
         }
     }
 

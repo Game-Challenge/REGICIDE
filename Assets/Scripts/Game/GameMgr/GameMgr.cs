@@ -5,6 +5,19 @@ using Random = System.Random;
 
 partial class GameMgr : Singleton<GameMgr>
 {
+    public GameMgr()
+    {
+       var value =  PlayerPrefs.GetInt("GameLevel");
+       if (value == 0)
+       {
+           PlayerPrefs.SetInt("GameLevel",3);
+       }
+       else
+       {
+           NeedKillBossCount = 4 * value;
+       }
+    }
+
     #region 属性
     public int PlayerNum;
 
@@ -301,7 +314,7 @@ partial class GameMgr : Singleton<GameMgr>
     {
         var currentBoss = TotalKillBossCount;
 
-        if (GameLevel == 0)
+        if (GameLevel == 1)
         {
             //var temp = new List<CardData>();
 
@@ -369,7 +382,7 @@ partial class GameMgr : Singleton<GameMgr>
         if (TotalKillBossCount >= NeedKillBossCount)
         {
             SetState(GameState.STATEWIN);
-            UISys.ShowTipMsg("游戏胜利，您已经弑杀了{0}位君主！！！", TotalKillBossCount);
+            UISys.ShowTipMsg(string.Format("游戏胜利，您已经弑杀了{0}位君主！！！", TotalKillBossCount));
             var ui = UISys.Mgr.ShowWindow<GameWinUI>();
             ui.InitUI(string.Format("游戏胜利，您已经弑杀了{0}位君主！！！", TotalKillBossCount));
             return;
@@ -722,12 +735,14 @@ partial class GameMgr : Singleton<GameMgr>
     }
 
     public int GameLevel = 0;
-    public void RestartGame(int index = 0)
+    public void RestartGame()
     {
-        GameLevel = index;
+        var _index = PlayerPrefs.GetInt("GameLevel");
+        GameLevel = _index;
+
         TotalKillBossCount = 0;
         LeftJokerCount = 2;
-        NeedKillBossCount = (index + 1) * 4;
+        NeedKillBossCount = (GameLevel) * 4;
         UISys.ShowTipMsg("重新开始！！");
         InitTotalCards();
         InitMyCards();

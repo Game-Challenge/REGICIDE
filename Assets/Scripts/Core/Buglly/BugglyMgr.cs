@@ -14,7 +14,7 @@ public class BugglyMgr : Singleton<BugglyMgr>
     {
         if (type == LogType.Exception || type == LogType.Error)
         {
-            //Push(string.Format("报错啦,请截图发QQ群761857971{0}\n{1}", condition, stackTrace));
+            Push(string.Format("报错啦,请截图发QQ群761857971{0}\n{1}", condition, stackTrace));
         }
     }
 
@@ -40,7 +40,7 @@ public class BugglyMgr : Singleton<BugglyMgr>
 
         var msg = m_errorMsgs.Pop();
         m_count--;
-        Debug.LogError(msg);
+        Debug.Log(msg);
         var ui = UISys.Mgr.ShowWindow<ERRORUI>(UI_Layer.System);
         ui.Init(msg);
     }

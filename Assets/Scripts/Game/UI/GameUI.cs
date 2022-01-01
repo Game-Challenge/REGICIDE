@@ -89,6 +89,7 @@ class GameUI : UIWindow
         EventCenter.Instance.RemoveEventListener<BossActor>("RefreshBoss", RefreshBoss);
         EventCenter.Instance.RemoveEventListener("RefreshGameUI", RefreshGameUI);
         EventCenter.Instance.RemoveEventListener("UpdateGameState", UpdateGameState);
+        EventCenter.Instance.RemoveEventListener("GameStart", GameStart);
     }
 
     private void UpdateGameState()
@@ -169,22 +170,22 @@ class GameUI : UIWindow
 
         switch (GameMgr.Instance.GameLevel)
         {
-            case 0:
+            case 1:
             {
                 value = "初级";
                 break;
             }
-            case 1:
+            case 2:
             {
                 value = "中级";
                 break;
             }
-            case 2:
+            case 3:
             {
                 value = "高级";
                 break;
             }
-            case 3:
+            case 4:
             {
                 value = "噩梦";
                 break;

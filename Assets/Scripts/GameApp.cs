@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 sealed partial class GameApp : UnitySingleton<GameApp>
 {
@@ -55,7 +56,8 @@ sealed partial class GameApp : UnitySingleton<GameApp>
             UISys.Mgr.ShowWindow<StartUI>();
         }
         else
-        {
+        { 
+            UnityUtil.RmvMonoBehaviour<CanvasScaler>(UISys.Mgr.canvas.gameObject);
             Debug.Log("是竖屏");
             UISys.Mgr.ShowWindow<StartUILand>();
         }

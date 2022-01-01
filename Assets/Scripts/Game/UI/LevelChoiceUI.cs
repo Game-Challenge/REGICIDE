@@ -79,36 +79,37 @@ class ItemLevel : UIWindowWidget
     private int m_index;
     public void Init(int index)
     {
-        m_index = index;
-        switch (index)
+        m_index = index + 1;
+        switch (m_index)
         {
-            case 0:
+            case 1:
             {
                 m_textRoomInfo.text = "初级";
                 break;
             }
-            case 1:
+            case 2:
             {
                 m_textRoomInfo.text = "中级";
                     break;
             }
-            case 2:
+            case 3:
             {
                 m_textRoomInfo.text = "高级";
                     break;
             }
-            case 3:
+            case 4:
             {
                 m_textRoomInfo.text = "噩梦";
                     break;
             }
         }
-        m_textNum.text = ((index + 1) * 4).ToString();
+        m_textNum.text = ((index+1) * 4).ToString();
     }
 
     private void Choice()
     {
-        GameMgr.Instance.RestartGame(m_index);
+        PlayerPrefs.SetInt("GameLevel", m_index);
+        GameMgr.Instance.RestartGame();
         UISys.Mgr.CloseWindow<LevelChoiceUI>();
     }
     #endregion

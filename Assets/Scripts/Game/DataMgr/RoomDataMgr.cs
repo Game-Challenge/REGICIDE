@@ -82,6 +82,15 @@ class RoomDataMgr : DataCenterModule<RoomDataMgr>
 
         Debug.Log(mainPack);
         RoomID = mainPack.Roompack[0].RoomID;
+
+        UISys.Mgr.CloseWindow<GameUI>();
+        UISys.Mgr.CloseWindow<GameUILand>();
+        UISys.Mgr.CloseWindow<RoomUI>();
+
+        Debug.Log(mainPack);
+        RoomID = mainPack.Roompack[0].RoomID;
+        var ui = UISys.Mgr.ShowWindow<RoomWaitUI>();
+        ui.Refresh(mainPack);
     }
 
     public void JoinRoomReq(int roomID,string password = "")

@@ -163,7 +163,7 @@ func (room *Room) Starting(client *Client) {
 
 func (room *Room) Broadcast(mainPack *GameProto.MainPack) {
 	for i := 0; i < len(room.ClientList); i++ {
-		room.ClientList[i].SendTCP(mainPack)
+		room.ClientList[i].Send(mainPack)
 	}
 }
 
@@ -179,6 +179,6 @@ func (room *Room) BroadcastTCP(client *Client, mainPack *GameProto.MainPack) {
 		if room.ClientList[i] == nil {
 			continue
 		}
-		room.ClientList[i].SendTCP(mainPack)
+		room.ClientList[i].Send(mainPack)
 	}
 }

@@ -64,11 +64,15 @@ class GameOnlineUI : UIWindow
         }
 
         var players = GameOnlineMgr.Instance.ActorPacks;
-        for (int i = 0; i < players.Count; i++)
+        if (players.Count <=4)
         {
-            m_textPlayerList[i].gameObject.Show(true);
-            //m_tfCardContent[2].
+            for (int i = 0; i < players.Count; i++)
+            {
+                m_textPlayerList[i].gameObject.Show(true);
+                m_textPlayerList[i].text = string.Format("玩家{0} {1}", players[i].ActorId, players[i].ActorId);
+                //m_tfCardContent[2].
                 //m_bossCard = CreateWidgetByPrefab<ItemCard>(m_itemCard, m_tfBossContent);
+            }
         }
 
 
@@ -87,6 +91,11 @@ class GameOnlineUI : UIWindow
         {
             m_cardList[0][i].Init(temp[i]);
         }
+    }
+
+    private void InitPlayer()
+    {
+
     }
 
     private void RefreshCards()
