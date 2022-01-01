@@ -56,7 +56,7 @@ partial class GameMgr : Singleton<GameMgr>
     public int LeftJokerCount = 2;
     public int TotalJokerCount = 2;
     public int TotalKillBossCount;
-    public int NeedKillBossCount = 12;
+    public int NeedKillBossCount = 4;
     public int LeftCount
     {
         get
@@ -389,6 +389,7 @@ partial class GameMgr : Singleton<GameMgr>
             UISys.Mgr.ShowWindow<GameChoiceUI>();
         }
         m_bossList.Remove(BossActor.cardData);
+        
         if (beFriend)
         {
             m_curList.Add(BossActor.cardData);
@@ -580,6 +581,7 @@ partial class GameMgr : Singleton<GameMgr>
 
     private void InitMyCards()
     {
+        RandomSort<CardData>(m_totalList);
         m_myList.Clear();
         for (int i = 0; i < m_totalList.Count; i++)
         {
