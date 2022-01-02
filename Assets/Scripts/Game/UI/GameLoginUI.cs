@@ -34,13 +34,12 @@ class GameLoginUI : UIWindow
             WebSocketMgr.Instance.Init();
         }
 
-        if (GameDataMgr.Instance.HadCacheLoginData())
-        {
-            var userId = PlayerPrefs.GetString("userId");
-            var password = PlayerPrefs.GetString("password");
-            GameDataMgr.Instance.LoginReq(userId, password);
-            Close();
-        }
+        //if (GameDataMgr.Instance.HadCacheLoginData())
+        //{
+        //    var userId = PlayerPrefs.GetString("userId");
+        //    var password = PlayerPrefs.GetString("password");
+        //    GameDataMgr.Instance.LoginReq(userId, password);
+        //}
     }
 
     #region 事件

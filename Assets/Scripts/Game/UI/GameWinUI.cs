@@ -17,6 +17,15 @@ class GameWinUI : UIWindow
     }
     #endregion
 
+    protected override void OnCreate()
+    {
+        base.OnCreate();
+        if (GameDataMgr.Instance.HadLogin)
+        {
+            m_btnPushRank.gameObject.SetActive(false);
+        }
+    }
+
     public void InitUI(string msg)
     {
         m_textWinGame.text = msg;
