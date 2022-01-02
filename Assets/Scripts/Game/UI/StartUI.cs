@@ -122,6 +122,8 @@ class StartUI : UIWindow
 
     private void OnClickMutiplyBtn()
     {
+        UISys.ShowTipMsg("敬请期待~");
+        return;
         if (GameDataMgr.Instance.HadLogin)
         {
             UISys.Mgr.ShowWindow<RoomUI>();

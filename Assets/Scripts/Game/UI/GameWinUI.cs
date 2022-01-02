@@ -43,7 +43,35 @@ class GameWinUI : UIWindow
     }
     private void OnClickPushRankBtn()
     {
-        //RankDataMgr.Instance.PushRankData();
+        if (!GameDataMgr.Instance.HadLogin)
+        {
+            WebSocketMgr.Instance.Init((() =>
+            {
+                if (GameDataMgr.Instance.HadCacheLoginData())
+                {
+                    var userId = PlayerPrefs.GetString("userId");
+                    var password = PlayerPrefs.GetString("password");
+                    GameDataMgr.Instance.LoginReq(userId, password,(() => {Push();}));
+                }
+                else
+                {
+                    var ui = UISys.Mgr.ShowWindow<GameLoginUI>();
+                    ui.CloseCallBack = () => { Push(); };
+                }
+            }));
+        }
+    }
+
+    private void Push()
+    {
+        if (GameDataMgr.Instance.HadLogin)
+        {
+            m_btnPushRank.gameObject.SetActive(false);
+            var rankIndex = GameMgr.Instance.GameLevel;
+            var userId = GameOnlineMgr.Instance.MyActorId;
+            var completeType = -GameMgr.Instance.LeftJokerCount + 3;
+            RankDataMgr.Instance.PushRankData(rankIndex, userId, completeType);
+        }
     }
     #endregion
 

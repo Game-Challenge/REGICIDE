@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 class GameLoginUI : UIWindow
@@ -33,14 +34,9 @@ class GameLoginUI : UIWindow
         {
             WebSocketMgr.Instance.Init();
         }
-
-        //if (GameDataMgr.Instance.HadCacheLoginData())
-        //{
-        //    var userId = PlayerPrefs.GetString("userId");
-        //    var password = PlayerPrefs.GetString("password");
-        //    GameDataMgr.Instance.LoginReq(userId, password);
-        //}
     }
+
+    public Action CloseCallBack;
 
     #region 事件
     private void OnClickCloseBtn()
@@ -57,14 +53,14 @@ class GameLoginUI : UIWindow
             UISys.ShowTipMsg("字段太长了，请短一些哦~");
             return;
         }
-        GameDataMgr.Instance.RegisiterReq(userId,password,username);
+        GameDataMgr.Instance.RegisiterReq(userId,password,username, CloseCallBack);
     }
     private void OnClickLoginBtn()
     {
         var userId = m_inputUserID.text;
         var password = m_inputUserPassword.text;
         var username = m_inputUserName.text;
-        GameDataMgr.Instance.LoginReq(userId, password);
+        GameDataMgr.Instance.LoginReq(userId, password, CloseCallBack);
     }
     #endregion
 

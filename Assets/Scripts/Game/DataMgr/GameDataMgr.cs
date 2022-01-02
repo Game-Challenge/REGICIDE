@@ -41,9 +41,15 @@ public class GameDataMgr : DataCenterModule<GameDataMgr>
         UISys.Mgr.CloseWindow<GameLoginUI>();
 
         CacheData(m_cacheUserId, mainPack.LoginPack.Password);
+        if (m_action != null)
+        {
+            m_action();
+            m_action = null;
+        }
     }
 
-    public void RegisiterReq(string userId,string password,string name)
+    private Action m_action;
+    public void RegisiterReq(string userId,string password,string name,Action action= null)
     {
         if (string.IsNullOrEmpty(name)|| string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(password))
         {
@@ -51,6 +57,7 @@ public class GameDataMgr : DataCenterModule<GameDataMgr>
             return;
         }
 
+        m_action = action;
         m_cacheUserId = userId;
         MainPack mainPack = ProtoUtil.BuildMainPack(RequestCode.User, ActionCode.Register);
         LoginPack loginPack = new LoginPack();
@@ -62,7 +69,7 @@ public class GameDataMgr : DataCenterModule<GameDataMgr>
     }
 
     private string m_cacheUserId;
-    public void LoginReq(string userId, string password)
+    public void LoginReq(string userId, string password, Action action = null)
     {
         if (HadLogin)
         {
@@ -74,7 +81,7 @@ public class GameDataMgr : DataCenterModule<GameDataMgr>
             UISys.ShowTipMsg("不能有登录信息为空哦~");
             return;
         }
-
+        m_action = action;
         m_cacheUserId = userId;
         MainPack mainPack = ProtoUtil.BuildMainPack(RequestCode.User, ActionCode.Login);
         LoginPack loginPack = new LoginPack();
@@ -95,5 +102,10 @@ public class GameDataMgr : DataCenterModule<GameDataMgr>
         HadLogin = true;
         UISys.Mgr.CloseWindow<GameLoginUI>();
         CacheData(m_cacheUserId, mainPack.LoginPack.Password);
+        if (m_action!= null)
+        {
+            m_action();
+            m_action = null;
+        }
     }
 }

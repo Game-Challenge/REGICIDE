@@ -67,6 +67,28 @@ public class RankDataMgr : Singleton<RankDataMgr>
             RankDatas.Add(new RankData(data));
         }
 
+        RankDatas.Sort((a,  b) => {
+            if (a.GoldCount>b.GoldCount)
+            {
+                return -1;
+            }
+            else if (a.GoldCount == b.GoldCount)
+            {
+                if (a.YinCount!=b.YinCount)
+                {
+                    return -a.YinCount.CompareTo(-b.YinCount);
+                }
+                else
+                {
+                    return -a.TongCount.CompareTo(-b.TongCount);
+                }
+            }
+            else
+            {
+                return 1;
+            }
+        });
+
         EventCenter.Instance.EventTrigger("RefreshRankList", RankDatas);
     }
 
