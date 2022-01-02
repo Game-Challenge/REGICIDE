@@ -142,6 +142,7 @@ partial class GameMgr : Singleton<GameMgr>
 
         for (int i = 0; i < m_choiceList.Count; i++)
         {
+
             var card = m_choiceList[i];
             m_curList.Remove(card);
             m_myList.Add(card);
@@ -239,7 +240,7 @@ partial class GameMgr : Singleton<GameMgr>
 
         foreach (var card in m_choiceList)
         {
-            myValue += card.CardValue;
+            myValue += card.CardPower;
         }
 
         if (myValue < m_needAbordValue)
@@ -370,7 +371,9 @@ partial class GameMgr : Singleton<GameMgr>
         
         if (beFriend)
         {
-            m_curList.Add(BossActor.cardData);
+            UISys.ShowTipMsg("你劝服了这位君主！");
+            m_myList.Add(BossActor.cardData);
+            //m_curList.Add(BossActor.cardData);
             InitBoss();
         }
         else
@@ -589,12 +592,11 @@ partial class GameMgr : Singleton<GameMgr>
         turnCount = m_myList.Count > turnCount ? turnCount : m_myList.Count;
         for (int i = 0; i < turnCount; i++)
         {
-            var card = m_myList[i];
+            var card = m_myList[m_myList.Count-1];
             temp.Add(card);
             m_myList.Remove(card);
         }
         m_curList.AddRange(temp);
-        RandomSort(m_myList);
     }
 
     public void TurnJokerCard()
@@ -618,12 +620,11 @@ partial class GameMgr : Singleton<GameMgr>
         turnCount = couldTurnCount > turnCount ? turnCount : couldTurnCount;
         for (int i = 0; i < turnCount; i++)
         {
-            var card = m_myList[i];
+            var card = m_myList[m_myList.Count-1];
             temp.Add(card);
             m_myList.Remove(card);
         }
         m_curList.AddRange(temp);
-        RandomSort(m_myList);
         //EventCenter.Instance.EventTrigger("RefreshGameUI");
     }
 
