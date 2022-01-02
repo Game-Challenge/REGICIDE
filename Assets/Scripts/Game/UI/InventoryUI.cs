@@ -67,7 +67,8 @@ class InventoryUI : UIWindowWidget
     }
     private void OnClickRankBtn()
     {
-        UISys.ShowTipMsg("敬请期待");
+        //UISys.ShowTipMsg("敬请期待");
+        UISys.Mgr.ShowWindow<RankListUI>();
     }
     private void OnClickLeftBtn()
     {

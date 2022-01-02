@@ -39,7 +39,8 @@ public class GameDataMgr : DataCenterModule<GameDataMgr>
         GameOnlineMgr.Instance.InitMyData(mainPack);
         HadLogin = true;
         UISys.Mgr.CloseWindow<GameLoginUI>();
-        CacheData(mainPack.LoginPack.Username, mainPack.LoginPack.Password);
+
+        CacheData(m_cacheUserId, mainPack.LoginPack.Password);
     }
 
     public void RegisiterReq(string userId,string password,string name)
@@ -50,6 +51,7 @@ public class GameDataMgr : DataCenterModule<GameDataMgr>
             return;
         }
 
+        m_cacheUserId = userId;
         MainPack mainPack = ProtoUtil.BuildMainPack(RequestCode.User, ActionCode.Register);
         LoginPack loginPack = new LoginPack();
         loginPack.Username = userId;
@@ -59,6 +61,7 @@ public class GameDataMgr : DataCenterModule<GameDataMgr>
         GameClient.Instance.SendCSMsg(mainPack);
     }
 
+    private string m_cacheUserId;
     public void LoginReq(string userId, string password)
     {
         if (HadLogin)
@@ -72,6 +75,7 @@ public class GameDataMgr : DataCenterModule<GameDataMgr>
             return;
         }
 
+        m_cacheUserId = userId;
         MainPack mainPack = ProtoUtil.BuildMainPack(RequestCode.User, ActionCode.Login);
         LoginPack loginPack = new LoginPack();
         loginPack.Username = userId;
@@ -90,6 +94,6 @@ public class GameDataMgr : DataCenterModule<GameDataMgr>
 
         HadLogin = true;
         UISys.Mgr.CloseWindow<GameLoginUI>();
-        CacheData(mainPack.LoginPack.Username, mainPack.LoginPack.Password);
+        CacheData(m_cacheUserId, mainPack.LoginPack.Password);
     }
 }

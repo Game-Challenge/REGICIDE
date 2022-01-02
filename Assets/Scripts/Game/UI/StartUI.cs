@@ -28,6 +28,7 @@ class StartUI : UIWindow
         {
             PlayerPrefs.SetString("userId", "");
             UISys.ShowTipMsg("清除本地登录数据成功！");
+            m_btnCloseAuto.gameObject.Show(false);
         }));
     }
     #endregion

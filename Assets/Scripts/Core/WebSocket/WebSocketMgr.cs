@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using BestHTTP.WebSocket;
 using System;
+using BestHTTP;
 using RegicideProtocol;
 
 public class WebSocketMgr : UnitySingleton<WebSocketMgr>
@@ -44,8 +45,8 @@ public class WebSocketMgr : UnitySingleton<WebSocketMgr>
 
     void OnOpen(WebSocket ws)
     {
-        Debug.Log("WebSocket open ");
-        UISys.ShowTipMsg("服务器连接成功~");
+        //Debug.Log("WebSocket open ");
+        //UISys.ShowTipMsg("服务器连接成功~");
         if (m_Action!= null)
         {
             m_Action();
@@ -54,26 +55,6 @@ public class WebSocketMgr : UnitySingleton<WebSocketMgr>
         }
 
         GameClient.Instance.Status = GameClientStatus.StatusConnect;
-        //GameClient.Instance.RegActionHandle((int)ActionCode.StartGame, (pack =>{Debug.Log(pack.Str);} ));
-        //RoomDataMgr.Instance.StartGameReq();
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            //MainPack mainPack = ProtoUtil.BuildMainPack(RequestCode.Room, ActionCode.StartGame);
-            //RoomPack roomPack = new RoomPack();
-            //roomPack.RoomID = 123;
-            //mainPack.Roompack.Add(roomPack);
-            //Send(mainPack);
-
-            MainPack mainPack = ProtoUtil.BuildMainPack(RequestCode.Room, ActionCode.StartGame);
-            RoomPack roomPack = new RoomPack();
-            roomPack.RoomID = 123;
-            mainPack.Roompack.Add(roomPack);
-            GameClient.Instance.SendCSMsg(mainPack);
-        }
     }
 
     void OnMessageRecv(WebSocket ws, string message)
@@ -137,4 +118,22 @@ public class WebSocketMgr : UnitySingleton<WebSocketMgr>
         webSocket = null;
     }
 
+
+    public void Get(string url)
+    {
+        HTTPRequest request = new HTTPRequest(new Uri(url), OnRequestFinished);request.Send();
+       
+    }
+    void OnRequestFinished(HTTPRequest request, HTTPResponse response)
+    {
+        Debug.Log("Request Finished! Text received: " +response.DataAsText);
+    }
+
+    public void Post(string url)
+    {
+        HTTPRequest request = new HTTPRequest(new Uri(url), HTTPMethods.Post,
+        OnRequestFinished);
+        request.AddField("FieldName", "Field Value");
+        request.Send();
+    }
 }

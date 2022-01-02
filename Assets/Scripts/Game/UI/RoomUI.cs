@@ -14,6 +14,8 @@ class RoomUI : UIWindow
     private Button m_btnCreateRoom;
     private Button m_btnRefreshRoom;
     private Text m_textCreateRoom;
+    private Text m_textUserName;
+    private Text m_textUserId;
     protected override void ScriptGenerator()
     {
         m_tfContent = FindChild("ScrollView/Viewport/m_tfContent");
@@ -24,6 +26,8 @@ class RoomUI : UIWindow
         m_btnCreateRoom = FindChildComponent<Button>("m_goCreateRoom/m_btnCreateRoom");
         m_btnRefreshRoom = FindChildComponent<Button>("m_btnRefreshRoom");
         m_textCreateRoom = FindChildComponent<Text>("m_goCreateRoom/m_btnCreateRoom/m_textCreateRoom");
+        m_textUserName = FindChildComponent<Text>("m_accountInfo/m_textUserName");
+        m_textUserId = FindChildComponent<Text>("m_accountInfo/m_textUserId");
         m_btnClose.onClick.AddListener(OnClickCloseBtn);
         m_btnCreateRoom.onClick.AddListener(OnClickCreateRoomBtn);
         m_btnRefreshRoom.onClick.AddListener(Refresh);
@@ -47,6 +51,8 @@ class RoomUI : UIWindow
         Refresh();
         AdjustIconNum(m_roomList,30,m_tfContent,m_itemRoom);
         m_itemRoom.gameObject.SetActive(false);
+        m_textUserName.text = string.Format("用户名：{0}", GameOnlineMgr.Instance.MyName);
+        m_textUserId.text = string.Format("用户ID：：{0}", GameOnlineMgr.Instance.MyActorId);
     }
 
     private void OnRefresh(List<RoomPack> roomPacks)

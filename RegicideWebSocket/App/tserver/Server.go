@@ -36,7 +36,8 @@ func Start(server Server) {
 	print("START REGICIDE SERVER")
 	r := gin.Default()
 	r.GET("/ws", Ws)
-	r.GET("/rankList", GetRankList)
+	r.POST("/rankList", GetRankList)
+	r.POST("/rankPush", PostRankData)
 	r.Run(server.Port)
 }
 

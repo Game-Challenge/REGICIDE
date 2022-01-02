@@ -1,20 +1,311 @@
 package tserver
 
 import (
+	"Regicide/App/common"
+	"Regicide/App/model"
+	"Regicide/App/response"
+	"net/http"
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 )
 
-func GetRankList(c *gin.Context) {
-	//升级get请求为webSocket协议
-	ws, err := upGrader.Upgrade(c.Writer, c.Request, nil)
-	if err != nil {
-		return
+func GetRankList(ctx *gin.Context) {
+	rankIndex := ctx.PostForm("rankIndex")
+	switch rankIndex {
+	case "1":
+		{
+			var ranks []model.RumenRank
+			common.DB.Find(&ranks)
+			response.Success(ctx, gin.H{"ranks": ranks}, "Info success")
+			ctx.JSON(http.StatusOK, gin.H{
+				"code": 200,
+				"data": gin.H{
+					"ranks": ranks,
+				},
+			})
+		}
+	case "2":
+		{
+			var ranks []model.EasyRank
+			common.DB.Find(&ranks)
+			response.Success(ctx, gin.H{"ranks": ranks}, "Info success")
+			ctx.JSON(http.StatusOK, gin.H{
+				"code": 200,
+				"data": gin.H{
+					"ranks": ranks,
+				},
+			})
+		}
+	case "3":
+		{
+			var ranks []model.NormalRank
+			common.DB.Find(&ranks)
+			response.Success(ctx, gin.H{"ranks": ranks}, "Info success")
+			ctx.JSON(http.StatusOK, gin.H{
+				"code": 200,
+				"data": gin.H{
+					"ranks": ranks,
+				},
+			})
+		}
+	case "4":
+		{
+			var ranks []model.HardRank
+			common.DB.Find(&ranks)
+			response.Success(ctx, gin.H{"ranks": ranks}, "Info success")
+			ctx.JSON(http.StatusOK, gin.H{
+				"code": 200,
+				"data": gin.H{
+					"ranks": ranks,
+				},
+			})
+		}
+	case "5":
+		{
+			var ranks []model.VeryHardRank
+			common.DB.Find(&ranks)
+			response.Success(ctx, gin.H{"ranks": ranks}, "Info success")
+			ctx.JSON(http.StatusOK, gin.H{
+				"code": 200,
+				"data": gin.H{
+					"ranks": ranks,
+				},
+			})
+		}
+	}
+}
+
+func PostRankData(ctx *gin.Context) {
+	rankIndex := ctx.PostForm("rankIndex")
+	userId := ctx.PostForm("userId")
+	userName := ctx.PostForm("userName")
+	completeType := ctx.PostForm("completeType")
+
+	switch rankIndex {
+	case "1":
+		{
+			var dbRank model.RumenRank
+			common.DB.Where("Roleid = ?", userId).Find(&dbRank)
+			if dbRank.Roleid == 0 {
+				intuserId, _ := strconv.Atoi(userId)
+				switch completeType {
+				case "1":
+					{
+						dbRank := &model.RumenRank{Roleid: intuserId, Username: userName, GoldCount: 1, YinCount: 0, TongCount: 0}
+						common.DB.Create(dbRank)
+					}
+				case "2":
+					{
+						dbRank := &model.RumenRank{Roleid: intuserId, Username: userName, GoldCount: 0, YinCount: 1, TongCount: 0}
+						common.DB.Create(dbRank)
+					}
+				case "3":
+					{
+						dbRank := &model.RumenRank{Roleid: intuserId, Username: userName, GoldCount: 0, YinCount: 0, TongCount: 1}
+						common.DB.Create(dbRank)
+					}
+				}
+			} else {
+				switch completeType {
+				case "1":
+					{
+						goldCount := dbRank.GoldCount + 1
+						common.DB.Model(&dbRank).Update(model.RumenRank{GoldCount: goldCount})
+					}
+				case "2":
+					{
+						yinCount := dbRank.YinCount + 1
+						common.DB.Model(&dbRank).Update(model.RumenRank{YinCount: yinCount})
+					}
+				case "3":
+					{
+						tongCount := dbRank.TongCount + 1
+						common.DB.Model(&dbRank).Update(model.RumenRank{TongCount: tongCount})
+					}
+				}
+			}
+		}
+	case "2":
+		{
+			var dbRank model.EasyRank
+			common.DB.Where("Roleid = ?", userId).Find(&dbRank)
+			if dbRank.Roleid == 0 {
+				intuserId, _ := strconv.Atoi(userId)
+				switch completeType {
+				case "1":
+					{
+						dbRank := &model.EasyRank{Roleid: intuserId, Username: userName, GoldCount: 1, YinCount: 0, TongCount: 0}
+						common.DB.Create(dbRank)
+					}
+				case "2":
+					{
+						dbRank := &model.EasyRank{Roleid: intuserId, Username: userName, GoldCount: 0, YinCount: 1, TongCount: 0}
+						common.DB.Create(dbRank)
+					}
+				case "3":
+					{
+						dbRank := &model.EasyRank{Roleid: intuserId, Username: userName, GoldCount: 0, YinCount: 0, TongCount: 1}
+						common.DB.Create(dbRank)
+					}
+				}
+			} else {
+				switch completeType {
+				case "1":
+					{
+						goldCount := dbRank.GoldCount + 1
+						common.DB.Model(&dbRank).Update(model.EasyRank{GoldCount: goldCount})
+					}
+				case "2":
+					{
+						yinCount := dbRank.YinCount + 1
+						common.DB.Model(&dbRank).Update(model.EasyRank{YinCount: yinCount})
+					}
+				case "3":
+					{
+						tongCount := dbRank.TongCount + 1
+						common.DB.Model(&dbRank).Update(model.EasyRank{TongCount: tongCount})
+					}
+				}
+			}
+		}
+	case "3":
+		{
+			var dbRank model.NormalRank
+			common.DB.Where("Roleid = ?", userId).Find(&dbRank)
+			if dbRank.Roleid == 0 {
+				intuserId, _ := strconv.Atoi(userId)
+				switch completeType {
+				case "1":
+					{
+						dbRank := &model.NormalRank{Roleid: intuserId, Username: userName, GoldCount: 1, YinCount: 0, TongCount: 0}
+						common.DB.Create(dbRank)
+					}
+				case "2":
+					{
+						dbRank := &model.NormalRank{Roleid: intuserId, Username: userName, GoldCount: 0, YinCount: 1, TongCount: 0}
+						common.DB.Create(dbRank)
+					}
+				case "3":
+					{
+						dbRank := &model.NormalRank{Roleid: intuserId, Username: userName, GoldCount: 0, YinCount: 0, TongCount: 1}
+						common.DB.Create(dbRank)
+					}
+				}
+			} else {
+				switch completeType {
+				case "1":
+					{
+						goldCount := dbRank.GoldCount + 1
+						common.DB.Model(&dbRank).Update(model.NormalRank{GoldCount: goldCount})
+					}
+				case "2":
+					{
+						yinCount := dbRank.YinCount + 1
+						common.DB.Model(&dbRank).Update(model.NormalRank{YinCount: yinCount})
+					}
+				case "3":
+					{
+						tongCount := dbRank.TongCount + 1
+						common.DB.Model(&dbRank).Update(model.NormalRank{TongCount: tongCount})
+					}
+				}
+			}
+		}
+	case "4":
+		{
+			var dbRank model.HardRank
+			common.DB.Where("Roleid = ?", userId).Find(&dbRank)
+			if dbRank.Roleid == 0 {
+				intuserId, _ := strconv.Atoi(userId)
+				switch completeType {
+				case "1":
+					{
+						dbRank := &model.HardRank{Roleid: intuserId, Username: userName, GoldCount: 1, YinCount: 0, TongCount: 0}
+						common.DB.Create(dbRank)
+					}
+				case "2":
+					{
+						dbRank := &model.HardRank{Roleid: intuserId, Username: userName, GoldCount: 0, YinCount: 1, TongCount: 0}
+						common.DB.Create(dbRank)
+					}
+				case "3":
+					{
+						dbRank := &model.HardRank{Roleid: intuserId, Username: userName, GoldCount: 0, YinCount: 0, TongCount: 1}
+						common.DB.Create(dbRank)
+					}
+				}
+			} else {
+				switch completeType {
+				case "1":
+					{
+						goldCount := dbRank.GoldCount + 1
+						common.DB.Model(&dbRank).Update(model.HardRank{GoldCount: goldCount})
+					}
+				case "2":
+					{
+						yinCount := dbRank.YinCount + 1
+						common.DB.Model(&dbRank).Update(model.HardRank{YinCount: yinCount})
+					}
+				case "3":
+					{
+						tongCount := dbRank.TongCount + 1
+						common.DB.Model(&dbRank).Update(model.HardRank{TongCount: tongCount})
+					}
+				}
+			}
+		}
+	case "5":
+		{
+			var dbRank model.VeryHardRank
+			common.DB.Where("Roleid = ?", userId).Find(&dbRank)
+			if dbRank.Roleid == 0 {
+				intuserId, _ := strconv.Atoi(userId)
+				switch completeType {
+				case "1":
+					{
+						dbRank := &model.VeryHardRank{Roleid: intuserId, Username: userName, GoldCount: 1, YinCount: 0, TongCount: 0}
+						common.DB.Create(dbRank)
+					}
+				case "2":
+					{
+						dbRank := &model.VeryHardRank{Roleid: intuserId, Username: userName, GoldCount: 0, YinCount: 1, TongCount: 0}
+						common.DB.Create(dbRank)
+					}
+				case "3":
+					{
+						dbRank := &model.VeryHardRank{Roleid: intuserId, Username: userName, GoldCount: 0, YinCount: 0, TongCount: 1}
+						common.DB.Create(dbRank)
+					}
+				}
+			} else {
+				switch completeType {
+				case "1":
+					{
+						goldCount := dbRank.GoldCount + 1
+						common.DB.Model(&dbRank).Update(model.VeryHardRank{GoldCount: goldCount})
+					}
+				case "2":
+					{
+						yinCount := dbRank.YinCount + 1
+						common.DB.Model(&dbRank).Update(model.VeryHardRank{YinCount: yinCount})
+					}
+				case "3":
+					{
+						tongCount := dbRank.TongCount + 1
+						common.DB.Model(&dbRank).Update(model.VeryHardRank{TongCount: tongCount})
+					}
+				}
+			}
+		}
 	}
 
-	connid++
-	uniid := connid
-	ConnMap[connid] = ws
-	go handleClient(ws, uniid)
+	ctx.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"data": gin.H{
+			"type": "PostRank",
+		},
+	})
 }
 
 // func Resigter(ctx *gin.Context) {

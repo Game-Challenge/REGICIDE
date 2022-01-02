@@ -37,7 +37,11 @@ func InitDB() *gorm.DB {
 
 	//自动创建数据表
 	db.AutoMigrate(&model.User{})
-	// db.AutoMigrate(&model.Rank{})
+	db.AutoMigrate(&model.RumenRank{})
+	db.AutoMigrate(&model.EasyRank{})
+	db.AutoMigrate(&model.NormalRank{})
+	db.AutoMigrate(&model.HardRank{})
+	db.AutoMigrate(&model.VeryHardRank{})
 	DB = db
 	return db
 }

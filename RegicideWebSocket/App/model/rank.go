@@ -13,3 +13,53 @@ type Rank struct {
 	Hard     int    `gorm:int(11);not null`
 	VeryHard int    `gorm:int(11);not null`
 }
+
+type RumenRank struct {
+	gorm.Model
+	Name      string `gorm":type:varchar(20);not null"`
+	Username  string `gorm:varchar(11);not null`
+	Roleid    int    `gorm:int(11);not null`
+	GoldCount int    `gorm:int(11);not null`
+	YinCount  int    `gorm:int(11);not null`
+	TongCount int    `gorm:int(11);not null`
+}
+
+type EasyRank struct {
+	gorm.Model
+	Name      string `gorm":type:varchar(20);not null"`
+	Username  string `gorm:varchar(11);not null`
+	Roleid    int    `gorm:int(11);not null`
+	GoldCount int    `gorm:int(11);not null`
+	YinCount  int    `gorm:int(11);not null`
+	TongCount int    `gorm:int(11);not null`
+}
+
+type NormalRank struct {
+	gorm.Model
+	Name      string `gorm":type:varchar(20);not null"`
+	Username  string `gorm:varchar(11);not null`
+	Roleid    int    `gorm:int(11);not null`
+	GoldCount int    `gorm:int(11);not null`
+	YinCount  int    `gorm:int(11);not null`
+	TongCount int    `gorm:int(11);not null`
+}
+
+type HardRank struct {
+	gorm.Model
+	Name      string `gorm":type:varchar(20);not null"`
+	Username  string `gorm:varchar(11);not null`
+	Roleid    int    `gorm:int(11);not null`
+	GoldCount int    `gorm:int(11);not null`
+	YinCount  int    `gorm:int(11);not null`
+	TongCount int    `gorm:int(11);not null`
+}
+
+type VeryHardRank struct {
+	gorm.Model
+	Name      string `gorm":type:varchar(20);not null"`
+	Username  string `gorm:varchar(11);not null`
+	Roleid    int    `gorm:int(11);not null`
+	GoldCount int    `gorm:int(11);not null`
+	YinCount  int    `gorm:int(11);not null`
+	TongCount int    `gorm:int(11);not null`
+}

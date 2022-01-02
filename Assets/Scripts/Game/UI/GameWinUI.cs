@@ -23,6 +23,10 @@ class GameWinUI : UIWindow
         if (GameDataMgr.Instance.HadLogin)
         {
             m_btnPushRank.gameObject.SetActive(false);
+            var rankIndex = GameMgr.Instance.GameLevel;
+            var userId = GameOnlineMgr.Instance.MyActorId;
+            var completeType = -GameMgr.Instance.LeftJokerCount + 3;
+            RankDataMgr.Instance.PushRankData(rankIndex, userId, completeType);
         }
     }
 
@@ -39,7 +43,7 @@ class GameWinUI : UIWindow
     }
     private void OnClickPushRankBtn()
     {
-        RankDataMgr.Instance.PushRankData();
+        //RankDataMgr.Instance.PushRankData();
     }
     #endregion
 
