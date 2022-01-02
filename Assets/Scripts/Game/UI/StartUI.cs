@@ -46,35 +46,39 @@ class StartUI : UIWindow
     }
     private void OnClickConnectBtn()
     {
-        WebSocketMgr.Instance.Init((() =>
+        if (GameClient.Instance.Status != GameClientStatus.StatusConnect)
         {
-            Close();
-            UISys.Mgr.ShowWindow<RoomUI>();
-        }));
-      
+            WebSocketMgr.Instance.Init((() =>
+            {
+                UISys.Mgr.ShowWindow<GameLoginUI>();
+            }));
+        }
+
+        if (GameDataMgr.Instance.HadLogin)
+        {
+            UISys.ShowTipMsg("您已经登录了");
+            return;
+        }
+
         if (GameClient.Instance.Status == GameClientStatus.StatusConnect)
         {
-            //WebSocketMgr.Instance.Init();
-            //Close();
-            //UISys.Mgr.ShowWindow<RoomUI>();
             UISys.ShowTipMsg("您已经连接到了服务器");
         }
         else
         {
             UISys.ShowTipMsg("亲，这个还没有做，快加群来催我(╯▔皿▔)╯！");
-            //GameClient.Instance.Connect();
         }
     }
 
     private void OnClickMutiplyBtn()
     {
-        if (GameClient.Instance.Status == GameClientStatus.StatusConnect)
+        if (GameDataMgr.Instance.HadLogin)
         {
             UISys.Mgr.ShowWindow<RoomUI>();
         }
         else
         {
-            UISys.ShowTipMsg("多人模式请先连接服务器哦~");
+            UISys.ShowTipMsg("多人模式请登录或注册哦~");
         }
     }
     #endregion

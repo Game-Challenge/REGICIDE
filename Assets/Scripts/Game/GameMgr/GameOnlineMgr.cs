@@ -12,6 +12,9 @@ class GameOnlineMgr:Singleton<GameOnlineMgr>
     public int PlayerNum { private set; get; }  //玩家数目
     public int GameId { private set; get; }     //游戏ID
     public int GameIndex { private set; get; }  //当前是玩家几号
+
+
+    public string MyName { private set; get; }  //我的用户名
     public int MyActorId { private set; get; }  //我的唯一编号
 
     public bool IsOnlineGameIng;
@@ -28,6 +31,8 @@ class GameOnlineMgr:Singleton<GameOnlineMgr>
         int.TryParse(mainPack.Str, out result);
 
         MyActorId = result;
+
+        MyName = mainPack.LoginPack.Username;
 
         Debug.Log("初始化成功："+MyActorId);
     }

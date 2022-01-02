@@ -2,7 +2,6 @@ package tserver
 
 import (
 	GameProto "Regicide/GameProto"
-	"fmt"
 
 	"github.com/gorilla/websocket"
 )
@@ -25,13 +24,13 @@ func InstanceClient(conn *websocket.Conn, uniid uint32) *Client {
 
 	client := Client{Addr: rAddr.String(), Conn: conn, Uniid: uniid, Actor: actor}
 
-	mainpack := &GameProto.MainPack{}
+	// mainpack := &GameProto.MainPack{}
 
-	mainpack.Str = fmt.Sprint(uniid) //string(uniid)
+	// mainpack.Str = fmt.Sprint(uniid) //string(uniid)
 
-	mainpack.Actioncode = GameProto.ActionCode_Login
+	// mainpack.Actioncode = GameProto.ActionCode_Login
 
-	client.Send(mainpack)
+	// client.Send(mainpack)
 
 	return &client
 }

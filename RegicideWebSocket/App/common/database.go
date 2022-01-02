@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/spf13/viper"
 	"github.com/wonderivan/logger"
 )
@@ -36,7 +37,7 @@ func InitDB() *gorm.DB {
 
 	//自动创建数据表
 	db.AutoMigrate(&model.User{})
-	db.AutoMigrate(&model.Actor{})
+	// db.AutoMigrate(&model.Rank{})
 	DB = db
 	return db
 }

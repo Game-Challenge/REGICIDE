@@ -6,6 +6,7 @@ import (
 	server "Regicide/App/tserver"
 	GameProto "Regicide/GameProto"
 	"errors"
+	"fmt"
 
 	"github.com/jinzhu/gorm"
 	"golang.org/x/crypto/bcrypt"
@@ -37,6 +38,7 @@ func Register(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (
 		return nil, errors.New("client is nil")
 	}
 	userNameStr := mainpack.LoginPack.Username
+	var RoleId int
 	DB := common.GetDB()
 	if isUserExist(DB, userNameStr) {
 		mainpack.Str = "已经存在用户"
@@ -46,15 +48,18 @@ func Register(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (
 		//创建用户
 		//加密密码
 		roleid := InstanceRoleId(DB)
+		RoleId = roleid
 		hasedPassword, _ := bcrypt.GenerateFromPassword([]byte(mainpack.LoginPack.Password), bcrypt.DefaultCost)
 		newUser := model.User{
-			Name:     userNameStr,
+			Name:     mainpack.Str,
 			Username: userNameStr,
 			Password: string(hasedPassword),
 			Roleid:   roleid,
 		}
 		DB.Create(&newUser)
 	}
+
+	mainpack.Str = fmt.Sprint(RoleId)
 	mainpack.Returncode = GameProto.ReturnCode_Success
 	return mainpack, nil
 }
@@ -76,7 +81,15 @@ func CheckLogin(mainpack *GameProto.MainPack, client *server.Client) bool {
 		return false
 	}
 
+	for i := 0; i < len(server.ClientList); i++ {
+		if user.Roleid == int(server.ClientList[i].RoleId) {
+			mainpack.Str = "已经登录了该账号"
+			return false
+		}
+	}
+
 	client.RoleId = uint32(user.Roleid)
+	mainpack.Str = fmt.Sprint(client.RoleId)
 	return true
 }
 

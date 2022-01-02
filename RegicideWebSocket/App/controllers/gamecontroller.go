@@ -21,8 +21,8 @@ func Attack(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*G
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	room := client.RoomInfo
-	client.Actor.CuttrntCards = tserver.RemoveCardData
+	// room := client.RoomInfo
+	client.Actor.CuttrntCards = tserver.RemoveCardData(client.Actor.CuttrntCards, nil)
 	return nil, nil
 }
 

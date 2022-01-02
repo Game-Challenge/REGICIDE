@@ -52,6 +52,8 @@ public class WebSocketMgr : UnitySingleton<WebSocketMgr>
 
             m_Action = null;
         }
+
+        GameClient.Instance.Status = GameClientStatus.StatusConnect;
         //GameClient.Instance.RegActionHandle((int)ActionCode.StartGame, (pack =>{Debug.Log(pack.Str);} ));
         //RoomDataMgr.Instance.StartGameReq();
     }
@@ -118,6 +120,7 @@ public class WebSocketMgr : UnitySingleton<WebSocketMgr>
     {
         Debug.LogFormat("OnClosed: code={0}, msg={1}", code, message);
         webSocket = null;
+        GameClient.Instance.Status = GameClientStatus.StatusClose;
     }
 
     void OnError(WebSocket ws, string reason)

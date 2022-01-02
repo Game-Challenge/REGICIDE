@@ -11,7 +11,8 @@ import (
 
 func main() {
 	print("START REGICIDE SERVER")
-	// InitConfig()
+	InitConfig()
+	InitDatabase()
 	InitControllers()
 
 	tserver.StartServer(":12345")
@@ -38,5 +39,6 @@ func InitConfig() {
 
 func InitDatabase() {
 	db := common.InitDB()
-	defer db.Close()
+	print(db)
+	// defer db.Close()
 }
