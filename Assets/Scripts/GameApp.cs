@@ -54,6 +54,7 @@ sealed partial class GameApp : UnitySingleton<GameApp>
         {
             Debug.Log("是横屏");
             UISys.Mgr.ShowWindow<StartUI>();
+            UISys.Mgr.ShowWindow<MsgUI>(UI_Layer.Top);
         }
         else
         { 

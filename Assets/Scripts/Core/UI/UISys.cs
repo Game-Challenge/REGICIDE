@@ -56,6 +56,9 @@ class UISys:BaseLogicSys<UISys>
 
     public static void ShowTipMsg(string tex,float waitTime = 0, int diyTime = 0)
     {
+        EventCenter.Instance.EventTrigger<string>(TipsEvent.Log, tex);
+        return;
+
         if (waitTime != 0)
         {
             //MonoManager.Instance.StartCoroutine(ShowTip(tex, waitTime));
