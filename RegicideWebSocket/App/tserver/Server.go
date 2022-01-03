@@ -2,6 +2,7 @@ package tserver
 
 import (
 	"Regicide/App/middleware"
+	"io"
 	"net/http"
 	"os"
 
@@ -36,6 +37,9 @@ func Start(server Server) {
 	CreateRoom("断剑重铸之日")
 	print("START REGICIDE SERVER")
 	r := gin.Default()
+	f, _ := os.Create("regicide.log")
+	gin.DefaultWriter = io.MultiWriter(f)
+
 	r.Use(middleware.CrosMiddleWare())
 	r.GET("/ws", Ws)
 	r.POST("/rankList", GetRankList)

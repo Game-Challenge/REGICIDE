@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/spf13/viper"
+	"github.com/wonderivan/logger"
 )
 
 func main() {
@@ -14,6 +15,7 @@ func main() {
 	InitConfig()
 	InitDatabase()
 	InitControllers()
+	InitLogger()
 
 	tserver.StartServer(":12345")
 	select {}
@@ -41,4 +43,9 @@ func InitDatabase() {
 	db := common.InitDB()
 	print(db)
 	// defer db.Close()
+}
+
+func InitLogger() {
+	print("\n 	 _   _      _ _    __        __         _     _ \n	| | | | ___| | | __\\ \\      / /__  _ __| | __| |\n	| |_| |/ _ \\ | |/ _ \\ \\ /\\ / / _ \\| '__| |/ _` |\n	|  _  |  __/ | | (_) \\ V  V / (_) | |  | | (_| |\n	|_| |_|\\___|_|_|\\___/ \\_/\\_/ \\___/|_|  |_|\\__,_|")
+	logger.SetLogger("config/log.json")
 }

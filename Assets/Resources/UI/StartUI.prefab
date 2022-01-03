@@ -288,6 +288,7 @@ GameObject:
   - component: {fileID: 2267613183492472653}
   - component: {fileID: 3837416945071527035}
   - component: {fileID: 5935999792943140402}
+  - component: {fileID: 4478064715375731785}
   m_Layer: 5
   m_Name: m_textStartGame
   m_TagString: Untagged
@@ -420,6 +421,21 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &4478064715375731785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2336235330063102652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 3, y: -3}
+  m_UseGraphicAlpha: 1
 --- !u!1 &3205442546536046753
 GameObject:
   m_ObjectHideFlags: 0

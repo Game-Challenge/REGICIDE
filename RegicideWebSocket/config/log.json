@@ -5,7 +5,7 @@
         "color": true
     },
     "File": {
-        "filename": "app.log",
+        "filename": "regicide.log",
         "level": "TRAC",
         "daily": true,
         "maxlines": 1000000,

@@ -76,11 +76,29 @@ public class RankDataMgr : Singleton<RankDataMgr>
             {
                 if (a.YinCount!=b.YinCount)
                 {
-                    return -a.YinCount.CompareTo(-b.YinCount);
+                    if (a.YinCount > b.YinCount)
+                    {
+                        return -1;
+                    }
+                    else
+                    {
+                        return 1;
+                    }
                 }
                 else
                 {
-                    return -a.TongCount.CompareTo(-b.TongCount);
+                    if (a.TongCount != b.TongCount)
+                    {
+                        if (a.TongCount > b.TongCount)
+                        {
+                            return -1;
+                        }
+                        else
+                        {
+                            return 1;
+                        }
+                    }
+                    return a.TongCount.CompareTo(b.TongCount);
                 }
             }
             else

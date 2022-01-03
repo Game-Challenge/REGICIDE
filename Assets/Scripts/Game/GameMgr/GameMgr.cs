@@ -231,7 +231,18 @@ partial class GameMgr : Singleton<GameMgr>
             {
                 if (m_choiceList[i].IsJoker)
                 {
-                    UISys.ShowTipMsg("Joker无法遗弃！！！");
+                    //UISys.ShowTipMsg("Joker无法遗弃！！！");
+                    if (LeftJokerCount>0)
+                    {
+                        LeftJokerCount--;
+                        UISys.ShowTipMsg("弃牌阶段使用Joker");
+                        GameMgr.Instance.TurnJokerCard();
+                        EventCenter.Instance.EventTrigger("RefreshGameUI");
+                    }
+                    else
+                    {
+                        UISys.ShowTipMsg("没有Joker了");
+                    }
                     return;
                 }
             }
@@ -495,6 +506,8 @@ partial class GameMgr : Singleton<GameMgr>
             LeftJokerCount--;
         }
 
+        BattleMgr.Instance.ImpactSkill(attackData, BossActor);
+
         for (int i = 0; i < m_choiceList.Count; i++)
         {
             var card = m_choiceList[i];
@@ -511,8 +524,6 @@ partial class GameMgr : Singleton<GameMgr>
         }
 
         m_choiceList.Clear();
-
-        BattleMgr.Instance.ImpactSkill(attackData, BossActor);
 
         EventCenter.Instance.EventTrigger("RefreshGameUI");
     }
@@ -538,7 +549,7 @@ partial class GameMgr : Singleton<GameMgr>
                 UISys.ShowTipMsg("受到君主的伤害:" + value);
                 UISys.ShowTipMsg(string.Format("您需要遗弃:{0}点数的牌", value));
             }
-            else
+            else if (LeftJokerCount <= 0)
             {
                 UISys.Mgr.ShowWindow<GameLoseUI>().InitUI("游戏失败，你被君主击败了！");
                 UISys.ShowTipMsg("您已无法承受君主的伤害。");
@@ -687,6 +698,14 @@ partial class GameMgr : Singleton<GameMgr>
         m_stateIndex = (int)state;
         UISys.ShowTipMsg("当前阶段:" + GetCurrentStateStr());
         EventCenter.Instance.EventTrigger("UpdateGameState");
+        if (gameState == GameState.STATEONE)
+        {
+            if (m_curList.Count <= 0 && LeftJokerCount <= 0)
+            {
+                UISys.Mgr.ShowWindow<GameLoseUI>().InitUI("游戏失败，你被君主击败了！");
+                UISys.ShowTipMsg("您没有任何牌了。");
+            }
+        }
     }
 
     public string GetCurrentStateStr()
