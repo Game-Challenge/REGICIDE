@@ -138,6 +138,30 @@ public class BossActor: GameActor
 
     public void Hurt(int value)
     {
+        MonoManager.Instance.StartCoroutine(Hurt(value, 0.5f));
+        return;
+        Hp -= value;
+        if (Hp <= 0)
+        {
+            EventCenter.Instance.EventTrigger("BossDie", Hp == 0); //boss被归化，变成卡堆第一张
+            Hp = 0;
+        }
+        else
+        {
+            MonoManager.Instance.StartCoroutine(BossAttack());
+        }
+#if UNITY_EDITOR
+        Debug.Log("Boss Hp:" + Hp);
+#endif
+        if (Hp != 0)
+        {
+            EventCenter.Instance.EventTrigger("BossDataRefresh", this);
+        }
+    }
+
+    IEnumerator Hurt(int value ,float waitsecond)
+    {
+        yield return new WaitForSeconds(waitsecond);
         Hp -= value;
         if (Hp <= 0)
         {

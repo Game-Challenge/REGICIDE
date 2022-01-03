@@ -294,6 +294,8 @@ partial class GameMgr : Singleton<GameMgr>
             m_myList.Add(card);
         }
 
+        RandomSort(m_myList);
+
         for (int i = 0; i < count; i++)
         {
             var card = m_useList[0];
