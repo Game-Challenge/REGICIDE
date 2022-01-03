@@ -155,7 +155,8 @@ partial class GameMgr : Singleton<GameMgr>
 
     public List<CardData> RandTurnCards()
     {
-        var count = m_myList.Count < 4 ? m_myList.Count : 4;
+        var randomCardNum = (5 - GameLevel) < 0 ? 1 : (5 - GameLevel);
+        var count = m_myList.Count < randomCardNum ? m_myList.Count : randomCardNum;
         var temp = new List<CardData>();
         bool complete = false;
         int randCount = 0;

@@ -60,6 +60,9 @@ sealed partial class GameApp : UnitySingleton<GameApp>
         { 
             UnityUtil.RmvMonoBehaviour<CanvasScaler>(UISys.Mgr.canvas.gameObject);
             Debug.Log("是竖屏");
+
+            var ui = UISys.Mgr.ShowWindow<MsgUI>(UI_Layer.Top);
+            ui.gameObject.transform.localScale = new Vector3(2, 2, 1);
             UISys.Mgr.ShowWindow<StartUILand>();
         }
 

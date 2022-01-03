@@ -68,7 +68,7 @@ class RankListUI : UIWindow
         AdjustIconNum(m_itemRanks, count, m_tfContent,m_itemRank);
         for (int i = 0; i < count; i++)
         {
-            m_itemRanks[i].Init(rankDatas[i]);
+            m_itemRanks[i].Init(rankDatas[i],i+1);
         }
     }
 
@@ -98,6 +98,7 @@ class ItemRank : UIWindowWidget
     private Text m_textUserName;
     private Text m_textNum;
     private Text m_textRoomId;
+    private Text m_textRankIndex;
     protected override void ScriptGenerator()
     {
         m_tfContent = FindChild("m_tfContent");
@@ -105,13 +106,15 @@ class ItemRank : UIWindowWidget
         m_textUserName = FindChildComponent<Text>("m_tfContent/m_textUserName");
         m_textNum = FindChildComponent<Text>("m_tfContent/m_textNum");
         m_textRoomId = FindChildComponent<Text>("m_textRoomId");
+        m_textRankIndex = FindChildComponent<Text>("m_tfContent/m_textRankIndex");
     }
     #endregion
 
-    public void Init(RankData data)
+    public void Init(RankData data,int rankIndex)
     {
         m_textUserName.text = data.name;
-        m_textNum.text = String.Format("金奖:{0}/银奖:{1}/铜奖:{2}/",data.GoldCount,data.YinCount,data.TongCount);
+        m_textNum.text = String.Format("<color=#FFC200>金奖:{0}</color> <color=#FFF2C7>银奖:{1}</color> <color=#B09544>铜奖:{2}</color>", data.GoldCount,data.YinCount,data.TongCount);
+        m_textRankIndex.text = rankIndex.ToString();
     }
 
     #region 事件
