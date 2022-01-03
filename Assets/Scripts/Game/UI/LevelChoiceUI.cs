@@ -105,13 +105,13 @@ class ItemLevel : UIWindowWidget
             case 4:
             {
                 m_textRoomInfo.text = "困难";
-                    m_textNum.text = (13).ToString();
+                    m_textNum.text = (14).ToString();
                     break;
             }
             case 5:
                 {
                     m_textRoomInfo.text = "地狱";
-                    m_textNum.text = (14).ToString();
+                    m_textNum.text = "7+7";
                     break;
                 }
         }

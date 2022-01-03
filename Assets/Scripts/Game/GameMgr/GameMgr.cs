@@ -132,6 +132,12 @@ partial class GameMgr : Singleton<GameMgr>
             UISys.ShowTipMsg("随机牌库与我的手牌数目需要相同！");
             return;
         }
+        var ableChangeCard = (5 - GameLevel) < 1 ? 1 : (5 - GameLevel);
+        if (choiceRandCount > ableChangeCard)
+        {
+            UISys.ShowTipMsg(string.Format("该难度下一次最多调度 {0} 张手牌！",ableChangeCard));
+            return;
+        }
 
         for (int i = 0; i < m_choiceRandomList.Count; i++)
         {
@@ -155,7 +161,7 @@ partial class GameMgr : Singleton<GameMgr>
 
     public List<CardData> RandTurnCards()
     {
-        var randomCardNum = (5 - GameLevel) < 0 ? 1 : (5 - GameLevel);
+        var randomCardNum = 4;
         var count = m_myList.Count < randomCardNum ? m_myList.Count : randomCardNum;
         var temp = new List<CardData>();
         bool complete = false;
@@ -173,6 +179,11 @@ partial class GameMgr : Singleton<GameMgr>
                     hadCard = true;
                     break;
                 }
+                
+            }
+            if (card.IsBoss)
+            {
+                hadCard = true;
             }
 
             if (!hadCard)
@@ -294,7 +305,7 @@ partial class GameMgr : Singleton<GameMgr>
             m_myList.Add(card);
         }
 
-        RandomSort(m_myList);
+        //RandomSort(m_myList);
 
         for (int i = 0; i < count; i++)
         {
@@ -385,8 +396,11 @@ partial class GameMgr : Singleton<GameMgr>
         
         if (beFriend)
         {
-            UISys.ShowTipMsg("你劝服了这位君主！");
-            m_myList.Add(BossActor.cardData);
+            if(BossActor.cardData.cardType!=CardType.BLACK_JOKER && BossActor.cardData.cardType != CardType.RED_JOKER)
+            {
+                UISys.ShowTipMsg("你劝服了这位君主！");
+                m_myList.Insert(0,BossActor.cardData);
+            }
             //m_curList.Add(BossActor.cardData);
             InitBoss();
         }
@@ -508,20 +522,24 @@ partial class GameMgr : Singleton<GameMgr>
             LeftJokerCount--;
         }
 
+        for (int i = 0; i < m_choiceList.Count; i++)
+        {
+            var card = m_choiceList[i];
+
+            if (!card.IsJoker)
+            {
+                m_curList.Remove(card);
+            }
+        }
         BattleMgr.Instance.ImpactSkill(attackData, BossActor);
 
         for (int i = 0; i < m_choiceList.Count; i++)
         {
             var card = m_choiceList[i];
 
-            if (card.IsJoker)
-            {
-                //LeftJokerCount--;
-            }
-            else
+            if (!card.IsJoker)
             {
                 m_useList.Add(card);
-                m_curList.Remove(card);
             }
         }
 
@@ -555,6 +573,15 @@ partial class GameMgr : Singleton<GameMgr>
             {
                 UISys.Mgr.ShowWindow<GameLoseUI>().InitUI("游戏失败，你被君主击败了！");
                 UISys.ShowTipMsg("您已无法承受君主的伤害。");
+            }
+            else
+            {
+                UISys.ShowTipMsg("您已无法承受君主的伤害。");
+                UISys.ShowTipMsg("已自动消耗一张[JOKER]重置手牌。");
+                TurnJokerCard();
+                LeftJokerCount--;
+                EventCenter.Instance.EventTrigger("RefreshGameUI");
+                
             }
         }
         
@@ -595,6 +622,30 @@ partial class GameMgr : Singleton<GameMgr>
         m_bossList.Sort((CardData a,CardData b) => {
             return a.CardValue.CompareTo(b.CardValue);
         });
+        if (GameLevel == 5)
+        {
+            m_bossList.Sort((CardData a, CardData b) => {
+                int xa = 0;
+                int xb = 0;
+                if (a.cardType == CardType.HEART || a.cardType == CardType.DIAMOND || a.cardType==CardType.RED_JOKER)
+                {
+                    xa = 1;
+                }
+                else
+                {
+                    xa = 0;
+                }
+                if (b.cardType == CardType.HEART || b.cardType == CardType.DIAMOND || b.cardType == CardType.RED_JOKER)
+                {
+                    xb = 1;
+                }
+                else
+                {
+                    xb = 0;
+                }
+                return xa.CompareTo(xb);
+            });
+        }
     }
 
     
@@ -606,7 +657,7 @@ partial class GameMgr : Singleton<GameMgr>
         turnCount = m_myList.Count > turnCount ? turnCount : m_myList.Count;
         for (int i = 0; i < turnCount; i++)
         {
-            var card = m_myList[m_myList.Count-1];
+            var card = m_myList[0];
             temp.Add(card);
             m_myList.Remove(card);
         }
@@ -634,7 +685,7 @@ partial class GameMgr : Singleton<GameMgr>
         turnCount = couldTurnCount > turnCount ? turnCount : couldTurnCount;
         for (int i = 0; i < turnCount; i++)
         {
-            var card = m_myList[m_myList.Count-1];
+            var card = m_myList[0];
             temp.Add(card);
             m_myList.Remove(card);
         }
@@ -742,7 +793,7 @@ partial class GameMgr : Singleton<GameMgr>
                 NeedKillBossCount = 12;
                 break;
             case 4:
-                NeedKillBossCount = 13;
+                NeedKillBossCount = 14;
                 break;
             case 5:
                 NeedKillBossCount = 14;

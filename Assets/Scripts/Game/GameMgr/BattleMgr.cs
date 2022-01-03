@@ -46,19 +46,8 @@ public struct AttackData
             }
             else
             {
-                var value = card.CardValue;
-                if (card.CardValue == 11)
-                {
-                    value = 10;
-                }
-                else if (card.CardValue == 12)
-                {
-                    value = 15;
-                }
-                else if (card.CardValue == 13)
-                {
-                    value = 20;
-                }
+                var value = card.CardPower;
+                
                 Damage += value;
             }
 
