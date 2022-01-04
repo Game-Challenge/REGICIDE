@@ -4,6 +4,8 @@ import (
 	GameProto "Regicide/GameProto"
 	"errors"
 	"fmt"
+
+	"github.com/wonderivan/logger"
 )
 
 func main() {
@@ -102,10 +104,18 @@ func RemoveCardData(values []*GameProto.CardData, val *GameProto.CardData) []*Ga
 	if len(values) <= 0 {
 		return values
 	}
+	if val == nil {
+		logger.Error("error RemoveCardData val is nil")
+		return values
+	}
 
 	res := []*GameProto.CardData{}
 
 	for i := 0; i < len(values); i++ {
+		if values[i] == nil {
+			logger.Error("error RemoveCardData values:", i, " is nil")
+			continue
+		}
 		if values[i].CardInt == val.CardInt {
 			continue
 		}

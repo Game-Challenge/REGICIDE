@@ -5,7 +5,7 @@ using RegicideProtocol;
 using UnityEngine;
 using CardData = RegicideProtocol.CardData;
 
-class GameOnlineMgr:Singleton<GameOnlineMgr>
+class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
 {
     public GAMESTATE Gamestate { private set; get; }//当前状态
     public int MyGameIndex { private set; get; }//我是几号,第几个出牌的
@@ -38,7 +38,7 @@ class GameOnlineMgr:Singleton<GameOnlineMgr>
     }
 
     #region 协议
-    public void Init()
+    public override void Init()
     {
         GameClient.Instance.RegActionHandle((int)ActionCode.Attack, AttackRes);
         GameClient.Instance.RegActionHandle((int)ActionCode.Skill, SkillRes);
@@ -181,7 +181,9 @@ class GameOnlineMgr:Singleton<GameOnlineMgr>
 
     private void AttackRes(MainPack mainPack)
     {
+        Debug.Log(mainPack);
         GameMgr.Instance.m_choiceList.Clear();
+        //EventCenter.Instance.EventTrigger("");
         
     }
     #endregion

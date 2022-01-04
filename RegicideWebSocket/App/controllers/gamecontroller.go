@@ -5,6 +5,8 @@ import (
 	server "Regicide/App/tserver"
 	GameProto "Regicide/GameProto"
 	"errors"
+
+	"github.com/wonderivan/logger"
 )
 
 func InitGameController() {
@@ -35,10 +37,24 @@ func Attack(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*G
 	}
 	choiceCards := mainpack.Roompack[0].ActorPack[0].CuttrntCards
 
-	client.AttackBoss(choiceCards)
+	err := client.AttackBoss(choiceCards)
 
-	client.Actor.CuttrntCards = tserver.RemoveCardData(choiceCards, nil)
-	return nil, nil
+	if err != nil {
+		logger.Error(err)
+		return nil, err
+	}
+
+	for i := 0; i < len(choiceCards); i++ {
+		client.Actor.CuttrntCards = tserver.RemoveCardData(client.Actor.CuttrntCards, choiceCards[i])
+	}
+
+	mainpack = &GameProto.MainPack{}
+	mainpack.Actioncode = GameProto.ActionCode_ATTACK
+	mainpack.Requestcode = GameProto.RequestCode_Game
+	// bossActor := client.RoomInfo.RoomPack.BossActor
+	mainpack.Roompack = append(mainpack.Roompack, client.RoomInfo.RoomPack)
+	mainpack.Returncode = GameProto.ReturnCode_Success
+	return mainpack, nil
 }
 
 func Skill(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*GameProto.MainPack, error) {
