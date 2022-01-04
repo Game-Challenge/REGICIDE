@@ -181,29 +181,30 @@ func (room *Room) InitBoss() *GameProto.ActorPack {
 		atk = 30
 		hp = 50
 	}
+	room.RoomPack.Gamestate.State = GameProto.GAMESTATE_STATE1
 	CURRENT_BOSS_INDEX++
 	CurrentBossBeJokerAtk = false
 	bossActor := &GameProto.ActorPack{ATK: atk, Hp: hp, ActorId: int32(cardData.CardInt), Index: int32(CURRENT_BOSS_INDEX), ActorJob: int32(((cardData.CardInt) / 13) + 1)}
-	room.CurrentBoss = bossActor
+	room.RoomPack.BossActor = bossActor
 	return bossActor
 }
 
-func (client *Client) AttackBoss(cardData []*GameProto.CardData) error {
+func (client *Client) AttackBoss(cardData []*GameProto.CardData) (bool, error) {
 	if client == nil {
-		return errors.New("client is nil")
+		return false, errors.New("client is nil")
 	}
 	room := client.RoomInfo
 	if room == nil {
-		return errors.New("room is nil")
+		return false, errors.New("room is nil")
 	}
 	if room.RoomPack == nil {
-		return errors.New("room.RoomPack is nil")
+		return false, errors.New("room.RoomPack is nil")
 	}
 	if room.RoomPack.BossActor == nil {
-		return errors.New("room.RoomPack.BossActor is nil")
+		return false, errors.New("room.RoomPack.BossActor is nil")
 	}
 	if room.RoomPack.Gamestate.State != GameProto.GAMESTATE_STATE1 {
-		return errors.New("is not GameProto.GAMESTATE_STATE1")
+		return false, errors.New("is not GameProto.GAMESTATE_STATE1")
 	}
 
 	bossActor := room.RoomPack.BossActor
@@ -212,16 +213,14 @@ func (client *Client) AttackBoss(cardData []*GameProto.CardData) error {
 
 	logger.Debug("attackData:", attackData)
 
-	ImpactSkill(client, bossActor, attackData)
-
-	return nil
+	return ImpactSkill(client, bossActor, attackData), nil
 }
 
 var CurrentBossType GameProto.CardType
 
 var CurrentBossBeJokerAtk bool
 
-func ImpactSkill(client *Client, bossActor *GameProto.ActorPack, attackData AttackData) {
+func ImpactSkill(client *Client, bossActor *GameProto.ActorPack, attackData AttackData) bool {
 	if attackData.HadJoker {
 		CurrentBossBeJokerAtk = true
 	}
@@ -247,11 +246,13 @@ func ImpactSkill(client *Client, bossActor *GameProto.ActorPack, attackData Atta
 	} else {
 		bossActor.Hp -= attackData.Damage
 	}
+	bossDie := bossActor.Hp <= 0
 	if bossActor.Hp <= 0 {
 		bossActor.Hp = 0
 		client.RoomInfo.InitBoss()
 	}
 	logger.Debug("bossActor:", bossActor)
+	return bossDie
 }
 
 func GenAttackData(cardData []*GameProto.CardData) AttackData {

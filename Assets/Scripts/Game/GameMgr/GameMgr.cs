@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using RegicideProtocol;
 using UnityEngine;
 using Random = System.Random;
 
@@ -765,6 +766,14 @@ partial class GameMgr : Singleton<GameMgr>
     {
         string str = String.Empty;
         stateMsgDic.TryGetValue(gameState, out str);
+        return str;
+    }
+
+    public string GetCurrentStateStr(GAMESTATE state)
+    {
+        var _state = (GameState)((int)state+1);
+        string str = String.Empty;
+        stateMsgDic.TryGetValue(_state, out str);
         return str;
     }
 

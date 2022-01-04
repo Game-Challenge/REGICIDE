@@ -7,7 +7,22 @@ using CardData = RegicideProtocol.CardData;
 
 class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
 {
-    public GAMESTATE Gamestate { private set; get; }//当前状态
+    private GAMESTATE gamestate;
+
+    public GAMESTATE Gamestate
+    {
+        private set
+        {
+            gamestate = value;
+            UISys.ShowTipMsg("当前阶段:" + GameMgr.Instance.GetCurrentStateStr(gamestate));
+            EventCenter.Instance.EventTrigger("UpdateGameState");
+        }
+        get
+        {
+            return gamestate;
+        }
+    } //当前状态
+
     public int MyGameIndex { private set; get; }//我是几号,第几个出牌的
     public int PlayerNum { private set; get; }  //玩家数目
     public int GameId { private set; get; }     //游戏ID
@@ -48,14 +63,19 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
 
     public void InitGame(MainPack mainPack)
     {
-        PlayerNum = mainPack.Roompack[0].ActorPack.Count;
-        Gamestate = (GAMESTATE)mainPack.Roompack[0].State;
-        GameIndex = mainPack.Roompack[0].CurrentIndex;
+        var roomPack = mainPack.Roompack[0];
 
+        PlayerNum = roomPack.ActorPack.Count;
 
-        ActorPacks = mainPack.Roompack[0].ActorPack.ToList();
+        Gamestate = roomPack.Gamestate.State;
 
-        var bossActorPack = mainPack.Roompack[0].BossActor;
+        //SetState(roomPack.Gamestate.State);
+
+        GameIndex = roomPack.CurrentIndex;
+
+        ActorPacks = roomPack.ActorPack.ToList();
+
+        var bossActorPack = roomPack.BossActor;
 
         BossActor = ActorMgr.Instance.InstanceBossActor(bossActorPack.ActorId);
 
@@ -96,6 +116,19 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
         }
     }
 
+    public void RefreshCardDataByActorId(int actorId, List<RegicideProtocol.CardData> cardDatas)
+    {
+        if (CardDictionary.ContainsKey(actorId))
+        {
+            var list = CardDictionary[actorId];
+            list.Clear();
+            for (int i = 0; i < cardDatas.Count; i++)
+            {
+                var cardData = CardMgr.Instance.InstanceData(cardDatas[i].CardInt);
+                list.Add(cardData);
+            }
+        }
+    }
 
     public List<global::CardData> GetCardDataByActorId(int actorId)
     {
@@ -117,6 +150,12 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
 
     public void AbordReq()
     {
+        if (Gamestate != GAMESTATE.State4)
+        {
+            UISys.ShowTipMsg("当前阶段:" + GameMgr.Instance.GetCurrentStateStr(Gamestate));
+            return;
+        }
+
         List<global::CardData> list = GameMgr.Instance.m_choiceList;
 
         MainPack mainPack = ProtoUtil.BuildMainPack(RequestCode.Game, ActionCode.Hurt);
@@ -147,6 +186,17 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
     private void AbordRes(MainPack mainPack)
     {
         GameMgr.Instance.m_choiceList.Clear();
+
+        var roomPack = mainPack.Roompack[0];
+        var playerPack = mainPack.Roompack[0].ActorPack;
+        foreach (var player in playerPack)
+        {
+            RefreshCardDataByActorId(player.ActorId, player.CuttrntCards.ToList());
+        }
+
+        Gamestate = roomPack.Gamestate.State;
+        BossActor.Refresh(roomPack.BossActor);
+        EventCenter.Instance.EventTrigger("RefreshGameUI");
     }
 
     private void DamageRes(MainPack mainPack)
@@ -162,9 +212,20 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
     #region Attack
     public void AttackReq()
     {
+        if (Gamestate != GAMESTATE.State1)
+        {
+            UISys.ShowTipMsg("当前阶段:" + GameMgr.Instance.GetCurrentStateStr(Gamestate));
+            return;
+        }
         MainPack mainPack = ProtoUtil.BuildMainPack(RequestCode.Game, ActionCode.Attack);
 
         List<global::CardData> list = GameMgr.Instance.m_choiceList;
+        if (list.Count == 0)
+        {
+            //UISys.ShowTipMsg("请选择卡牌！");
+            UISys.ShowTipMsg("当前阶段:" + GameMgr.Instance.GetCurrentStateStr(Gamestate));
+            return;
+        }
         RoomPack roomPack = new RoomPack();
         ActorPack actorPack = new ActorPack();
 
@@ -181,10 +242,19 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
 
     private void AttackRes(MainPack mainPack)
     {
-        Debug.Log(mainPack);
         GameMgr.Instance.m_choiceList.Clear();
-        //EventCenter.Instance.EventTrigger("");
-        
+
+        var roomPack = mainPack.Roompack[0];
+        var playerPack = mainPack.Roompack[0].ActorPack;
+        foreach (var player in playerPack)
+        {
+            RefreshCardDataByActorId(player.ActorId,player.CuttrntCards.ToList());
+        }
+
+        Gamestate = roomPack.Gamestate.State;
+        BossActor.Refresh(roomPack.BossActor);
+        EventCenter.Instance.EventTrigger("RefreshGameUI");
+
     }
     #endregion
 

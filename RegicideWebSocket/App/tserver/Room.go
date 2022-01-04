@@ -9,9 +9,8 @@ import (
 )
 
 type Room struct {
-	ClientList  []*Client
-	RoomPack    *GameProto.RoomPack
-	CurrentBoss *GameProto.ActorPack
+	ClientList []*Client
+	RoomPack   *GameProto.RoomPack
 }
 
 type BossActor struct {
@@ -89,8 +88,6 @@ func (room *Room) StartGame(client *Client) {
 	room.InitCards()
 	room.InitMyCards()
 	room.InitBoss()
-
-	room.RoomPack.BossActor = room.CurrentBoss
 
 	mainPack := &GameProto.MainPack{}
 	mainPack.Requestcode = GameProto.RequestCode_Room

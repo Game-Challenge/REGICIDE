@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class BossActor: GameActor
+public class BossActor : GameActor
 {
     public CardData cardData { private set; get; }
 
@@ -21,6 +21,7 @@ public class BossActor: GameActor
             {
                 return CardType.NONE;
             }
+
             return cardData.cardType;
         }
     }
@@ -35,6 +36,12 @@ public class BossActor: GameActor
     ~BossActor()
     {
         DeRegisterEvent();
+    }
+
+    public void Refresh(RegicideProtocol.ActorPack bossActorPack)
+    {
+        Atk = bossActorPack.ATK;
+        Hp = bossActorPack.Hp;
     }
 
     private void RegisterEvent()

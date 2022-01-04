@@ -105,7 +105,6 @@ class GameOnlineUI : UIWindow
             }
         }
 
-        RefreshBoss(GameOnlineMgr.Instance.BossActor);
 
         RefreshGameUI();
     }
@@ -175,6 +174,7 @@ class GameOnlineUI : UIWindow
     {
         RefreshMyCards();
         RefeshOthersCard();
+        RefreshBoss(GameOnlineMgr.Instance.BossActor);
     }
 
     private void UpdateGameState()

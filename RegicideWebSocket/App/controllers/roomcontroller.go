@@ -151,7 +151,6 @@ func StartGame(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) 
 				mainpack.Str = "您不是房主不能开始"
 				return mainpack, nil
 			}
-			room.RoomPack.State = 1
 			room.StartGame(client)
 			return nil, nil
 		}
