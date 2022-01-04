@@ -40,6 +40,10 @@ public class BossActor : GameActor
 
     public void Refresh(RegicideProtocol.ActorPack bossActorPack)
     {
+        if (cardData.CardInt != bossActorPack.ActorId)
+        {
+            cardData = CardMgr.Instance.InstanceData(bossActorPack.ActorId);
+        }
         Atk = bossActorPack.ATK;
         Hp = bossActorPack.Hp;
     }
