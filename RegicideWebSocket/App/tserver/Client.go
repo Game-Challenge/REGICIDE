@@ -14,6 +14,7 @@ type Client struct {
 	Conn     *websocket.Conn
 	RoomInfo *Room
 	Actor    *GameProto.ActorPack
+	ActorID  int
 }
 
 func InstanceClient(conn *websocket.Conn, uniid uint32) *Client {
@@ -23,14 +24,6 @@ func InstanceClient(conn *websocket.Conn, uniid uint32) *Client {
 	actor := &GameProto.ActorPack{ActorId: int32(uniid)}
 
 	client := Client{Addr: rAddr.String(), Conn: conn, Uniid: uniid, Actor: actor}
-
-	// mainpack := &GameProto.MainPack{}
-
-	// mainpack.Str = fmt.Sprint(uniid) //string(uniid)
-
-	// mainpack.Actioncode = GameProto.ActionCode_Login
-
-	// client.Send(mainpack)
 
 	return &client
 }

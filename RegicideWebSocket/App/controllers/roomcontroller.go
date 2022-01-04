@@ -50,8 +50,8 @@ func CreateRoom(client *server.Client, mainpack *GameProto.MainPack, isUdp bool)
 	room := tserver.InstanceRoom(roompack)
 	tserver.RoomList = append(tserver.RoomList, &room)
 	mainpack.Returncode = GameProto.ReturnCode_Success
-
 	room.RoomPack.RoomID = roomID
+	room.RoomPack.State = 0
 	room.Join(client)
 	// playerpack := &GameProto.PlayerPack{}
 	// playerpack.Playername = strconv.Itoa(int(client.Uniid)) //todo_client.Username
@@ -146,9 +146,13 @@ func StartGame(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) 
 	for i := 0; i < count; i++ {
 		room := server.RoomList[i]
 		if room.RoomPack.RoomID == mainpack.Roompack[0].RoomID {
+			if client != room.ClientList[0] {
+				mainpack.Returncode = GameProto.ReturnCode_Fail
+				mainpack.Str = "您不是房主不能开始"
+				return mainpack, nil
+			}
 			room.RoomPack.State = 1
 			room.StartGame(client)
-			// mainpack.Returncode = GameProto.ReturnCode_Success
 			return nil, nil
 		}
 	}

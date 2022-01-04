@@ -81,6 +81,23 @@ func RemoveActor(values []*GameProto.ActorPack, val *GameProto.ActorPack) []*Gam
 	return res
 }
 
+func RemoveCard(values []*CardData, val *CardData) []*CardData {
+	if len(values) <= 0 {
+		return values
+	}
+
+	res := []*CardData{}
+
+	for i := 0; i < len(values); i++ {
+		if values[i].CardInt == val.CardInt {
+			continue
+		}
+		v := values[i]
+		res = append(res, v)
+	}
+	return res
+}
+
 func RemoveCardData(values []*GameProto.CardData, val *GameProto.CardData) []*GameProto.CardData {
 	if len(values) <= 0 {
 		return values

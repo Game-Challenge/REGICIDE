@@ -53,12 +53,10 @@ class GameOnlineUI : UIWindow
     #region Create Destroy生命周期
     protected override void OnCreate()
     {
-        m_itemCard.gameObject.Show(false);
+        m_itemCard.gameObject.SetActive(false);
         for (int i = 0; i < 4; i++)
         {
-            //List<ItemCard> list = new List<ItemCard>();
-            //m_cardList.Add(list);
-            m_textPlayerList[i].gameObject.Show(false);
+            m_textPlayerList[i].gameObject.SetActive(false);
         }
 
         GameOnlineMgr.Instance.IsOnlineGameIng = true;
@@ -87,23 +85,23 @@ class GameOnlineUI : UIWindow
 
         for (int i = 0; i < players.Count; i++)
         {
-            m_textPlayerList[i].gameObject.Show(true);
+            m_textPlayerList[i].gameObject.SetActive(true);
             m_textPlayerList[i].text = string.Format("玩家{0} {1}", players[i].ActorId, players[i].ActorId);
             //Todo Ugly code
             if (i == 1)
             {
                 m_player2Cards = CreateWidgetByPrefab<ItemCard>(m_itemCard, m_tfCardContent[1]);
-                m_player2Cards.gameObject.Show(true);
+                m_player2Cards.gameObject.SetActive(true);
             }
             else if (i == 2)
             {
                 m_player3Cards = CreateWidgetByPrefab<ItemCard>(m_itemCard, m_tfCardContent[2]);
-                m_player3Cards.gameObject.Show(true);
+                m_player3Cards.gameObject.SetActive(true);
             }
             else if (i == 3)
             {
                 m_player4Cards = CreateWidgetByPrefab<ItemCard>(m_itemCard, m_tfCardContent[3]);
-                m_player4Cards.gameObject.Show(true);
+                m_player4Cards.gameObject.SetActive(true);
             }
         }
 

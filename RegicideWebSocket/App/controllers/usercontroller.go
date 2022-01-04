@@ -62,6 +62,9 @@ func Register(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (
 	mainpack.LoginPack.Username = mainpack.Str
 	mainpack.Str = fmt.Sprint(RoleId)
 	mainpack.Returncode = GameProto.ReturnCode_Success
+
+	client.ActorID = RoleId
+	client.Actor.ActorId = int32(RoleId)
 	return mainpack, nil
 }
 
@@ -92,6 +95,8 @@ func CheckLogin(mainpack *GameProto.MainPack, client *server.Client) bool {
 	mainpack.LoginPack.Username = user.Name
 	client.RoleId = uint32(user.Roleid)
 	mainpack.Str = fmt.Sprint(client.RoleId)
+	client.ActorID = user.Roleid
+	client.Actor.ActorId = int32(user.Roleid)
 	return true
 }
 

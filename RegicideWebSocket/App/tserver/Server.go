@@ -28,12 +28,6 @@ func StartServer(port string) Server {
 }
 
 func Start(server Server) {
-	// logfile, err := os.Create("./gin_http.log")
-	// if err != nil {
-	// 	logger.Debug("Could not create log file")
-	// }
-	// gin.SetMode(gin.DebugMode)
-	// gin.DefaultWriter = io.MultiWriter(logfile)
 	CreateRoom("断剑重铸之日")
 	print("START REGICIDE SERVER")
 	r := gin.Default()
@@ -47,17 +41,13 @@ func Start(server Server) {
 	r.Run(server.Port)
 }
 
-//设置websocket
-//CheckOrigin防止跨站点的请求伪造
 var upGrader = websocket.Upgrader{
 	CheckOrigin: func(r *http.Request) bool {
 		return true
 	},
 }
 
-//websocket实现
 func Ws(c *gin.Context) {
-	//升级get请求为webSocket协议
 	ws, err := upGrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
 		return
@@ -70,19 +60,16 @@ func Ws(c *gin.Context) {
 }
 
 func handleClient(conn *websocket.Conn, uniid uint32) {
-	defer conn.Close() //返回前关闭
+	defer conn.Close()
 	client := InstanceClient(conn, uniid)
 	ClientList, _ = AddClient(client)
-	// buf := make([]byte, 1024)
 	for {
-		//读取ws中的数据
 		messagetype, message, err := conn.ReadMessage()
 		if err != nil {
 			logger.Debug(" conn.Read error", err)
 			RemoveClient(client)
 			break
 		}
-		//写入ws数据
 		logger.Debug("messagetype:", messagetype, "   message:", message)
 		buffCount := len(message)
 		err2 := GetDataCenter().handBuffer(client, message[4:buffCount])

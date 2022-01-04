@@ -3,9 +3,7 @@ package tserver
 import (
 	GameProto "Regicide/GameProto"
 	"errors"
-	"math/rand"
 	"strconv"
-	"time"
 
 	"github.com/wonderivan/logger"
 )
@@ -78,29 +76,9 @@ func (room *Room) Join(client *Client) {
 			return
 		}
 	}
-
 	room.ClientList = append(room.ClientList, client)
 	room.RoomPack.Curnum = room.RoomPack.Curnum + 1
 	room.RoomPack.ActorPack = append(room.RoomPack.ActorPack, client.Actor)
-}
-
-//boss
-func (room *Room) InitBoss() *GameProto.ActorPack {
-	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-	count := len(BossList)
-	index := r.Intn(count - 1)
-
-	var atk int32
-	var hp int32
-
-	cardData := BossList[index]
-	if cardData.CardValue == 11 {
-
-	}
-
-	bossActor := &GameProto.ActorPack{ATK: atk, Hp: hp, ActorId: int32(cardData.CardInt)}
-	room.CurrentBoss = bossActor
-	return bossActor
 }
 
 func (room *Room) StartGame(client *Client) {
@@ -121,10 +99,9 @@ func (room *Room) StartGame(client *Client) {
 	for i := 0; i < len(room.ClientList); i++ {
 		_client := room.ClientList[i]
 		room.TurnCards(_client)
-		room.RoomPack.ActorPack = append(room.RoomPack.ActorPack, _client.Actor)
 		playerpack := &GameProto.PlayerPack{}
-		playerpack.Playername = strconv.Itoa(int(_client.Uniid)) //todo _client.Username
-		playerpack.PlayerID = strconv.Itoa(int(_client.Uniid))
+		playerpack.Playername = _client.Username //todo _client.Username
+		playerpack.PlayerID = strconv.Itoa(int(_client.ActorID))
 		mainPack.Playerpack = append(mainPack.Playerpack, playerpack)
 	}
 	mainPack.Roompack = append(mainPack.Roompack, room.RoomPack)
