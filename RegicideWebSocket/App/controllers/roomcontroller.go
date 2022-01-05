@@ -116,7 +116,14 @@ func FindRoom(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (
 			logger.Crit("this room error", room)
 			continue
 		}
-		mainpack.Roompack = append(mainpack.Roompack, room.RoomPack)
+		roompack := &GameProto.RoomPack{}
+		roompack.Roomname = room.RoomPack.Roomname
+		roompack.Maxnum = room.RoomPack.Maxnum
+		roompack.Gamestate = room.RoomPack.Gamestate
+		roompack.Curnum = room.RoomPack.Curnum
+		roompack.RoomID = room.RoomPack.RoomID
+		mainpack.Roompack = append(mainpack.Roompack, roompack)
+		// mainpack.Roompack = append(mainpack.Roompack, room.RoomPack)
 	}
 
 	mainpack.Returncode = GameProto.ReturnCode_Success

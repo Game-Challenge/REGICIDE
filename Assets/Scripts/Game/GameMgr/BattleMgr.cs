@@ -93,8 +93,6 @@ public class BattleMgr : Singleton<BattleMgr>
 
     public void ImpactSkill(AttackData attackData,BossActor actor)
     {
-        //Debug.LogFormat(string.Format("attackData: 数值{0},抽卡{1},降低boss攻击{2},回复{3},双倍攻击{4}",attackData.Damage,attackData.CouldTurnCard,attackData.CouldDownBossAtk,attackData.CouldAddHp,attackData.CouldDoubleAtk));
-
         if (attackData.HadJoker)
         {
             //EventCenter.Instance.EventTrigger("BeJokerAtk"); 
@@ -113,13 +111,13 @@ public class BattleMgr : Singleton<BattleMgr>
         {
             EventCenter.Instance.EventTrigger<int>("DownAtk", attackData.Damage);
         }
-        if (attackData.CouldTurnCard && (boss_type != CardType.DIAMOND && boss_type != CardType.RED_JOKER))
-        {
-            GameMgr.Instance.TurnCard(attackData.Damage);
-        }
         if (attackData.CouldAddHp && (boss_type != CardType.HEART && boss_type != CardType.RED_JOKER))
         {
             EventCenter.Instance.EventTrigger<int>("AddHp", attackData.Damage);
+        }
+        if (attackData.CouldTurnCard && (boss_type != CardType.DIAMOND && boss_type != CardType.RED_JOKER))
+        {
+            GameMgr.Instance.TurnCard(attackData.Damage);
         }
         EventCenter.Instance.EventTrigger<int>("AttackBoss", value);
     }

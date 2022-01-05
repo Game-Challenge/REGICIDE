@@ -49,6 +49,27 @@ func Add(values []interface{}, val interface{}, index int) ([]interface{}, error
 	return res, nil
 }
 
+func RemoveRoom(values []*Room, val *Room) []*Room {
+	if len(values) <= 0 {
+		return values
+	}
+
+	if val == nil {
+		return values
+	}
+
+	res := []*Room{}
+
+	for i := 0; i < len(values); i++ {
+		if values[i] == val {
+			continue
+		}
+		v := values[i]
+		res = append(res, v)
+	}
+	return res
+}
+
 func RemoveC(values []*Client, val *Client) []*Client {
 	if len(values) <= 0 {
 		return values

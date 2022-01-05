@@ -16,6 +16,8 @@ const (
 
 var CURRENT_BOSS_INDEX int
 
+var CURRENT_MAX_TURN_COUNT int
+
 //InitCards 初始化所有卡牌
 func (room *Room) InitCards() {
 	for i := 0; i < TOTAL_CARD_COUNT; i++ {
@@ -38,6 +40,7 @@ func (room *Room) InitMyCards() {
 
 func (room *Room) TurnCards(client *Client) {
 	turnCount := int(9 - room.RoomPack.Curnum)
+	CURRENT_MAX_TURN_COUNT = turnCount
 	if turnCount == 0 {
 		return
 	}
@@ -59,7 +62,7 @@ func (room *Room) TurnCards(client *Client) {
 		cardData := turnCardList[i]
 		MyCardList = RemoveCard(MyCardList, cardData)
 
-		cardProtoData := &GameProto.CardData{CardInt: int32(turnCardList[i].CardInt)}
+		cardProtoData := &GameProto.CardData{CardInt: int32(cardData.CardInt), CardValue: int32(cardData.CardValue)}
 		currentCards = append(currentCards, cardProtoData)
 	}
 
@@ -68,6 +71,7 @@ func (room *Room) TurnCards(client *Client) {
 
 //todo
 func (client *Client) TurnCardDiamond(number int) {
+	logger.Debug("TurnCardDiamond number=>", number)
 	room := client.RoomInfo
 	turnCount := number
 	if turnCount == 0 {
@@ -82,32 +86,44 @@ func (client *Client) TurnCardDiamond(number int) {
 		turnCount = len(MyCardList)
 	}
 
-	return
+	// return
 	// // todo
-	// index := 0
-	// for i := 0; i < len(client.RoomInfo.ClientList); i++ {
-	// 	if client.RoomInfo.ClientList[i] == client {
-	// 		index = i
-	// 	}
-	// }
-
-	turnCardList := []*CardData{}
-
-	for i := 0; i < turnCount; i++ {
+	myIndex := 0
+	clientCount := len(client.RoomInfo.ClientList)
+	for i := 0; i < len(client.RoomInfo.ClientList); i++ {
+		if client.RoomInfo.ClientList[i] == client {
+			myIndex = i
+			break
+		}
+	}
+	i := 0
+	index := myIndex
+	continueCount := 0
+	for {
+		logger.Debug(i, index, continueCount)
+		if i > number || continueCount > number {
+			break
+		}
+		if index >= clientCount {
+			index = 0
+		}
+		clientCardCount := len(client.RoomInfo.ClientList[index].Actor.CuttrntCards)
+		if clientCardCount >= CURRENT_MAX_TURN_COUNT {
+			index++
+			continueCount++
+			continue
+		}
 		cardData := MyCardList[i]
-		turnCardList = append(turnCardList, cardData)
-	}
-
-	currentCards := []*GameProto.CardData{}
-
-	for i := 0; i < turnCount; i++ {
-		cardData := turnCardList[i]
 		MyCardList = RemoveCard(MyCardList, cardData)
-
-		cardProtoData := &GameProto.CardData{CardInt: int32(turnCardList[i].CardInt)}
-		currentCards = append(currentCards, cardProtoData)
+		cardProtoData := &GameProto.CardData{CardInt: int32(cardData.CardInt), CardValue: int32(cardData.CardValue)}
+		client.RoomInfo.ClientList[index].Actor.CuttrntCards = append(client.RoomInfo.ClientList[index].Actor.CuttrntCards, cardProtoData)
+		i++
+		index++
+		if i > number {
+			break
+		}
 	}
-	// client.Actor.CuttrntCards = currentCards
+	logger.Debug("out")
 }
 
 func RandomSort(cardDatas []*CardData) {

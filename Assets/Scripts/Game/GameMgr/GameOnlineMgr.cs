@@ -10,6 +10,10 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
 {
     private GAMESTATE gamestate;
 
+    public void SetGameSate(GAMESTATE state)
+    {
+        Gamestate = state;
+    }
     public GAMESTATE Gamestate
     {
         private set
@@ -72,7 +76,7 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
 
         //SetState(roomPack.Gamestate.State);
 
-        CurrentGameIndex = roomPack.CurrentIndex - 1;
+        CurrentGameIndex = roomPack.CurrentIndex;
 
         ActorPacks = roomPack.ActorPack.ToList();
 
@@ -220,7 +224,7 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
         GameMgr.Instance.m_choiceList.Clear();
 
         var roomPack = mainPack.Roompack[0];
-        CurrentGameIndex = roomPack.CurrentIndex - 1;
+        CurrentGameIndex = roomPack.CurrentIndex;
 
         var playerPack = mainPack.Roompack[0].ActorPack;
         foreach (var player in playerPack)
@@ -251,6 +255,8 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
         if (CurrentGameIndex!=MyGameIndex)
         {
             UISys.ShowTipMsg("当前阶段不是您出牌");
+            Debug.Log(CurrentGameIndex);
+            Debug.Log(MyGameIndex.ToString());
             return;
         }
         if (Gamestate != GAMESTATE.State1)
@@ -286,8 +292,16 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
         GameMgr.Instance.m_choiceList.Clear();
 
         var roomPack = mainPack.Roompack[0];
-        CurrentGameIndex = roomPack.CurrentIndex - 1;
+
+        CurrentGameIndex = roomPack.CurrentIndex;
+
         var playerPack = mainPack.Roompack[0].ActorPack;
+
+        if (mainPack.Str.Equals("GAMELOSE"))
+        {
+            UISys.Mgr.ShowWindow<GameLoseUI>().InitUI("游戏失败，"+ playerPack[CurrentGameIndex].ActorName + "的牌不足以抵挡本次攻击！！");
+        }
+       
         foreach (var player in playerPack)
         {
             RefreshCardDataByActorId(player.ActorId,player.CuttrntCards);
@@ -297,7 +311,7 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
         BossActor.Refresh(roomPack.BossActor);
         EventCenter.Instance.EventTrigger("RefreshGameUI");
 
-        UISys.ShowTipMsg(string.Format("当前{0}号玩家{1}攻击结束，请弃点数{2}的牌！",CurrentGameIndex, playerPack[CurrentGameIndex].ActorName),BossActor.Atk);
+        UISys.ShowTipMsg(string.Format("当前{0}号玩家{1}攻击结束，请弃点数{2}的牌！",CurrentGameIndex, playerPack[CurrentGameIndex].ActorName, BossActor.Atk));
 
     }
     #endregion

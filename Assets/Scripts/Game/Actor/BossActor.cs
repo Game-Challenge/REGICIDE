@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using RegicideProtocol;
 using UnityEngine;
 
 public class BossActor : GameActor
@@ -42,7 +43,10 @@ public class BossActor : GameActor
     {
         if (cardData.CardInt != bossActorPack.ActorId)
         {
+            //bossDie
+            GameOnlineMgr.Instance.SetGameSate(GAMESTATE.State1);
             cardData = CardMgr.Instance.InstanceData(bossActorPack.ActorId);
+            MaxHp = bossActorPack.Hp;
         }
         Atk = bossActorPack.ATK;
         Hp = bossActorPack.Hp;

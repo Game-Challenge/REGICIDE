@@ -40,6 +40,7 @@ func (room *Room) Destroy() error {
 	}
 	room.ClientList = nil
 	room.RoomPack = nil
+	RoomList = RemoveRoom(RoomList, room)
 	room = nil
 	return nil
 }
@@ -170,26 +171,26 @@ func (room *Room) BroadcastTCP(client *Client, mainPack *GameProto.MainPack) {
 	}
 }
 
-//获取随机第一次玩家Index  1~4
+//获取随机第一次玩家Index  0~3
 func (room *Room) GetFirstIndex() {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-	playerNum := len(room.ClientList)
+	playerNum := len(room.ClientList) - 1
 	index := int32(r.Intn(playerNum))
 	room.RoomPack.CurrentIndex = index
 }
 
-//获取下一次玩家Index 1~4
+//获取下一次玩家Index 0~3
 func (room *Room) GetNextIndex() {
 	playerNum := int32(len(room.ClientList))
 
-	if (room.RoomPack.CurrentIndex + 1) > playerNum {
-		room.RoomPack.CurrentIndex = 1
+	if (room.RoomPack.CurrentIndex + 1) >= playerNum {
+		room.RoomPack.CurrentIndex = 0
 	} else {
 		room.RoomPack.CurrentIndex++
 	}
 }
 
-//设置玩家Index 1~4
+//设置玩家Index 0~3
 func (room *Room) SetPlayerIndex(index int32) {
 	if index >= int32(len(room.ClientList)) {
 		return
