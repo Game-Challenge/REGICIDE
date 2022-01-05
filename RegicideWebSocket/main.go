@@ -17,7 +17,7 @@ func main() {
 	InitControllers()
 	InitLogger()
 
-	tserver.StartServer(":12345")
+	tserver.StartServer(":8767")
 	select {}
 }
 

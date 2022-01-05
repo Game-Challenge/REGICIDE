@@ -26,7 +26,7 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
     public int MyGameIndex { private set; get; }//我是几号,第几个出牌的
     public int PlayerNum { private set; get; }  //玩家数目
     public int GameId { private set; get; }     //游戏ID
-    public int GameIndex { private set; get; }  //当前是玩家几号
+    public int CurrentGameIndex { private set; get; }  //当前是玩家几号
 
 
     public string MyName { private set; get; }  //我的用户名
@@ -71,7 +71,7 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
 
         //SetState(roomPack.Gamestate.State);
 
-        GameIndex = roomPack.CurrentIndex;
+        CurrentGameIndex = roomPack.CurrentIndex;
 
         ActorPacks = roomPack.ActorPack.ToList();
 
@@ -150,6 +150,11 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
 
     public void AbordReq()
     {
+        if (CurrentGameIndex != MyGameIndex)
+        {
+            UISys.ShowTipMsg("当前阶段不是您出牌");
+            return;
+        }
         if (Gamestate != GAMESTATE.State4)
         {
             UISys.ShowTipMsg("当前阶段:" + GameMgr.Instance.GetCurrentStateStr(Gamestate));
@@ -188,6 +193,8 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
         GameMgr.Instance.m_choiceList.Clear();
 
         var roomPack = mainPack.Roompack[0];
+        CurrentGameIndex = roomPack.CurrentIndex;
+
         var playerPack = mainPack.Roompack[0].ActorPack;
         foreach (var player in playerPack)
         {
@@ -197,6 +204,8 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
         Gamestate = roomPack.Gamestate.State;
         BossActor.Refresh(roomPack.BossActor);
         EventCenter.Instance.EventTrigger("RefreshGameUI");
+
+        UISys.ShowTipMsg(string.Format("当前{0}号玩家{1}准备攻击，请选牌！", CurrentGameIndex, playerPack[CurrentGameIndex-1].ActorName));
     }
 
     private void DamageRes(MainPack mainPack)
@@ -212,6 +221,11 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
     #region Attack
     public void AttackReq()
     {
+        if (CurrentGameIndex!=MyGameIndex)
+        {
+            UISys.ShowTipMsg("当前阶段不是您出牌");
+            return;
+        }
         if (Gamestate != GAMESTATE.State1)
         {
             UISys.ShowTipMsg("当前阶段:" + GameMgr.Instance.GetCurrentStateStr(Gamestate));
@@ -245,6 +259,7 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
         GameMgr.Instance.m_choiceList.Clear();
 
         var roomPack = mainPack.Roompack[0];
+        CurrentGameIndex = roomPack.CurrentIndex;
         var playerPack = mainPack.Roompack[0].ActorPack;
         foreach (var player in playerPack)
         {
@@ -254,6 +269,8 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
         Gamestate = roomPack.Gamestate.State;
         BossActor.Refresh(roomPack.BossActor);
         EventCenter.Instance.EventTrigger("RefreshGameUI");
+
+        UISys.ShowTipMsg(string.Format("当前{0}号玩家{1}攻击结束，请弃牌！",CurrentGameIndex, playerPack[CurrentGameIndex-1].ActorName));
 
     }
     #endregion

@@ -122,6 +122,7 @@ func RandomSort(cardDatas []*CardData) {
 }
 
 var ToTalCardList []*CardData
+var UsedCardList []*CardData
 var MyCardList []*CardData
 var BossList []*CardData
 

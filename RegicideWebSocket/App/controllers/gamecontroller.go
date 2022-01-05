@@ -46,12 +46,12 @@ func Attack(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*G
 
 	for i := 0; i < len(choiceCards); i++ {
 		client.Actor.CuttrntCards = tserver.RemoveCardData(client.Actor.CuttrntCards, choiceCards[i])
+		// tserver.UsedCardList = append(tserver.UsedCardList, choiceCards[i])
 	}
 
 	mainpack = &GameProto.MainPack{}
 	mainpack.Actioncode = GameProto.ActionCode_ATTACK
 	mainpack.Requestcode = GameProto.RequestCode_Game
-	// bossActor := client.RoomInfo.RoomPack.BossActor
 	mainpack.Roompack = append(mainpack.Roompack, client.RoomInfo.RoomPack)
 	mainpack.Returncode = GameProto.ReturnCode_Success
 	if bossdie {
@@ -60,6 +60,7 @@ func Attack(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*G
 		client.RoomInfo.RoomPack.Gamestate.State = GameProto.GAMESTATE_STATE4
 	}
 
+	client.RoomInfo.BroadcastTCP(client, mainpack)
 	return mainpack, nil
 }
 
@@ -102,6 +103,8 @@ func Hurt(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*Gam
 	mainpack.Returncode = GameProto.ReturnCode_Success
 
 	client.RoomInfo.RoomPack.Gamestate.State = GameProto.GAMESTATE_STATE1
+	client.RoomInfo.GetNextIndex()
 
+	client.RoomInfo.BroadcastTCP(client, mainpack)
 	return mainpack, nil
 }

@@ -7,14 +7,15 @@ import (
 )
 
 type Client struct {
-	Addr     string
-	Username string
-	Uniid    uint32
-	RoleId   uint32
-	Conn     *websocket.Conn
-	RoomInfo *Room
-	Actor    *GameProto.ActorPack
-	ActorID  int
+	Addr      string
+	Username  string
+	Uniid     uint32
+	RoleId    uint32
+	Conn      *websocket.Conn
+	RoomInfo  *Room
+	Actor     *GameProto.ActorPack
+	ActorID   int
+	ActorName string
 }
 
 func InstanceClient(conn *websocket.Conn, uniid uint32) *Client {

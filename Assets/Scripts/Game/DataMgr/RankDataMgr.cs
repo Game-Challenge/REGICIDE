@@ -15,7 +15,7 @@ public class RankDataMgr : Singleton<RankDataMgr>
                 case (GameApp.HostPoint.LocalHost):
                     return "http://127.0.0.1:12345/";
                 case (GameApp.HostPoint.LinuxServer):
-                    return "http://47.106.96.238:12345/";
+                    return "http://1.12.241.46:12345/";
                 case (GameApp.HostPoint.WinServer):
                     return "http://1.14.132.143:12345/";
             }

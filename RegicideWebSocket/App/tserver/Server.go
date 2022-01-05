@@ -92,8 +92,9 @@ func AddClient(client *Client) ([]*Client, error) {
 }
 
 func RemoveClient(client *Client) {
-	room := client.RoomInfo
-	room.RemoveClient(client)
+	// 离开断线时不移除，等重等
+	// room := client.RoomInfo
+	// room.RemoveClient(client)
 	ClientList = RemoveC(ClientList, client)
 	_, ok := ConnMap[client.Uniid]
 	if ok {

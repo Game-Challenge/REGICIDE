@@ -85,8 +85,21 @@ class GameOnlineUI : UIWindow
 
         for (int i = 0; i < players.Count; i++)
         {
+            var myIndex = GameOnlineMgr.Instance.MyGameIndex;
+            if (i == myIndex)
+            {
+                m_textPlayerList[0].gameObject.SetActive(true);
+                m_textPlayerList[0].text = string.Format("玩家{0} {1}", players[0].ActorId, players[0].ActorName);
+            }
+            else
+            {
+                var index = (myIndex +i) > players.Count ? (players.Count - myIndex + i) : (myIndex + i);
+            }
+  
+
+
             m_textPlayerList[i].gameObject.SetActive(true);
-            m_textPlayerList[i].text = string.Format("玩家{0} {1}", players[i].ActorId, players[i].ActorId);
+            m_textPlayerList[i].text = string.Format("玩家{0} {1}", players[i].ActorId, players[i].ActorName);
             //Todo Ugly code
             if (i == 1)
             {

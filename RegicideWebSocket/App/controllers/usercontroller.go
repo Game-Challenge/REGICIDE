@@ -97,6 +97,7 @@ func CheckLogin(mainpack *GameProto.MainPack, client *server.Client) bool {
 	mainpack.Str = fmt.Sprint(client.RoleId)
 	client.ActorID = user.Roleid
 	client.Actor.ActorId = int32(user.Roleid)
+	client.Actor.ActorName = user.Name
 	return true
 }
 

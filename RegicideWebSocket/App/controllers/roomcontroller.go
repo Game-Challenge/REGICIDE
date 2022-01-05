@@ -35,30 +35,25 @@ func Chat(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*Gam
 	return nil, nil
 }
 
-var roomID int32 = 1000
-
 func CreateRoom(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*GameProto.MainPack, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
 	}
-	roomID = roomID + 1
+	server.RoomID++
 
 	roompack := &GameProto.RoomPack{}
 	roompack.Roomname = mainpack.Roompack[0].Roomname
 	roompack.Maxnum = mainpack.Roompack[0].Maxnum
-	roompack.RoomID = roomID
+	roompack.RoomID = server.RoomID
+
 	room := tserver.InstanceRoom(roompack)
 	tserver.RoomList = append(tserver.RoomList, &room)
 	mainpack.Returncode = GameProto.ReturnCode_Success
-	room.RoomPack.RoomID = roomID
+	room.RoomPack.RoomID = server.RoomID
 	room.RoomPack.State = 0
 	room.Join(client)
-	// playerpack := &GameProto.PlayerPack{}
-	// playerpack.Playername = strconv.Itoa(int(client.Uniid)) //todo_client.Username
-	// playerpack.PlayerID = strconv.Itoa(int(client.Uniid))
-	// mainpack.Playerpack = append(mainpack.Playerpack, playerpack)
 
-	mainpack.Roompack = append(mainpack.Roompack, room.RoomPack)
+	mainpack.Roompack[0] = room.RoomPack //(mainpack.Roompack, room.RoomPack)
 
 	return mainpack, nil
 }
@@ -95,12 +90,6 @@ func JoinRoom(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (
 				room.Join(client)
 
 				for i := 0; i < len(room.ClientList); i++ {
-					// _client := room.ClientList[i]
-					// playerpack := &GameProto.PlayerPack{}
-					// playerpack.Playername = strconv.Itoa(int(_client.Uniid)) //todo_client.Username
-					// playerpack.PlayerID = strconv.Itoa(int(_client.Uniid))
-					// mainpack.Playerpack = append(mainpack.Playerpack, playerpack)
-
 					mainpack.Roompack = append(mainpack.Roompack, room.RoomPack)
 				}
 

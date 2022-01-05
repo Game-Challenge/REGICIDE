@@ -43,7 +43,6 @@ class RoomWaitUI : UIWindow
     public void Refresh(MainPack mainPack)
     {
         var roomPack = mainPack.Roompack[0];
-        //var playerPack = mainPack.Playerpack;
 
         var actorPack = roomPack.ActorPack;
 
@@ -106,7 +105,7 @@ class RoomPlayerItem : UIWindowWidget
             return;
         }
 
-        m_textName.text = actorPack.ActorId.ToString();
+        m_textName.text = actorPack.ActorName;
         m_textID.text = actorPack.ActorId.ToString();
 
         m_btnNick.gameObject.SetActive(false);

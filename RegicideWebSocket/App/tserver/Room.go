@@ -3,7 +3,9 @@ package tserver
 import (
 	GameProto "Regicide/GameProto"
 	"errors"
+	"math/rand"
 	"strconv"
+	"time"
 
 	"github.com/wonderivan/logger"
 )
@@ -84,7 +86,9 @@ func (room *Room) StartGame(client *Client) {
 	gameState := &GameProto.GameStatePack{}
 	gameState.State = GameProto.GAMESTATE_STATE1
 	room.RoomPack.Gamestate = gameState
+	room.RoomPack.State = 1
 
+	room.GetFirstIndex()
 	room.InitCards()
 	room.InitMyCards()
 	room.InitBoss()
@@ -128,6 +132,9 @@ func (room *Room) Starting(client *Client) {
 
 func (room *Room) Broadcast(mainPack *GameProto.MainPack) {
 	for i := 0; i < len(room.ClientList); i++ {
+		if room.ClientList[i] == nil {
+			continue
+		}
 		room.ClientList[i].Send(mainPack)
 	}
 }
@@ -146,4 +153,31 @@ func (room *Room) BroadcastTCP(client *Client, mainPack *GameProto.MainPack) {
 		}
 		room.ClientList[i].Send(mainPack)
 	}
+}
+
+//获取随机第一次玩家Index
+func (room *Room) GetFirstIndex() {
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	playerNum := len(room.ClientList)
+	index := int32(r.Intn(playerNum))
+	room.RoomPack.CurrentIndex = index
+}
+
+//获取下一次玩家Index
+func (room *Room) GetNextIndex() {
+	playerNum := int32(len(room.ClientList))
+
+	if (room.RoomPack.CurrentIndex + 1) > playerNum {
+		room.RoomPack.CurrentIndex = 1
+	} else {
+		room.RoomPack.CurrentIndex++
+	}
+}
+
+//设置玩家Index
+func (room *Room) SetPlayerIndex(index int32) {
+	if index >= int32(len(room.ClientList)) {
+		return
+	}
+	room.RoomPack.CurrentIndex = index
 }
