@@ -11,8 +11,9 @@ import (
 )
 
 type Room struct {
-	ClientList []*Client
-	RoomPack   *GameProto.RoomPack
+	ClientList        []*Client
+	RoomPack          *GameProto.RoomPack
+	OnlinePlayerCount int
 }
 
 type BossActor struct {
@@ -28,6 +29,19 @@ type BossActor struct {
 func InstanceRoom(roomPack *GameProto.RoomPack) Room {
 	room := Room{RoomPack: roomPack}
 	return room
+}
+
+func (room *Room) Destroy() error {
+	if room == nil {
+		return errors.New("room is nil")
+	}
+	if room.OnlinePlayerCount > 0 {
+		return errors.New("still player online")
+	}
+	room.ClientList = nil
+	room.RoomPack = nil
+	room = nil
+	return nil
 }
 
 func CreateRoom(roomName string) Room {
@@ -79,6 +93,7 @@ func (room *Room) Join(client *Client) {
 	}
 	room.ClientList = append(room.ClientList, client)
 	room.RoomPack.Curnum = room.RoomPack.Curnum + 1
+	room.OnlinePlayerCount++
 	room.RoomPack.ActorPack = append(room.RoomPack.ActorPack, client.Actor)
 }
 
@@ -155,7 +170,7 @@ func (room *Room) BroadcastTCP(client *Client, mainPack *GameProto.MainPack) {
 	}
 }
 
-//获取随机第一次玩家Index
+//获取随机第一次玩家Index  1~4
 func (room *Room) GetFirstIndex() {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	playerNum := len(room.ClientList)
@@ -163,7 +178,7 @@ func (room *Room) GetFirstIndex() {
 	room.RoomPack.CurrentIndex = index
 }
 
-//获取下一次玩家Index
+//获取下一次玩家Index 1~4
 func (room *Room) GetNextIndex() {
 	playerNum := int32(len(room.ClientList))
 
@@ -174,7 +189,7 @@ func (room *Room) GetNextIndex() {
 	}
 }
 
-//设置玩家Index
+//设置玩家Index 1~4
 func (room *Room) SetPlayerIndex(index int32) {
 	if index >= int32(len(room.ClientList)) {
 		return

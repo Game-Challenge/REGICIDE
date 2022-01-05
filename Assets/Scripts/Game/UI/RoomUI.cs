@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Google.Protobuf.Collections;
 using RegicideProtocol;
 using UnityEngine;
 using UnityEngine.UI;
@@ -36,13 +37,13 @@ class RoomUI : UIWindow
     protected override void RegisterEvent()
     {
         base.RegisterEvent();
-        EventCenter.Instance.AddEventListener<List<RoomPack>>("RoomPack", OnRefresh);
+        EventCenter.Instance.AddEventListener<RepeatedField<RoomPack>>("RoomPack", OnRefresh);
     }
 
     protected override void DeRegisterEvent()
     {
         base.DeRegisterEvent();
-        EventCenter.Instance.RemoveEventListener<List<RoomPack>>("RoomPack", OnRefresh);
+        EventCenter.Instance.RemoveEventListener<RepeatedField<RoomPack>>("RoomPack", OnRefresh);
     }
 
     protected override void OnCreate()
@@ -55,7 +56,7 @@ class RoomUI : UIWindow
         m_textUserId.text = string.Format("用户ID：：{0}", GameOnlineMgr.Instance.MyActorId);
     }
 
-    private void OnRefresh(List<RoomPack> roomPacks)
+    private void OnRefresh(RepeatedField<RoomPack> roomPacks)
     {
         AdjustIconNum(m_roomList, roomPacks.Count, m_tfContent, m_itemRoom);
         m_itemRoom.gameObject.SetActive(false);

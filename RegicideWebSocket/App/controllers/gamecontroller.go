@@ -35,18 +35,28 @@ func Attack(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*G
 	if mainpack.Roompack[0].ActorPack == nil || len(mainpack.Roompack[0].ActorPack) <= 0 {
 		return nil, errors.New("mainpack.Roompack[0].ActorPack[0] is nil")
 	}
+
 	choiceCards := mainpack.Roompack[0].ActorPack[0].CuttrntCards
 
-	bossdie, err := client.AttackBoss(choiceCards)
+	var bossDie bool
+	choiceCardCount := len(choiceCards)
+	if choiceCardCount > 0 {
+		bossdie, err := client.AttackBoss(choiceCards)
+		bossDie = bossdie
+		if err != nil {
+			logger.Error(err)
+			return nil, err
+		}
 
-	if err != nil {
-		logger.Error(err)
-		return nil, err
-	}
+		if err != nil {
+			logger.Error(err)
+			return nil, err
+		}
 
-	for i := 0; i < len(choiceCards); i++ {
-		client.Actor.CuttrntCards = tserver.RemoveCardData(client.Actor.CuttrntCards, choiceCards[i])
-		// tserver.UsedCardList = append(tserver.UsedCardList, choiceCards[i])
+		for i := 0; i < choiceCardCount; i++ {
+			client.Actor.CuttrntCards = tserver.RemoveCardData(client.Actor.CuttrntCards, choiceCards[i])
+			// tserver.UsedCardList = append(tserver.UsedCardList, choiceCards[i])
+		}
 	}
 
 	mainpack = &GameProto.MainPack{}
@@ -54,7 +64,7 @@ func Attack(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*G
 	mainpack.Requestcode = GameProto.RequestCode_Game
 	mainpack.Roompack = append(mainpack.Roompack, client.RoomInfo.RoomPack)
 	mainpack.Returncode = GameProto.ReturnCode_Success
-	if bossdie {
+	if bossDie {
 		client.RoomInfo.RoomPack.Gamestate.State = GameProto.GAMESTATE_STATE1
 	} else {
 		client.RoomInfo.RoomPack.Gamestate.State = GameProto.GAMESTATE_STATE4

@@ -51,6 +51,7 @@ class StartUI : UIWindow
     {
         UISys.ShowTipMsg("敬请期待~");
     }
+
     private void OnClickStartGameBtn()
     {
         Close();
@@ -63,7 +64,6 @@ class StartUI : UIWindow
         {
             UISys.Mgr.ShowWindow<GameUILand>();
         }
-        
     }
     private void OnClickConnectBtn()
     {

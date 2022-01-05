@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Google.Protobuf.Collections;
 using RegicideProtocol;
 using UnityEngine;
 using CardData = RegicideProtocol.CardData;
@@ -71,7 +72,7 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
 
         //SetState(roomPack.Gamestate.State);
 
-        CurrentGameIndex = roomPack.CurrentIndex;
+        CurrentGameIndex = roomPack.CurrentIndex - 1;
 
         ActorPacks = roomPack.ActorPack.ToList();
 
@@ -112,6 +113,20 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
             if (!CardDictionary.ContainsKey(players[i].ActorId))
             {
                 CardDictionary.Add(players[i].ActorId,temp);
+            }
+        }
+    }
+
+    public void RefreshCardDataByActorId(int actorId, RepeatedField<RegicideProtocol.CardData> cardDatas)
+    {
+        if (CardDictionary.ContainsKey(actorId))
+        {
+            var list = CardDictionary[actorId];
+            list.Clear();
+            foreach (var card in cardDatas)
+            {
+                var cardData = CardMgr.Instance.InstanceData(card.CardInt);
+                list.Add(cardData);
             }
         }
     }
@@ -163,6 +178,18 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
 
         List<global::CardData> list = GameMgr.Instance.m_choiceList;
 
+        var point = 0;
+        for (int i = 0; i < list.Count; i++)
+        {
+            point += list[i].CardValue;
+        }
+
+        if (point < BossActor.Atk)
+        {
+            UISys.ShowTipMsg(string.Format("弃牌点数还差{0}点",BossActor.Atk - point));
+            return;
+        }
+
         MainPack mainPack = ProtoUtil.BuildMainPack(RequestCode.Game, ActionCode.Hurt);
         RoomPack roomPack = new RoomPack();
         ActorPack actorPack = new ActorPack();
@@ -193,19 +220,19 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
         GameMgr.Instance.m_choiceList.Clear();
 
         var roomPack = mainPack.Roompack[0];
-        CurrentGameIndex = roomPack.CurrentIndex;
+        CurrentGameIndex = roomPack.CurrentIndex - 1;
 
         var playerPack = mainPack.Roompack[0].ActorPack;
         foreach (var player in playerPack)
         {
-            RefreshCardDataByActorId(player.ActorId, player.CuttrntCards.ToList());
+            RefreshCardDataByActorId(player.ActorId, player.CuttrntCards);
         }
 
         Gamestate = roomPack.Gamestate.State;
         BossActor.Refresh(roomPack.BossActor);
         EventCenter.Instance.EventTrigger("RefreshGameUI");
 
-        UISys.ShowTipMsg(string.Format("当前{0}号玩家{1}准备攻击，请选牌！", CurrentGameIndex, playerPack[CurrentGameIndex-1].ActorName));
+        UISys.ShowTipMsg(string.Format("当前{0}号玩家{1}准备攻击，请选牌！", CurrentGameIndex, playerPack[CurrentGameIndex].ActorName));
     }
 
     private void DamageRes(MainPack mainPack)
@@ -234,12 +261,12 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
         MainPack mainPack = ProtoUtil.BuildMainPack(RequestCode.Game, ActionCode.Attack);
 
         List<global::CardData> list = GameMgr.Instance.m_choiceList;
+
         if (list.Count == 0)
         {
-            //UISys.ShowTipMsg("请选择卡牌！");
-            UISys.ShowTipMsg("当前阶段:" + GameMgr.Instance.GetCurrentStateStr(Gamestate));
-            return;
+            UISys.ShowTipMsg(string.Format("玩家{0}跳过出牌",ActorPacks[CurrentGameIndex].ActorName));
         }
+
         RoomPack roomPack = new RoomPack();
         ActorPack actorPack = new ActorPack();
 
@@ -259,18 +286,18 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
         GameMgr.Instance.m_choiceList.Clear();
 
         var roomPack = mainPack.Roompack[0];
-        CurrentGameIndex = roomPack.CurrentIndex;
+        CurrentGameIndex = roomPack.CurrentIndex - 1;
         var playerPack = mainPack.Roompack[0].ActorPack;
         foreach (var player in playerPack)
         {
-            RefreshCardDataByActorId(player.ActorId,player.CuttrntCards.ToList());
+            RefreshCardDataByActorId(player.ActorId,player.CuttrntCards);
         }
 
         Gamestate = roomPack.Gamestate.State;
         BossActor.Refresh(roomPack.BossActor);
         EventCenter.Instance.EventTrigger("RefreshGameUI");
 
-        UISys.ShowTipMsg(string.Format("当前{0}号玩家{1}攻击结束，请弃牌！",CurrentGameIndex, playerPack[CurrentGameIndex-1].ActorName));
+        UISys.ShowTipMsg(string.Format("当前{0}号玩家{1}攻击结束，请弃点数{2}的牌！",CurrentGameIndex, playerPack[CurrentGameIndex].ActorName),BossActor.Atk);
 
     }
     #endregion

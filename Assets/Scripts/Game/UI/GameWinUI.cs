@@ -33,6 +33,7 @@ class GameWinUI : UIWindow
     public void InitUI(string msg)
     {
         m_textWinGame.text = msg;
+        //MonoManager.Instance.GC();
     }
 
     #region 事件

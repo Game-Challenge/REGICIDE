@@ -112,13 +112,11 @@ func FindRoom(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (
 
 	for i := 0; i < len(server.RoomList); i++ {
 		room := server.RoomList[i]
-		roompack := &GameProto.RoomPack{}
-		roompack.Roomname = room.RoomPack.Roomname
-		roompack.Maxnum = room.RoomPack.Maxnum
-		roompack.Gamestate = room.RoomPack.Gamestate
-		roompack.Curnum = room.RoomPack.Curnum
-		roompack.RoomID = room.RoomPack.RoomID
-		mainpack.Roompack = append(mainpack.Roompack, roompack)
+		if room == nil || room.RoomPack == nil {
+			logger.Crit("this room error", room)
+			continue
+		}
+		mainpack.Roompack = append(mainpack.Roompack, room.RoomPack)
 	}
 
 	mainpack.Returncode = GameProto.ReturnCode_Success
@@ -138,6 +136,11 @@ func StartGame(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) 
 			if client != room.ClientList[0] {
 				mainpack.Returncode = GameProto.ReturnCode_Fail
 				mainpack.Str = "您不是房主不能开始"
+				return mainpack, nil
+			}
+			if len(room.ClientList) <= 1 {
+				mainpack.Returncode = GameProto.ReturnCode_Fail
+				mainpack.Str = "最少需要两名玩家哦~"
 				return mainpack, nil
 			}
 			room.StartGame(client)

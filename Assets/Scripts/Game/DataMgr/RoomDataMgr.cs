@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Google.Protobuf.Collections;
 using RegicideProtocol;
 using UnityEngine;
 
 class RoomDataMgr : DataCenterModule<RoomDataMgr>
 {
     private int RoomID = 0;
-    private List<RoomPack> m_roomPacks = new List<RoomPack>();
+    private RepeatedField<RoomPack> m_roomPacks = new RepeatedField<RoomPack>();
     public override void Init()
     {
         GameClient.Instance.RegActionHandle((int)ActionCode.FindRoom, FindRoomRes);
@@ -56,9 +57,7 @@ class RoomDataMgr : DataCenterModule<RoomDataMgr>
         }
         Debug.Log(mainPack);
 
-        m_roomPacks.Clear();
-
-        m_roomPacks = mainPack.Roompack.ToList();
+        m_roomPacks = mainPack.Roompack;
 
         EventCenter.Instance.EventTrigger("RoomPack", m_roomPacks);
     }

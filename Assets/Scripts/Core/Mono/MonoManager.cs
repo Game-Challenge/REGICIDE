@@ -78,4 +78,9 @@ public class MonoManager : Singleton<MonoManager>
     {
         controller.m_DontDestroyOnLoad(go);
     }
+
+    public void GC()
+    {
+        System.GC.Collect();
+    }
 }
