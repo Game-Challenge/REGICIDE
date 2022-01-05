@@ -55,7 +55,8 @@ func Attack(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*G
 
 		for i := 0; i < choiceCardCount; i++ {
 			client.Actor.CuttrntCards = tserver.RemoveCardData(client.Actor.CuttrntCards, choiceCards[i])
-			// tserver.UsedCardList = append(tserver.UsedCardList, choiceCards[i])
+			//放进弃牌堆
+			tserver.UsedCardList = append(tserver.UsedCardList, choiceCards[i])
 		}
 	}
 
