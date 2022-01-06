@@ -252,4 +252,4 @@ MonoBehaviour:
   ConnectAuto: 0
   UseWebSocket: 1
   IsGmMode: 0
-  hostPoint: 1
+  hostPoint: 2

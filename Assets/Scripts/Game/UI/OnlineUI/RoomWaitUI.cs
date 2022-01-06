@@ -17,6 +17,8 @@ class RoomWaitUI : UIWindow
     private Button m_btnExit;
     private Transform m_tfPlayerContent;
     private GameObject m_itemPlayer;
+    private InputField m_inputChat;
+    private Button m_btnSend;
     protected override void ScriptGenerator()
     {
         m_textWaiting = FindChildComponent<Text>("m_textWaiting");
@@ -28,8 +30,18 @@ class RoomWaitUI : UIWindow
         m_btnExit = FindChildComponent<Button>("m_goRoomInfo/m_btnExit");
         m_tfPlayerContent = FindChild("m_tfPlayerContent");
         m_itemPlayer = FindChild("m_tfPlayerContent/m_itemPlayer").gameObject;
+        m_inputChat = FindChildComponent<InputField>("m_inputChat");
+        m_btnSend = FindChildComponent<Button>("m_btnSend");
         m_btnStartGame.onClick.AddListener(OnClickStartGameBtn);
         m_btnExit.onClick.AddListener(OnClickExitBtn);
+        m_btnSend.onClick.AddListener((() =>
+        {
+            if (!m_inputChat.text.Equals(string.Empty))
+            {
+                RoomDataMgr.Instance.ChatReq(m_inputChat.text);
+                m_inputChat.text = string.Empty;
+            }
+        }));
     }
 
     private void OnClickExitBtn()

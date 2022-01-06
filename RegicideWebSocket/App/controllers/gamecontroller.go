@@ -37,6 +37,7 @@ func Attack(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*G
 		return nil, errors.New("mainpack.Roompack[0].ActorPack[0] is nil")
 	}
 
+	client.RoomInfo.RoomPack.CurrentUseCards = client.RoomInfo.RoomPack.CurrentUseCards[0:0]
 	if mainpack.Str == "JKR" {
 		idx, _ := strconv.Atoi(mainpack.User)
 		choiceIndex := int32(idx)
@@ -79,7 +80,7 @@ func Attack(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*G
 			for i := 0; i < choiceCardCount; i++ {
 				client.Actor.CuttrntCards = tserver.RemoveCardData(client.Actor.CuttrntCards, choiceCards[i])
 				//放进弃牌堆
-				tserver.CurrentAttackCardList = append(tserver.UsedCardList, choiceCards[i])
+				client.RoomInfo.CurrentAttackCardList = append(client.RoomInfo.UsedCardList, choiceCards[i])
 				//放入协议通知客户端
 				client.RoomInfo.RoomPack.CurrentUseCards = append(client.RoomInfo.RoomPack.CurrentUseCards, choiceCards[i])
 			}
@@ -100,7 +101,7 @@ func Attack(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*G
 		for i := 0; i < choiceCardCount; i++ {
 			client.Actor.CuttrntCards = tserver.RemoveCardData(client.Actor.CuttrntCards, choiceCards[i])
 			//放进弃牌堆
-			tserver.CurrentAttackCardList = append(tserver.UsedCardList, choiceCards[i])
+			client.RoomInfo.CurrentAttackCardList = append(client.RoomInfo.UsedCardList, choiceCards[i])
 			//放入协议通知客户端
 			client.RoomInfo.RoomPack.CurrentUseCards = append(client.RoomInfo.RoomPack.CurrentUseCards, choiceCards[i])
 		}
@@ -171,17 +172,20 @@ func Hurt(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*Gam
 	if mainpack.Roompack[0].ActorPack == nil || len(mainpack.Roompack[0].ActorPack) <= 0 {
 		return nil, errors.New("mainpack.Roompack[0].ActorPack[0] is nil")
 	}
+
+	client.RoomInfo.RoomPack.CurrentUseCards = client.RoomInfo.RoomPack.CurrentUseCards[0:0]
+
 	choiceCards := mainpack.Roompack[0].ActorPack[0].CuttrntCards
 
 	for i := 0; i < len(choiceCards); i++ {
 		client.Actor.CuttrntCards = tserver.RemoveCardData(client.Actor.CuttrntCards, choiceCards[i])
 		//放进弃牌堆
-		tserver.UsedCardList = append(tserver.UsedCardList, choiceCards[i])
+		client.RoomInfo.UsedCardList = append(client.RoomInfo.UsedCardList, choiceCards[i])
 		//放入协议通知客户端
 		client.RoomInfo.RoomPack.CurrentUseCards = append(client.RoomInfo.RoomPack.CurrentUseCards, choiceCards[i])
 	}
 
-	client.RoomInfo.RoomPack.LeftCardCount = int32(len(server.MyCardList))
+	client.RoomInfo.RoomPack.LeftCardCount = int32(len(client.RoomInfo.MyCardList))
 
 	mainpack = &GameProto.MainPack{}
 	mainpack.Actioncode = GameProto.ActionCode_HURT

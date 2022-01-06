@@ -31,6 +31,8 @@ class GameOnlineUI : UIWindow
     private Text m_textPlayerIndex;
     private Text m_textLeft;
     private Text m_textMudi;
+    private InputField m_inputChat;
+    private Button m_btnSend;
 
     protected override void ScriptGenerator()
     {
@@ -41,12 +43,15 @@ class GameOnlineUI : UIWindow
         m_btnAbord = FindChildComponent<Button>("m_goContent/m_goMiddle/m_btnAbord");
         m_goInventoryRoot = FindChild("m_goContent/m_goMiddle/m_goInventoryRoot").gameObject;
         m_btnUsed = FindChildComponent<Button>("m_goContent/m_goMiddle/m_btnUsed");
-        m_textMudi = FindChildComponent<Text>("m_goContent/m_goMiddle/m_textMudi");
+        m_textMudi = FindChildComponent<Text>("m_goContent/m_goMiddle/m_btnUsed/m_textMudi");
         m_goCardsRoot = FindChild("m_goContent/m_goCardsRoot").gameObject;
         m_itemCard = FindChild("m_goContent/m_goCardsRoot/m_itemCard").gameObject;
         m_textBossIndex = FindChildComponent<Text>("m_goContent/m_goTop/m_textBossIndex");
         m_textPlayerIndex = FindChildComponent<Text>("m_goContent/m_goTop/m_textPlayerIndex");
         m_textLeft = FindChildComponent<Text>("m_goContent/m_goMiddle/m_btnLeft/m_textLeft");
+
+        m_inputChat = FindChildComponent<InputField>("m_goContent/m_inputChat");
+        m_btnSend = FindChildComponent<Button>("m_goContent/m_btnSend");
         for (int i = 1; i <=4; i++)
         {
             m_tfCardContent.Add(FindChild("m_goContent/m_goCardsRoot/m_tfCardContent"+i));
@@ -55,6 +60,15 @@ class GameOnlineUI : UIWindow
         m_btnAttack.onClick.AddListener(OnClickAttackBtn);
         m_btnAbord.onClick.AddListener(OnClickAbordBtn);
         m_btnUsed.onClick.AddListener(OnClickUsedBtn);
+
+        m_btnSend.onClick.AddListener((() =>
+        {
+            if (!m_inputChat.text.Equals(string.Empty))
+            {
+                RoomDataMgr.Instance.ChatReq(m_inputChat.text);
+                m_inputChat.text = string.Empty;
+            }
+        }));
     }
     #endregion
 

@@ -45,6 +45,7 @@ class RoomUI : UIWindow
             else
             {
                 UISys.Mgr.ShowWindow<GameUILand>();
+                GameMgr.Instance.RestartGame();
             }
         });
     }

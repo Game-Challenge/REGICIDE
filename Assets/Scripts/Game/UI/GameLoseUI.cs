@@ -52,7 +52,7 @@ public class GameLoseUI : UIWindow
         else
         {
             UISys.Mgr.CloseWindow<GameOnlineUI>();
-            UISys.Mgr.ShowWindow<RoomWaitUI>();
+            RoomDataMgr.Instance.ExitRoomReq();
         }
     }
     #endregion

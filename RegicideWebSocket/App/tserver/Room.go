@@ -14,6 +14,18 @@ type Room struct {
 	ClientList        []*Client
 	RoomPack          *GameProto.RoomPack
 	OnlinePlayerCount int
+
+	CurrentBossType       GameProto.CardType
+	CurrentBossBeJokerAtk bool
+
+	ToTalCardList         []*CardData
+	UsedCardList          []*GameProto.CardData //弃牌堆
+	CurrentAttackCardList []*GameProto.CardData //boss未死亡的牌堆
+	MyCardList            []*CardData
+	BossList              []*CardData
+
+	CURRENT_BOSS_INDEX     int
+	CURRENT_MAX_TURN_COUNT int
 }
 
 type BossActor struct {
@@ -55,6 +67,7 @@ func CreateRoom(roomName string) Room {
 	roompack.Maxnum = 4
 	roompack.RoomID = RoomID
 	room := InstanceRoom(roompack)
+	room.RoomPack.State = 1
 	RoomList = append(RoomList, &room)
 	return room
 }

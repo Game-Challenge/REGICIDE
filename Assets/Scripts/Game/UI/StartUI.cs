@@ -121,6 +121,7 @@ class StartUI : UIWindow
         //return;
         if (GameDataMgr.Instance.HadLogin)
         {
+            Close();
             UISys.Mgr.ShowWindow<RoomUI>();
         }
         else

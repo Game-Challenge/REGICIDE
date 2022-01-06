@@ -62,7 +62,9 @@ class GameWinUI : UIWindow
         else
         {
             UISys.Mgr.CloseWindow<GameOnlineUI>();
-            UISys.Mgr.ShowWindow<RoomWaitUI>();
+            //UISys.Mgr.ShowWindow<RoomWaitUI>();
+            RoomDataMgr.Instance.ExitRoomReq();
+            //UISys.Mgr.ShowWindow<RoomUI>();
         }
     }
     private void OnClickPushRankBtn()

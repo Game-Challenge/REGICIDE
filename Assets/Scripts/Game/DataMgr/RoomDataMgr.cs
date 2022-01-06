@@ -15,7 +15,27 @@ class RoomDataMgr : DataCenterModule<RoomDataMgr>
         GameClient.Instance.RegActionHandle((int)ActionCode.JoinRoom, JoinRoomRes);
         GameClient.Instance.RegActionHandle((int)ActionCode.Exit, ExitRoomRes);
         GameClient.Instance.RegActionHandle((int)ActionCode.StartGame, StartGameRes);
+        GameClient.Instance.RegActionHandle((int)ActionCode.Chat, ChatRes);
     }
+
+    public void ChatReq(string str)
+    {
+        MainPack mainPack = ProtoUtil.BuildMainPack(RequestCode.Room, ActionCode.Chat);
+        mainPack.Str = str;
+        GameClient.Instance.SendCSMsg(mainPack);
+        UISys.ShowTipMsg(string.Format("{0}:{1}", "我", mainPack.Str));
+    }
+    private void ChatRes(MainPack mainPack)
+    {
+        if (Utils.CheckHaveError(mainPack))
+        {
+            return;
+        }
+        //Debug.Log(mainPack);
+
+        UISys.ShowTipMsg(string.Format("{0}:{1}",mainPack.User,mainPack.Str));
+    }
+
     public void StartGameReq()
     {
         MainPack mainPack = ProtoUtil.BuildMainPack(RequestCode.Room, ActionCode.StartGame);
@@ -151,6 +171,7 @@ class RoomDataMgr : DataCenterModule<RoomDataMgr>
         }
 
         Debug.Log(mainPack);
+        UISys.Mgr.CloseWindow<GameOnlineUI>();
 
         UISys.Mgr.CloseWindow<RoomWaitUI>();
 

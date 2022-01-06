@@ -262,7 +262,8 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
 
         LeftCardCount = roomPack.LeftCardCount;
         SetMuDiUsedCards(roomPack.MuDiCards);
-        SetCurrentUsedCards(roomPack.CurrentUseCards);
+        //SetCurrentUsedCards(roomPack.CurrentUseCards);
+        UISys.Mgr.ShowWindow<GameOnlineTips>(UI_Layer.Top).ShowTip("玩家"+ playerPack[CurrentGameIndex].ActorName+"遗弃卡牌", roomPack.CurrentUseCards);
 
         Gamestate = roomPack.Gamestate.State;
         BossActor.Refresh(roomPack.BossActor);
@@ -346,11 +347,13 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
 
         LeftCardCount = roomPack.LeftCardCount;
 
-        SetCurrentUsedCards(roomPack.CurrentUseCards);
+        var playerPack = mainPack.Roompack[0].ActorPack;
+
+        //SetCurrentUsedCards(roomPack.CurrentUseCards);
+        UISys.Mgr.ShowWindow<GameOnlineTips>(UI_Layer.Top).ShowTip("玩家" + playerPack[CurrentGameIndex].ActorName + "打出卡牌", roomPack.CurrentUseCards);
 
         CurrentGameIndex = roomPack.CurrentIndex;
 
-        var playerPack = mainPack.Roompack[0].ActorPack;
 
         if (mainPack.Str.Equals("GAMELOSE"))
         {
@@ -372,6 +375,7 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
         }
         if (bossDie)
         {
+            CurrentBossBeJokerAtk = false;
             UISys.ShowTipMsg(string.Format("当前{0}号玩家{1}击败boss，直接进入阶段一", CurrentGameIndex, playerPack[CurrentGameIndex].ActorName));
         }
         else
@@ -380,6 +384,7 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
         }
     }
 
+    public bool CurrentBossBeJokerAtk;
     private bool ChekJoker(MainPack mainPack)
     {
         if (mainPack.Str.Equals("JKR")) //打出了Joker
@@ -387,6 +392,8 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
             var playerPack = mainPack.Roompack[0].ActorPack;
 
             UISys.ShowTipMsg(string.Format("当前{0}号玩家{1}打出了Joker，BOSS技能失效，请选择下一个出牌的玩家！", CurrentGameIndex, playerPack[CurrentGameIndex].ActorName));
+
+            CurrentBossBeJokerAtk = true;
 
             Gamestate = GAMESTATE.State1;
             if (CurrentGameIndex == MyGameIndex)
