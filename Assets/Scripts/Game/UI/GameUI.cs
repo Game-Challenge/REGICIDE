@@ -133,7 +133,7 @@ class GameUI : UIWindow
 
     private void ShowUsed()
     {
-        UISys.Mgr.ShowWindow<UsedListUI>();
+        UISys.Mgr.ShowWindow<UsedListUI>().InitUI();
     }
 
     #region 事件

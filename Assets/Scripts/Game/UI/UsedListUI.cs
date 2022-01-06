@@ -21,19 +21,24 @@ class UsedListUI : UIWindow
     protected override void OnCreate()
     {
         base.OnCreate();
+       
+        m_ItemCard.gameObject.SetActive(false);
+    }
+
+    public void InitUI()
+    {
         var list = GameMgr.Instance.UseCardDatas;
-        AdjustIconNum(m_items, list.Count,m_tfContent,m_ItemCard);
+        AdjustIconNum(m_items, list.Count, m_tfContent, m_ItemCard);
         for (int i = 0; i < m_items.Count; i++)
         {
             m_items[i].Init(list[i]);
             m_items[i].CouldChoice = false;
         }
-        m_ItemCard.gameObject.SetActive(false);
     }
 
     public void InitOnlineUI()
     {
-        var list = GameOnlineMgr.Instance.MuDiCardDatas;
+        var list = GameOnlineMgr.Instance.CurrentUsedCardDatas;
         AdjustIconNum(m_items, list.Count, m_tfContent, m_ItemCard);
         for (int i = 0; i < m_items.Count; i++)
         {

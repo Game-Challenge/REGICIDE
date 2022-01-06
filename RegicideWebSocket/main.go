@@ -40,9 +40,9 @@ func InitConfig() {
 }
 
 func InitDatabase() {
+	//defer db.Close()
 	db := common.InitDB()
 	print(db)
-	// defer db.Close()
 }
 
 func InitLogger() {

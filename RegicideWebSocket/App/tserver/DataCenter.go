@@ -74,7 +74,7 @@ func (dataCenter *DataCenter) sendBuffer(client *Client, mainpack *GameProto.Mai
 
 	logger.Crit(conn.RemoteAddr(), "send mainpack: ", mainpack)
 
-	logger.Crit(conn.RemoteAddr(), "send buff: ", buff)
+	// logger.Crit(conn.RemoteAddr(), "send buff: ", buff)
 
 	err2 := conn.WriteMessage(2, buff)
 

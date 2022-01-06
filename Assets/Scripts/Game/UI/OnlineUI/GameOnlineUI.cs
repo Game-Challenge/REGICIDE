@@ -30,6 +30,7 @@ class GameOnlineUI : UIWindow
     private Text m_textBossIndex;
     private Text m_textPlayerIndex;
     private Text m_textLeft;
+    private Text m_textMudi;
 
     protected override void ScriptGenerator()
     {
@@ -40,6 +41,7 @@ class GameOnlineUI : UIWindow
         m_btnAbord = FindChildComponent<Button>("m_goContent/m_goMiddle/m_btnAbord");
         m_goInventoryRoot = FindChild("m_goContent/m_goMiddle/m_goInventoryRoot").gameObject;
         m_btnUsed = FindChildComponent<Button>("m_goContent/m_goMiddle/m_btnUsed");
+        m_textMudi = FindChildComponent<Text>("m_goContent/m_goMiddle/m_textMudi");
         m_goCardsRoot = FindChild("m_goContent/m_goCardsRoot").gameObject;
         m_itemCard = FindChild("m_goContent/m_goCardsRoot/m_itemCard").gameObject;
         m_textBossIndex = FindChildComponent<Text>("m_goContent/m_goTop/m_textBossIndex");
@@ -60,11 +62,6 @@ class GameOnlineUI : UIWindow
     protected override void OnCreate()
     {
         m_itemCard.gameObject.SetActive(false);
-        for (int i = 0; i < 4; i++)
-        {
-            m_textPlayerList[i].gameObject.SetActive(false);
-        }
-
         GameOnlineMgr.Instance.IsOnlineGameIng = true;
     }
 
@@ -122,19 +119,19 @@ class GameOnlineUI : UIWindow
                     {
                         m_player2Cards = CreateWidgetByPrefab<ItemCard>(m_itemCard, m_tfCardContent[1]);
                         m_player2Cards.gameObject.SetActive(true);
-                        m_textPlayerList[2].text = i + "号" + string.Format("玩家{0}", players[i].ActorName);
+                        m_textPlayerList[1].text = i + "号" + string.Format("玩家{0}", players[i].ActorName);
                     }
                     else if (i == 3)
                     { 
                         m_player3Cards = CreateWidgetByPrefab<ItemCard>(m_itemCard, m_tfCardContent[2]);
                         m_player3Cards.gameObject.SetActive(true);
-                        m_textPlayerList[3].text = i + "号" + string.Format("玩家{0}", players[i].ActorName);
+                        m_textPlayerList[2].text = i + "号" + string.Format("玩家{0}", players[i].ActorName);
                     }
                     else if (i == 0)
                     {
                         m_player4Cards = CreateWidgetByPrefab<ItemCard>(m_itemCard, m_tfCardContent[3]);
                         m_player4Cards.gameObject.SetActive(true);
-                        m_textPlayerList[0].text = i + "号" + string.Format("玩家{0}", players[i].ActorName);
+                        m_textPlayerList[3].text = i + "号" + string.Format("玩家{0}", players[i].ActorName);
                     }
                     break;
                 }
@@ -144,19 +141,19 @@ class GameOnlineUI : UIWindow
                     {
                         m_player2Cards = CreateWidgetByPrefab<ItemCard>(m_itemCard, m_tfCardContent[1]);
                         m_player2Cards.gameObject.SetActive(true);
-                        m_textPlayerList[3].text = i + "号" + string.Format("玩家{0}", players[i].ActorName);
+                        m_textPlayerList[1].text = i + "号" + string.Format("玩家{0}", players[i].ActorName);
                         }
                     else if (i == 0)
                     {
                         m_player3Cards = CreateWidgetByPrefab<ItemCard>(m_itemCard, m_tfCardContent[2]);
                         m_player3Cards.gameObject.SetActive(true);
-                        m_textPlayerList[0].text = i + "号" + string.Format("玩家{0}", players[i].ActorName);
+                        m_textPlayerList[2].text = i + "号" + string.Format("玩家{0}", players[i].ActorName);
                         }
                     else if (i == 1)
                     {
                         m_player4Cards = CreateWidgetByPrefab<ItemCard>(m_itemCard, m_tfCardContent[3]);
                         m_player4Cards.gameObject.SetActive(true);
-                        m_textPlayerList[1].text = i + "号" + string.Format("玩家{0}", players[i].ActorName);
+                        m_textPlayerList[3].text = i + "号" + string.Format("玩家{0}", players[i].ActorName);
                         }
                     break;
                 }
@@ -166,19 +163,19 @@ class GameOnlineUI : UIWindow
                     {
                         m_player2Cards = CreateWidgetByPrefab<ItemCard>(m_itemCard, m_tfCardContent[1]);
                         m_player2Cards.gameObject.SetActive(true);
-                        m_textPlayerList[0].text = i + "号" + string.Format("玩家{0}", players[i].ActorName);
+                        m_textPlayerList[1].text = i + "号" + string.Format("玩家{0}", players[i].ActorName);
                         }
                     else if (i == 1)
                     {
                         m_player3Cards = CreateWidgetByPrefab<ItemCard>(m_itemCard, m_tfCardContent[2]);
                         m_player3Cards.gameObject.SetActive(true);
-                        m_textPlayerList[1].text = i + "号" + string.Format("玩家{0}", players[i].ActorName);
+                        m_textPlayerList[2].text = i + "号" + string.Format("玩家{0}", players[i].ActorName);
                         }
                     else if (i == 2)
                     {
                         m_player4Cards = CreateWidgetByPrefab<ItemCard>(m_itemCard, m_tfCardContent[3]);
                         m_player4Cards.gameObject.SetActive(true);
-                        m_textPlayerList[2].text = i + "号" + string.Format("玩家{0}", players[i].ActorName);
+                        m_textPlayerList[3].text = i + "号" + string.Format("玩家{0}", players[i].ActorName);
                         }
                     break;
                 }
@@ -186,7 +183,6 @@ class GameOnlineUI : UIWindow
 
             if (i == myIndex)   //我的位置一定是0
             {
-                m_textPlayerList[0].gameObject.SetActive(true);
                 m_textPlayerList[0].text = GameOnlineMgr.Instance.MyGameIndex + "号" + string.Format("玩家{0}", players[myIndex].ActorName);
                 //"Index= " + GameOnlineMgr.Instance.MyGameIndex + string.Format("玩家{0} {1}", players[myIndex].ActorId, players[myIndex].ActorName);
             }
@@ -326,6 +322,7 @@ class GameOnlineUI : UIWindow
         m_textPlayerIndex.text = string.Format("当前回合玩家:{0}", GameOnlineMgr.Instance.ActorPacks[GameOnlineMgr.Instance.CurrentGameIndex].ActorName);
 
         m_textLeft.text = string.Format("酒馆剩余:{0}", GameOnlineMgr.Instance.LeftCardCount);
+        m_textMudi.text = string.Format("弃牌堆:{0}", GameOnlineMgr.Instance.CurrentUsedCardDatas.Count);
     }
 
     private void UpdateGameState()

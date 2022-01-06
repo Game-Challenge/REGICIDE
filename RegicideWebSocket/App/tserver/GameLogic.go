@@ -22,14 +22,16 @@ var CURRENT_MAX_TURN_COUNT int
 
 //InitCards 初始化所有卡牌
 func (room *Room) InitCards() {
-	clientCount := len(room.ClientList)
-	if clientCount <= 2 {
-		TOTAL_CARD_COUNT = 52
-	} else if clientCount == 3 {
-		TOTAL_CARD_COUNT = 53
-	} else if clientCount == 4 {
-		TOTAL_CARD_COUNT = 54
-	}
+	// clientCount := len(room.ClientList)
+	// if clientCount <= 2 {
+	// 	TOTAL_CARD_COUNT = 52
+	// } else if clientCount == 3 {
+	// 	TOTAL_CARD_COUNT = 53
+	// } else if clientCount == 4 {
+	// 	TOTAL_CARD_COUNT = 54
+	// }
+
+	TOTAL_CARD_COUNT = 54
 	for i := 0; i < TOTAL_CARD_COUNT; i++ {
 		cardData := InstanceCardData(i)
 		ToTalCardList = append(ToTalCardList, &cardData)
@@ -79,6 +81,7 @@ func (room *Room) TurnCards(client *Client) {
 	}
 
 	client.Actor.CuttrntCards = currentCards
+	room.RoomPack.LeftCardCount = int32(len(MyCardList))
 }
 
 //红桃
@@ -95,10 +98,14 @@ func (client *Client) AddHp(number int) {
 		MyCardList = append(MyCardList, &cardData)
 	}
 	for i := 0; i < number; i++ {
-		cardData := UsedCardList[i]
+		if len(UsedCardList) <= 0 {
+			break
+		}
+		cardData := UsedCardList[0]
 		UsedCardList = RemoveCardData(UsedCardList, cardData)
 	}
 	RandomSort(MyCardList)
+	client.RoomInfo.RoomPack.LeftCardCount = int32(len(MyCardList))
 }
 
 // 方块抽卡
@@ -127,7 +134,7 @@ func (client *Client) TurnCardDiamond(number int) {
 	index := myIndex
 	continueCount := 0
 	for {
-		logger.Debug(i, index, continueCount)
+		// logger.Debug(i, index, continueCount)
 		if i > turnCount || continueCount > turnCount {
 			break
 		}
@@ -150,7 +157,7 @@ func (client *Client) TurnCardDiamond(number int) {
 			break
 		}
 	}
-	logger.Debug("out")
+	client.RoomInfo.RoomPack.LeftCardCount = int32(len(MyCardList))
 }
 
 func RandomSort(cardDatas []*CardData) {
@@ -317,17 +324,17 @@ func ImpactSkill(client *Client, bossActor *GameProto.ActorPack, attackData Atta
 		bossActor.Hp -= attackData.Damage
 	}
 
-	if bossActor.Hp < 0 {
-		cardData := InstanceCardData(int(bossActor.ActorId))
-		MyCardList = append(MyCardList, &cardData)
-	} else if bossActor.Hp == 0 {
-		cardData := InstanceCardData(int(bossActor.ActorId))
-		MyCardList = append(MyCardList, &cardData)
+	// if bossActor.Hp < 0 {
+	// 	cardData := InstanceCardData(int(bossActor.ActorId))
+	// 	MyCardList = append(MyCardList, &cardData)
+	// } else if bossActor.Hp == 0 {
+	// 	cardData := InstanceCardData(int(bossActor.ActorId))
+	// 	MyCardList = append(MyCardList, &cardData)
 
-		cache := []*CardData{&cardData}
-		temp := append(cache, MyCardList...)
-		MyCardList = temp
-	}
+	// 	cache := []*CardData{&cardData}
+	// 	temp := append(cache, MyCardList...)
+	// 	MyCardList = temp
+	// }
 
 	bossDie := bossActor.Hp <= 0
 	if bossActor.Hp <= 0 {
@@ -356,8 +363,17 @@ func GenAttackData(cardData []*GameProto.CardData) AttackData {
 		//is pet
 		if card.CardValue == 1 {
 			HadPet = true
-		} else {
 			Damage += card.CardValue
+		} else {
+			if card.CardValue == 11 {
+				Damage += 10
+			} else if card.CardValue == 12 {
+				Damage += 15
+			} else if card.CardValue == 13 {
+				Damage += 20
+			} else {
+				Damage += card.CardValue
+			}
 		}
 
 		if card.CardType == GameProto.CardType_DIAMOND {
@@ -370,10 +386,8 @@ func GenAttackData(cardData []*GameProto.CardData) AttackData {
 			CouldAddHp = true
 		} else if card.CardType == GameProto.CardType_JOKER {
 			HadJoker = true
-		}
-
-		if HadPet {
-			Damage += 1
+		} else if int(card.CardType) == 6 {
+			HadJoker = true
 		}
 	}
 

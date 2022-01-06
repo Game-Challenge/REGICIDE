@@ -193,7 +193,27 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
         var point = 0;
         for (int i = 0; i < list.Count; i++)
         {
-            point += list[i].CardValue;
+            var card = list[i];
+            if (card.cardType == CardType.BLACK_JOKER || card.cardType == CardType.RED_JOKER)
+            {
+                continue;
+            }
+
+            if (card.CardValue == 11)
+            {
+                point += 10;
+            }else if (card.CardValue == 12)
+            {
+                point += 15;
+            }
+            else if (card.CardValue == 13)
+            {
+                point += 20;
+            }
+            else
+            {
+                point += list[i].CardValue;
+            }
         }
 
         if (point < BossActor.Atk)
@@ -368,14 +388,16 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
 
             UISys.ShowTipMsg(string.Format("当前{0}号玩家{1}打出了Joker，BOSS技能失效，请选择下一个出牌的玩家！", CurrentGameIndex, playerPack[CurrentGameIndex].ActorName));
 
+            Gamestate = GAMESTATE.State1;
             if (CurrentGameIndex == MyGameIndex)
             {
+                GameMgr.Instance.m_choiceList.Clear();
                 UISys.Mgr.ShowWindow<JokerChoiceUI>();
+                return true;
             }
         }
         else if (mainPack.Str.Equals("JKRCH")) 
         {
-
             var roomPack = mainPack.Roompack[0];
 
             var playerPack = roomPack.ActorPack;
@@ -383,6 +405,10 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
             UISys.ShowTipMsg(string.Format("当前{0}号玩家{1}选择了{2}号玩家{3}出牌！", CurrentGameIndex, playerPack[CurrentGameIndex].ActorName, roomPack.CurrentIndex, playerPack[roomPack.CurrentIndex].ActorName));
 
             CurrentGameIndex = roomPack.CurrentIndex;
+
+            Gamestate = GAMESTATE.State1;
+
+            return true;
         }
 
         return false;
