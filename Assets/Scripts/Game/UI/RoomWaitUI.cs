@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using RegicideProtocol;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +14,7 @@ class RoomWaitUI : UIWindow
     private Text m_textRoomId;
     private Text m_textRoomName;
     private Button m_btnStartGame;
+    private Button m_btnExit;
     private Transform m_tfPlayerContent;
     private GameObject m_itemPlayer;
     protected override void ScriptGenerator()
@@ -23,9 +25,16 @@ class RoomWaitUI : UIWindow
         m_textRoomId = FindChildComponent<Text>("m_goRoomInfo/m_goRoom/m_textRoomId");
         m_textRoomName = FindChildComponent<Text>("m_goRoomInfo/m_goRoom/m_textRoomName");
         m_btnStartGame = FindChildComponent<Button>("m_goRoomInfo/m_btnStartGame");
+        m_btnExit = FindChildComponent<Button>("m_goRoomInfo/m_btnExit");
         m_tfPlayerContent = FindChild("m_tfPlayerContent");
         m_itemPlayer = FindChild("m_tfPlayerContent/m_itemPlayer").gameObject;
         m_btnStartGame.onClick.AddListener(OnClickStartGameBtn);
+        m_btnExit.onClick.AddListener(OnClickExitBtn);
+    }
+
+    private void OnClickExitBtn()
+    {
+        RoomDataMgr.Instance.ExitRoomReq();
     }
     #endregion
 

@@ -27,6 +27,8 @@ public class ActorMgr : Singleton<ActorMgr>
     {
         var cardData = new CardData(cardInt);
 
+        GameOnlineMgr.Instance.CurrentBossIndex++;
+
         if (GameMgr.Instance.BossActor == null)
         {
             return new BossActor(cardData);

@@ -46,7 +46,7 @@ public class WebSocketMgr : UnitySingleton<WebSocketMgr>
     void OnOpen(WebSocket ws)
     {
         //Debug.Log("WebSocket open ");
-        //UISys.ShowTipMsg("服务器连接成功~");
+        UISys.ShowTipMsg("服务器连接成功~");
         if (m_Action!= null)
         {
             m_Action();

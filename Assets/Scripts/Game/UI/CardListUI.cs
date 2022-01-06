@@ -47,6 +47,7 @@ class ItemCard : UIWindowWidget
     private List<Heart> m_listHeart = new List<Heart>();
     private CardData m_cardData;
     private bool m_choice;
+    public bool CouldChoice = true;
     #region 脚本工具生成的代码
     private Image m_imgIcon;
     private GameObject m_goSelect;
@@ -112,6 +113,16 @@ class ItemCard : UIWindowWidget
         m_isRandomCard = isRandomCard;
         m_cardData = data;
         m_imgIcon.sprite = m_cardData.sprite;
+        m_choice = false;
+        m_goCardInfo.gameObject.SetActive(false);
+        Refresh();
+    }
+
+    public void Init(RegicideProtocol.CardData data, bool isRandomCard = false)
+    {
+        CouldChoice = false;
+        m_isRandomCard = isRandomCard;
+        m_imgIcon.sprite = CardMgr.Instance.GetCardSprite(data.CardInt); ;
         m_choice = false;
         m_goCardInfo.gameObject.SetActive(false);
         Refresh();
@@ -208,6 +219,10 @@ class ItemCard : UIWindowWidget
 
     private void Choice()
     {
+        if (!CouldChoice)
+        {
+            return;
+        }
         if (m_isOnlieCards)
         {
             UISys.Mgr.ShowWindow<OtherListUI>().Init(m_onlineCardDatas);

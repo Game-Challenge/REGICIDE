@@ -34,6 +34,7 @@ class OtherListUI : UIWindow
         for (int i = 0; i < m_items.Count; i++)
         {
             m_items[i].Init(list[i]);
+            m_items[i].CouldChoice = false;
         }
         m_ItemCard.gameObject.SetActive(false);
     }

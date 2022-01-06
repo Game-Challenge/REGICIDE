@@ -37,49 +37,51 @@ namespace RegicideProtocol
                   "Cghyb29tcGFjaxgGIAMoCzIaLlJlZ2ljaWRlUHJvdG9jb2wuUm9vbVBhY2sS",
                   "MAoKcGxheWVycGFjaxgHIAMoCzIcLlJlZ2ljaWRlUHJvdG9jb2wuUGxheWVy",
                   "UGFjaxIMCgR1c2VyGAggASgJIi8KCUxvZ2luUGFjaxIQCgh1c2VybmFtZRgB",
-                  "IAEoCRIQCghwYXNzd29yZBgCIAEoCSK9AgoIUm9vbVBhY2sSEAoIcm9vbW5h",
+                  "IAEoCRIQCghwYXNzd29yZBgCIAEoCSK4AwoIUm9vbVBhY2sSEAoIcm9vbW5h",
                   "bWUYASABKAkSDgoGbWF4bnVtGAIgASgFEg4KBmN1cm51bRgDIAEoBRINCgVz",
                   "dGF0ZRgEIAEoBRIyCglnYW1lc3RhdGUYBSABKAsyHy5SZWdpY2lkZVByb3Rv",
                   "Y29sLkdhbWVTdGF0ZVBhY2sSDgoGcm9vbUlEGAYgASgFEhQKDGN1cnJlbnRJ",
                   "bmRleBgHIAEoBRIuCglhY3RvclBhY2sYCCADKAsyGy5SZWdpY2lkZVByb3Rv",
                   "Y29sLkFjdG9yUGFjaxIPCgd2aXNhYmxlGAkgASgFEhMKC3VzZVBhc3N3b3Jk",
                   "GAogASgFEhAKCHBhc3N3b3JkGAsgASgJEi4KCWJvc3NBY3RvchgMIAEoCzIb",
-                  "LlJlZ2ljaWRlUHJvdG9jb2wuQWN0b3JQYWNrIn0KClBsYXllclBhY2sSEgoK",
-                  "cGxheWVybmFtZRgBIAEoCRIQCghwbGF5ZXJJRBgCIAEoCRIKCgJocBgDIAEo",
-                  "BRIqCgdwb3NQYWNrGAQgASgLMhkuUmVnaWNpZGVQcm90b2NvbC5Qb3NQYWNr",
-                  "EhEKCXBsYXllckpvYhgFIAEoBSJLCg1HYW1lU3RhdGVQYWNrEioKBXN0YXRl",
-                  "GAEgASgOMhsuUmVnaWNpZGVQcm90b2NvbC5HQU1FU1RBVEUSDgoGQm9zc0lk",
-                  "GAIgASgFIrABCglBY3RvclBhY2sSDwoHQWN0b3JJZBgBIAEoBRITCgtDYXJk",
-                  "VmFsdWVJZBgCIAEoBRIKCgJIcBgDIAEoBRILCgNBVEsYBCABKAUSDQoFSW5k",
-                  "ZXgYBSABKAUSEAoIQWN0b3JKb2IYBiABKAUSMAoMQ3V0dHJudENhcmRzGAcg",
-                  "AygLMhouUmVnaWNpZGVQcm90b2NvbC5DYXJkRGF0YRIRCglBY3Rvck5hbWUY",
-                  "CCABKAkiXAoIQ2FyZERhdGESDwoHY2FyZEludBgBIAEoBRIRCgljYXJkVmFs",
-                  "dWUYAiABKAUSLAoIY2FyZFR5cGUYAyABKA4yGi5SZWdpY2lkZVByb3RvY29s",
-                  "LkNhcmRUeXBlIr8BCgdQb3NQYWNrEgwKBFBvc1gYASABKAUSDAoEUG9zWRgC",
-                  "IAEoBRIMCgRQb3NaGAMgASgFEg0KBVJvdGFYGAQgASgFEg0KBVJvdGFZGAUg",
-                  "ASgFEg0KBVJvdGFaGAYgASgFEg8KB0d1blJvdFoYByABKAISEQoJQW5pbWF0",
-                  "aW9uGAggASgFEgwKBERpcnQYCSABKAUSDQoFTW92ZVgYCiABKAISDQoFTW92",
-                  "ZVkYCyABKAISDQoFTW92ZVoYDCABKAIqRwoLUmVxdWVzdENvZGUSDwoLUmVx",
-                  "dWVzdE5vbmUQABIICgRVc2VyEAESCAoEUm9vbRACEggKBEdhbWUQAxIJCgVI",
-                  "ZWFydBAEKs4CCgpBY3Rpb25Db2RlEg4KCkFjdGlvbk5vbmUQABIMCghSZWdp",
-                  "c3RlchABEgkKBUxvZ2luEAISDgoKQ3JlYXRlUm9vbRADEgwKCEZpbmRSb29t",
-                  "EAQSDgoKUGxheWVyTGlzdBAFEgwKCEpvaW5Sb29tEAYSCAoERXhpdBAHEggK",
-                  "BENoYXQQCBINCglTdGFydEdhbWUQCRIMCghTdGFydGluZxAKEg8KC1VwZGF0",
-                  "ZVN0YXRlEAsSDAoIRXhpdEdhbWUQDBITCg9VcENoYXJhY3Rlckxpc3QQDRIJ",
-                  "CgVVcFBvcxAOEggKBEZpcmUQDxINCglIZWFydEJlYXQQEBIQCgxBZGRDaGFy",
-                  "YWN0ZXIQERITCg9SZW1vdmVDaGFyYWN0ZXIQEhIKCgZBVFRBQ0sQExIJCgVT",
-                  "S0lMTBAUEgoKBkRBTUFHRRAVEggKBEhVUlQQFiozCgpSZXR1cm5Db2RlEg4K",
-                  "ClJldHVybk5vbmUQABILCgdTdWNjZXNzEAESCAoERmFpbBACKjsKCUdBTUVT",
-                  "VEFURRIKCgZTVEFURTEQABIKCgZTVEFURTIQARIKCgZTVEFURTMQAhIKCgZT",
-                  "VEFURTQQAypMCghDYXJkVHlwZRIICgROT05FEAASCAoEQ0xVQhABEgsKB0RJ",
-                  "QU1PTkQQAhIJCgVIRUFSVBADEgkKBVNQQURFEAQSCQoFSk9LRVIQBWIGcHJv",
-                  "dG8z"));
+                  "LlJlZ2ljaWRlUHJvdG9jb2wuQWN0b3JQYWNrEhUKDUxlZnRDYXJkQ291bnQY",
+                  "DSABKAUSLQoJTXVEaUNhcmRzGA4gAygLMhouUmVnaWNpZGVQcm90b2NvbC5D",
+                  "YXJkRGF0YRIzCg9DdXJyZW50VXNlQ2FyZHMYDyADKAsyGi5SZWdpY2lkZVBy",
+                  "b3RvY29sLkNhcmREYXRhIn0KClBsYXllclBhY2sSEgoKcGxheWVybmFtZRgB",
+                  "IAEoCRIQCghwbGF5ZXJJRBgCIAEoCRIKCgJocBgDIAEoBRIqCgdwb3NQYWNr",
+                  "GAQgASgLMhkuUmVnaWNpZGVQcm90b2NvbC5Qb3NQYWNrEhEKCXBsYXllckpv",
+                  "YhgFIAEoBSJLCg1HYW1lU3RhdGVQYWNrEioKBXN0YXRlGAEgASgOMhsuUmVn",
+                  "aWNpZGVQcm90b2NvbC5HQU1FU1RBVEUSDgoGQm9zc0lkGAIgASgFIrABCglB",
+                  "Y3RvclBhY2sSDwoHQWN0b3JJZBgBIAEoBRITCgtDYXJkVmFsdWVJZBgCIAEo",
+                  "BRIKCgJIcBgDIAEoBRILCgNBVEsYBCABKAUSDQoFSW5kZXgYBSABKAUSEAoI",
+                  "QWN0b3JKb2IYBiABKAUSMAoMQ3V0dHJudENhcmRzGAcgAygLMhouUmVnaWNp",
+                  "ZGVQcm90b2NvbC5DYXJkRGF0YRIRCglBY3Rvck5hbWUYCCABKAkiXAoIQ2Fy",
+                  "ZERhdGESDwoHY2FyZEludBgBIAEoBRIRCgljYXJkVmFsdWUYAiABKAUSLAoI",
+                  "Y2FyZFR5cGUYAyABKA4yGi5SZWdpY2lkZVByb3RvY29sLkNhcmRUeXBlIr8B",
+                  "CgdQb3NQYWNrEgwKBFBvc1gYASABKAUSDAoEUG9zWRgCIAEoBRIMCgRQb3Na",
+                  "GAMgASgFEg0KBVJvdGFYGAQgASgFEg0KBVJvdGFZGAUgASgFEg0KBVJvdGFa",
+                  "GAYgASgFEg8KB0d1blJvdFoYByABKAISEQoJQW5pbWF0aW9uGAggASgFEgwK",
+                  "BERpcnQYCSABKAUSDQoFTW92ZVgYCiABKAISDQoFTW92ZVkYCyABKAISDQoF",
+                  "TW92ZVoYDCABKAIqRwoLUmVxdWVzdENvZGUSDwoLUmVxdWVzdE5vbmUQABII",
+                  "CgRVc2VyEAESCAoEUm9vbRACEggKBEdhbWUQAxIJCgVIZWFydBAEKs4CCgpB",
+                  "Y3Rpb25Db2RlEg4KCkFjdGlvbk5vbmUQABIMCghSZWdpc3RlchABEgkKBUxv",
+                  "Z2luEAISDgoKQ3JlYXRlUm9vbRADEgwKCEZpbmRSb29tEAQSDgoKUGxheWVy",
+                  "TGlzdBAFEgwKCEpvaW5Sb29tEAYSCAoERXhpdBAHEggKBENoYXQQCBINCglT",
+                  "dGFydEdhbWUQCRIMCghTdGFydGluZxAKEg8KC1VwZGF0ZVN0YXRlEAsSDAoI",
+                  "RXhpdEdhbWUQDBITCg9VcENoYXJhY3Rlckxpc3QQDRIJCgVVcFBvcxAOEggK",
+                  "BEZpcmUQDxINCglIZWFydEJlYXQQEBIQCgxBZGRDaGFyYWN0ZXIQERITCg9S",
+                  "ZW1vdmVDaGFyYWN0ZXIQEhIKCgZBVFRBQ0sQExIJCgVTS0lMTBAUEgoKBkRB",
+                  "TUFHRRAVEggKBEhVUlQQFiozCgpSZXR1cm5Db2RlEg4KClJldHVybk5vbmUQ",
+                  "ABILCgdTdWNjZXNzEAESCAoERmFpbBACKjsKCUdBTUVTVEFURRIKCgZTVEFU",
+                  "RTEQABIKCgZTVEFURTIQARIKCgZTVEFURTMQAhIKCgZTVEFURTQQAypMCghD",
+                  "YXJkVHlwZRIICgROT05FEAASCAoEQ0xVQhABEgsKB0RJQU1PTkQQAhIJCgVI",
+                  "RUFSVBADEgkKBVNQQURFEAQSCQoFSk9LRVIQBWIGcHJvdG8z"));
             descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
                 new pbr::FileDescriptor[] { },
                 new pbr::GeneratedClrTypeInfo(new[] { typeof(global::RegicideProtocol.RequestCode), typeof(global::RegicideProtocol.ActionCode), typeof(global::RegicideProtocol.ReturnCode), typeof(global::RegicideProtocol.GAMESTATE), typeof(global::RegicideProtocol.CardType), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::RegicideProtocol.MainPack), global::RegicideProtocol.MainPack.Parser, new[]{ "Requestcode", "Actioncode", "Returncode", "LoginPack", "Str", "Roompack", "Playerpack", "User" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::RegicideProtocol.LoginPack), global::RegicideProtocol.LoginPack.Parser, new[]{ "Username", "Password" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::RegicideProtocol.RoomPack), global::RegicideProtocol.RoomPack.Parser, new[]{ "Roomname", "Maxnum", "Curnum", "State", "Gamestate", "RoomID", "CurrentIndex", "ActorPack", "Visable", "UsePassword", "Password", "BossActor" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::RegicideProtocol.RoomPack), global::RegicideProtocol.RoomPack.Parser, new[]{ "Roomname", "Maxnum", "Curnum", "State", "Gamestate", "RoomID", "CurrentIndex", "ActorPack", "Visable", "UsePassword", "Password", "BossActor", "LeftCardCount", "MuDiCards", "CurrentUseCards" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::RegicideProtocol.PlayerPack), global::RegicideProtocol.PlayerPack.Parser, new[]{ "Playername", "PlayerID", "Hp", "PosPack", "PlayerJob" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::RegicideProtocol.GameStatePack), global::RegicideProtocol.GameStatePack.Parser, new[]{ "State", "BossId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::RegicideProtocol.ActorPack), global::RegicideProtocol.ActorPack.Parser, new[]{ "ActorId", "CardValueId", "Hp", "ATK", "Index", "ActorJob", "CuttrntCards", "ActorName" }, null, null, null, null),
@@ -871,6 +873,9 @@ namespace RegicideProtocol
             usePassword_ = other.usePassword_;
             password_ = other.password_;
             bossActor_ = other.bossActor_ != null ? other.bossActor_.Clone() : null;
+            leftCardCount_ = other.leftCardCount_;
+            muDiCards_ = other.muDiCards_.Clone();
+            currentUseCards_ = other.currentUseCards_.Clone();
             _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
         }
 
@@ -1051,6 +1056,41 @@ namespace RegicideProtocol
             }
         }
 
+        /// <summary>Field number for the "LeftCardCount" field.</summary>
+        public const int LeftCardCountFieldNumber = 13;
+        private int leftCardCount_;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int LeftCardCount
+        {
+            get { return leftCardCount_; }
+            set
+            {
+                leftCardCount_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "MuDiCards" field.</summary>
+        public const int MuDiCardsFieldNumber = 14;
+        private static readonly pb::FieldCodec<global::RegicideProtocol.CardData> _repeated_muDiCards_codec
+            = pb::FieldCodec.ForMessage(114, global::RegicideProtocol.CardData.Parser);
+        private readonly pbc::RepeatedField<global::RegicideProtocol.CardData> muDiCards_ = new pbc::RepeatedField<global::RegicideProtocol.CardData>();
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public pbc::RepeatedField<global::RegicideProtocol.CardData> MuDiCards
+        {
+            get { return muDiCards_; }
+        }
+
+        /// <summary>Field number for the "CurrentUseCards" field.</summary>
+        public const int CurrentUseCardsFieldNumber = 15;
+        private static readonly pb::FieldCodec<global::RegicideProtocol.CardData> _repeated_currentUseCards_codec
+            = pb::FieldCodec.ForMessage(122, global::RegicideProtocol.CardData.Parser);
+        private readonly pbc::RepeatedField<global::RegicideProtocol.CardData> currentUseCards_ = new pbc::RepeatedField<global::RegicideProtocol.CardData>();
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public pbc::RepeatedField<global::RegicideProtocol.CardData> CurrentUseCards
+        {
+            get { return currentUseCards_; }
+        }
+
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public override bool Equals(object other)
         {
@@ -1080,6 +1120,9 @@ namespace RegicideProtocol
             if (UsePassword != other.UsePassword) return false;
             if (Password != other.Password) return false;
             if (!object.Equals(BossActor, other.BossActor)) return false;
+            if (LeftCardCount != other.LeftCardCount) return false;
+            if (!muDiCards_.Equals(other.muDiCards_)) return false;
+            if (!currentUseCards_.Equals(other.currentUseCards_)) return false;
             return Equals(_unknownFields, other._unknownFields);
         }
 
@@ -1099,6 +1142,9 @@ namespace RegicideProtocol
             if (UsePassword != 0) hash ^= UsePassword.GetHashCode();
             if (Password.Length != 0) hash ^= Password.GetHashCode();
             if (bossActor_ != null) hash ^= BossActor.GetHashCode();
+            if (LeftCardCount != 0) hash ^= LeftCardCount.GetHashCode();
+            hash ^= muDiCards_.GetHashCode();
+            hash ^= currentUseCards_.GetHashCode();
             if (_unknownFields != null)
             {
                 hash ^= _unknownFields.GetHashCode();
@@ -1171,6 +1217,13 @@ namespace RegicideProtocol
                 output.WriteRawTag(98);
                 output.WriteMessage(BossActor);
             }
+            if (LeftCardCount != 0)
+            {
+                output.WriteRawTag(104);
+                output.WriteInt32(LeftCardCount);
+            }
+            muDiCards_.WriteTo(output, _repeated_muDiCards_codec);
+            currentUseCards_.WriteTo(output, _repeated_currentUseCards_codec);
             if (_unknownFields != null)
             {
                 _unknownFields.WriteTo(output);
@@ -1226,6 +1279,12 @@ namespace RegicideProtocol
             {
                 size += 1 + pb::CodedOutputStream.ComputeMessageSize(BossActor);
             }
+            if (LeftCardCount != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeInt32Size(LeftCardCount);
+            }
+            size += muDiCards_.CalculateSize(_repeated_muDiCards_codec);
+            size += currentUseCards_.CalculateSize(_repeated_currentUseCards_codec);
             if (_unknownFields != null)
             {
                 size += _unknownFields.CalculateSize();
@@ -1293,6 +1352,12 @@ namespace RegicideProtocol
                 }
                 BossActor.MergeFrom(other.BossActor);
             }
+            if (other.LeftCardCount != 0)
+            {
+                LeftCardCount = other.LeftCardCount;
+            }
+            muDiCards_.Add(other.muDiCards_);
+            currentUseCards_.Add(other.currentUseCards_);
             _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
         }
 
@@ -1373,6 +1438,21 @@ namespace RegicideProtocol
                                 BossActor = new global::RegicideProtocol.ActorPack();
                             }
                             input.ReadMessage(BossActor);
+                            break;
+                        }
+                    case 104:
+                        {
+                            LeftCardCount = input.ReadInt32();
+                            break;
+                        }
+                    case 114:
+                        {
+                            muDiCards_.AddEntriesFrom(input, _repeated_muDiCards_codec);
+                            break;
+                        }
+                    case 122:
+                        {
+                            currentUseCards_.AddEntriesFrom(input, _repeated_currentUseCards_codec);
                             break;
                         }
                 }

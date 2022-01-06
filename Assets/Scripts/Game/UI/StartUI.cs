@@ -71,7 +71,6 @@ class StartUI : UIWindow
         {
             WebSocketMgr.Instance.Init((() =>
             {
-
                 if (GameDataMgr.Instance.HadLogin)
                 {
                     UISys.ShowTipMsg("您已经登录了");
@@ -92,10 +91,6 @@ class StartUI : UIWindow
                 if (GameClient.Instance.Status == GameClientStatus.StatusConnect)
                 {
                     UISys.ShowTipMsg("您已经连接到了服务器");
-                }
-                else
-                {
-                    UISys.ShowTipMsg("亲，这个还没有做，快加群来催我(╯▔皿▔)╯！");
                 }
             }));
         }

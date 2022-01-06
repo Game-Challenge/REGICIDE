@@ -26,13 +26,14 @@ class UsedListUI : UIWindow
         for (int i = 0; i < m_items.Count; i++)
         {
             m_items[i].Init(list[i]);
+            m_items[i].CouldChoice = false;
         }
         m_ItemCard.gameObject.SetActive(false);
     }
 
     public void InitOnlineUI()
     {
-        var list = GameOnlineMgr.Instance.UseCardDatas;
+        var list = GameOnlineMgr.Instance.MuDiCardDatas;
         AdjustIconNum(m_items, list.Count, m_tfContent, m_ItemCard);
         for (int i = 0; i < m_items.Count; i++)
         {

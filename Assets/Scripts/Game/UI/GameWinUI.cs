@@ -7,26 +7,40 @@ class GameWinUI : UIWindow
     private Text m_textWinGame;
     private Button m_btnRestart;
     private Button m_btnPushRank;
+    private Button m_btnLeave;
     protected override void ScriptGenerator()
     {
         m_textWinGame = FindChildComponent<Text>("m_textWinGame");
         m_btnRestart = FindChildComponent<Button>("m_btnRestart");
         m_btnPushRank = FindChildComponent<Button>("m_btnPushRank");
+        m_btnLeave = FindChildComponent<Button>("m_btnLeave");
         m_btnRestart.onClick.AddListener(OnClickRestartBtn);
         m_btnPushRank.onClick.AddListener(OnClickPushRankBtn);
+        m_btnLeave.onClick.AddListener(() =>
+        {
+            RoomDataMgr.Instance.ExitRoomReq();
+        });
     }
     #endregion
 
     protected override void OnCreate()
     {
         base.OnCreate();
-        if (GameDataMgr.Instance.HadLogin)
+        if (GameDataMgr.Instance.HadLogin && !GameOnlineMgr.Instance.IsOnlineGameIng)
         {
             m_btnPushRank.gameObject.SetActive(false);
             var rankIndex = GameMgr.Instance.GameLevel;
             var userId = GameOnlineMgr.Instance.MyActorId;
             var completeType = -GameMgr.Instance.LeftJokerCount + 3;
             RankDataMgr.Instance.PushRankData(rankIndex, userId, completeType);
+        }
+        if (!GameOnlineMgr.Instance.IsOnlineGameIng)
+        {
+            m_btnLeave.gameObject.Show(false);
+        }
+        else
+        {
+            m_btnLeave.gameObject.Show(true);
         }
     }
 
@@ -40,7 +54,16 @@ class GameWinUI : UIWindow
     private void OnClickRestartBtn()
     {
         Close();
-        GameMgr.Instance.RestartGame();
+
+        if (!GameOnlineMgr.Instance.IsOnlineGameIng)
+        {
+            GameMgr.Instance.RestartGame();
+        }
+        else
+        {
+            UISys.Mgr.CloseWindow<GameOnlineUI>();
+            UISys.Mgr.ShowWindow<RoomWaitUI>();
+        }
     }
     private void OnClickPushRankBtn()
     {

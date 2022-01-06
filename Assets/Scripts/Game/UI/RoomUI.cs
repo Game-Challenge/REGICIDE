@@ -14,6 +14,7 @@ class RoomUI : UIWindow
     private InputField m_inputRoomName;
     private Button m_btnCreateRoom;
     private Button m_btnRefreshRoom;
+    private Button m_btnPlayLocalMode;
     private Text m_textCreateRoom;
     private Text m_textUserName;
     private Text m_textUserId;
@@ -29,9 +30,23 @@ class RoomUI : UIWindow
         m_textCreateRoom = FindChildComponent<Text>("m_goCreateRoom/m_btnCreateRoom/m_textCreateRoom");
         m_textUserName = FindChildComponent<Text>("m_accountInfo/m_textUserName");
         m_textUserId = FindChildComponent<Text>("m_accountInfo/m_textUserId");
+        m_btnPlayLocalMode = FindChildComponent<Button>("m_btnPlayLocalMode");
         m_btnClose.onClick.AddListener(OnClickCloseBtn);
         m_btnCreateRoom.onClick.AddListener(OnClickCreateRoomBtn);
         m_btnRefreshRoom.onClick.AddListener(Refresh);
+        m_btnPlayLocalMode.onClick.AddListener(() =>
+        {
+            Close();
+            if (GameMgr.Instance.IsLandScape)
+            {
+                UISys.Mgr.ShowWindow<GameUI>();
+                GameMgr.Instance.RestartGame();
+            }
+            else
+            {
+                UISys.Mgr.ShowWindow<GameUILand>();
+            }
+        });
     }
 
     protected override void RegisterEvent()

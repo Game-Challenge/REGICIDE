@@ -35,6 +35,9 @@ class RoomDataMgr : DataCenterModule<RoomDataMgr>
 
         GameOnlineMgr.Instance.InitGame(mainPack);
 
+        UISys.Mgr.CloseWindow<StartUI>();
+        UISys.Mgr.CloseWindow<StartUILand>();
+
         UISys.Mgr.CloseWindow<RoomWaitUI>();
 
         var ui = UISys.Mgr.ShowWindow<GameOnlineUI>();
@@ -109,20 +112,35 @@ class RoomDataMgr : DataCenterModule<RoomDataMgr>
             }
             return;
         }
-        UISys.Mgr.CloseWindow<GameUI>();
-        UISys.Mgr.CloseWindow<GameUILand>();
+
+        if (m_isExiting)
+        {
+            return;
+        }
+
+        UISys.Mgr.CloseWindow<StartUI>();
+        UISys.Mgr.CloseWindow<StartUILand>();
         UISys.Mgr.CloseWindow<RoomUI>();
 
+        var ui = UISys.Mgr.GetWindow<RoomWaitUI>();
+        if (ui == null)
+        {
+            RoomID = mainPack.Roompack[0].RoomID;
+            ui = UISys.Mgr.ShowWindow<RoomWaitUI>();
+        }
         Debug.Log(mainPack);
-        RoomID = mainPack.Roompack[0].RoomID;
-        var ui = UISys.Mgr.ShowWindow<RoomWaitUI>();
-        ui.Refresh(mainPack);
+
+        ui?.Refresh(mainPack);
     }
 
+    private bool m_isExiting;
     public void ExitRoomReq()
     {
         MainPack mainPack = ProtoUtil.BuildMainPack(RequestCode.Room, ActionCode.Exit);
+
         GameClient.Instance.SendCSMsg(mainPack);
+
+        m_isExiting = true;
     }
 
     private void ExitRoomRes(MainPack mainPack)
@@ -133,5 +151,11 @@ class RoomDataMgr : DataCenterModule<RoomDataMgr>
         }
 
         Debug.Log(mainPack);
+
+        UISys.Mgr.CloseWindow<RoomWaitUI>();
+
+        UISys.Mgr.ShowWindow<RoomUI>();
+
+        m_isExiting = false;
     }
 }

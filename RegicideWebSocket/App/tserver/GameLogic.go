@@ -10,9 +10,11 @@ import (
 )
 
 const (
-	TOTAL_CARD_COUNT = 54
+	// TOTAL_CARD_COUNT = 54
 	TOTAL_BOSS_COUNT = 12
 )
+
+var TOTAL_CARD_COUNT int
 
 var CURRENT_BOSS_INDEX int
 
@@ -20,6 +22,14 @@ var CURRENT_MAX_TURN_COUNT int
 
 //InitCards 初始化所有卡牌
 func (room *Room) InitCards() {
+	clientCount := len(room.ClientList)
+	if clientCount <= 2 {
+		TOTAL_CARD_COUNT = 52
+	} else if clientCount == 3 {
+		TOTAL_CARD_COUNT = 53
+	} else if clientCount == 4 {
+		TOTAL_CARD_COUNT = 54
+	}
 	for i := 0; i < TOTAL_CARD_COUNT; i++ {
 		cardData := InstanceCardData(i)
 		ToTalCardList = append(ToTalCardList, &cardData)
@@ -36,6 +46,7 @@ func (room *Room) InitMyCards() {
 		}
 	}
 	RandomSort(MyCardList)
+	room.RoomPack.LeftCardCount = int32(len(MyCardList))
 }
 
 func (room *Room) TurnCards(client *Client) {
@@ -45,8 +56,9 @@ func (room *Room) TurnCards(client *Client) {
 		return
 	}
 
-	if turnCount > len(MyCardList) {
-		turnCount = len(MyCardList)
+	mycardCount := len(MyCardList)
+	if turnCount > mycardCount {
+		turnCount = mycardCount
 	}
 
 	turnCardList := []*CardData{}
@@ -69,7 +81,27 @@ func (room *Room) TurnCards(client *Client) {
 	client.Actor.CuttrntCards = currentCards
 }
 
-//todo
+//红桃
+func (client *Client) AddHp(number int) {
+	count := len(UsedCardList)
+	if count == 0 {
+		return
+	}
+	if number > count {
+		number = count
+	}
+	for i := 0; i < number; i++ {
+		cardData := InstanceCardData(int(UsedCardList[i].CardInt))
+		MyCardList = append(MyCardList, &cardData)
+	}
+	for i := 0; i < number; i++ {
+		cardData := UsedCardList[i]
+		UsedCardList = RemoveCardData(UsedCardList, cardData)
+	}
+	RandomSort(MyCardList)
+}
+
+// 方块抽卡
 func (client *Client) TurnCardDiamond(number int) {
 	logger.Debug("TurnCardDiamond number=>", number)
 	room := client.RoomInfo
@@ -78,20 +110,15 @@ func (client *Client) TurnCardDiamond(number int) {
 		return
 	}
 
-	if turnCount > int(9-room.RoomPack.Curnum) {
-		return
+	mycardCount := len(MyCardList)
+	if turnCount > mycardCount {
+		turnCount = mycardCount
 	}
 
-	if turnCount > len(MyCardList) {
-		turnCount = len(MyCardList)
-	}
-
-	// return
-	// // todo
 	myIndex := 0
-	clientCount := len(client.RoomInfo.ClientList)
-	for i := 0; i < len(client.RoomInfo.ClientList); i++ {
-		if client.RoomInfo.ClientList[i] == client {
+	clientCount := len(room.ClientList)
+	for i := 0; i < len(room.ClientList); i++ {
+		if room.ClientList[i] == client {
 			myIndex = i
 			break
 		}
@@ -101,13 +128,13 @@ func (client *Client) TurnCardDiamond(number int) {
 	continueCount := 0
 	for {
 		logger.Debug(i, index, continueCount)
-		if i > number || continueCount > number {
+		if i > turnCount || continueCount > turnCount {
 			break
 		}
 		if index >= clientCount {
 			index = 0
 		}
-		clientCardCount := len(client.RoomInfo.ClientList[index].Actor.CuttrntCards)
+		clientCardCount := len(room.ClientList[index].Actor.CuttrntCards)
 		if clientCardCount >= CURRENT_MAX_TURN_COUNT {
 			index++
 			continueCount++
@@ -116,10 +143,10 @@ func (client *Client) TurnCardDiamond(number int) {
 		cardData := MyCardList[i]
 		MyCardList = RemoveCard(MyCardList, cardData)
 		cardProtoData := &GameProto.CardData{CardInt: int32(cardData.CardInt), CardValue: int32(cardData.CardValue)}
-		client.RoomInfo.ClientList[index].Actor.CuttrntCards = append(client.RoomInfo.ClientList[index].Actor.CuttrntCards, cardProtoData)
+		room.ClientList[index].Actor.CuttrntCards = append(room.ClientList[index].Actor.CuttrntCards, cardProtoData)
 		i++
 		index++
-		if i > number {
+		if i > turnCount {
 			break
 		}
 	}
@@ -138,7 +165,8 @@ func RandomSort(cardDatas []*CardData) {
 }
 
 var ToTalCardList []*CardData
-var UsedCardList []*GameProto.CardData
+var UsedCardList []*GameProto.CardData          //弃牌堆
+var CurrentAttackCardList []*GameProto.CardData //boss未死亡的牌堆
 var MyCardList []*CardData
 var BossList []*CardData
 
@@ -177,14 +205,35 @@ func InstanceCardData(cardInt int) CardData {
 
 //InitBoss
 func (room *Room) InitBoss() *GameProto.ActorPack {
-	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	CURRENT_BOSS_INDEX++
+
 	count := len(BossList)
-	index := r.Intn(count - 1)
+
+	var bossPower int
+	if CURRENT_BOSS_INDEX <= 4 {
+		bossPower = 11
+	} else if CURRENT_BOSS_INDEX <= 8 {
+		bossPower = 12
+	} else if CURRENT_BOSS_INDEX <= 12 {
+		bossPower = 13
+	}
+
+	var cacheList []*CardData
+	for i := 0; i < count; i++ {
+		if BossList[i].CardValue == bossPower {
+			cacheList = append(cacheList, BossList[i])
+		}
+	}
+
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	index := r.Intn(len(cacheList))
 
 	var atk int32
 	var hp int32
 
-	cardData := BossList[index]
+	cardData := cacheList[index]
+	BossList = RemoveCard(BossList, cardData)
+
 	if cardData.CardValue == 11 {
 		atk = 10
 		hp = 20
@@ -199,7 +248,6 @@ func (room *Room) InitBoss() *GameProto.ActorPack {
 		hp = 50
 	}
 	room.RoomPack.Gamestate.State = GameProto.GAMESTATE_STATE1
-	CURRENT_BOSS_INDEX++
 	CurrentBossBeJokerAtk = false
 	bossActor := &GameProto.ActorPack{ATK: atk, Hp: hp, ActorId: int32(cardData.CardInt), Index: int32(CURRENT_BOSS_INDEX), ActorJob: int32(((cardData.CardInt) / 13) + 1)}
 	room.RoomPack.BossActor = bossActor
@@ -240,6 +288,7 @@ var CurrentBossBeJokerAtk bool
 func ImpactSkill(client *Client, bossActor *GameProto.ActorPack, attackData AttackData) bool {
 	if attackData.HadJoker {
 		CurrentBossBeJokerAtk = true
+		return false
 	}
 
 	bossType := bossActor.ActorJob
@@ -250,12 +299,16 @@ func ImpactSkill(client *Client, bossActor *GameProto.ActorPack, attackData Atta
 
 	if attackData.CouldDownBossAtk && ((CurrentBossType != GameProto.CardType_SPADE) || CurrentBossBeJokerAtk) {
 		bossActor.ATK -= attackData.Damage
-	}
-	if attackData.CouldTurnCard && (CurrentBossType != GameProto.CardType_DIAMOND) {
-		client.TurnCardDiamond(int(attackData.Damage))
+		if bossActor.ATK <= 0 {
+			bossActor.ATK = 0
+		}
 	}
 	if attackData.CouldAddHp && (CurrentBossType != GameProto.CardType_HEART) {
+		client.AddHp(int(attackData.Damage))
+	}
 
+	if attackData.CouldTurnCard && (CurrentBossType != GameProto.CardType_DIAMOND) {
+		client.TurnCardDiamond(int(attackData.Damage))
 	}
 
 	if coubldDouble {
@@ -263,9 +316,27 @@ func ImpactSkill(client *Client, bossActor *GameProto.ActorPack, attackData Atta
 	} else {
 		bossActor.Hp -= attackData.Damage
 	}
+
+	if bossActor.Hp < 0 {
+		cardData := InstanceCardData(int(bossActor.ActorId))
+		MyCardList = append(MyCardList, &cardData)
+	} else if bossActor.Hp == 0 {
+		cardData := InstanceCardData(int(bossActor.ActorId))
+		MyCardList = append(MyCardList, &cardData)
+
+		cache := []*CardData{&cardData}
+		temp := append(cache, MyCardList...)
+		MyCardList = temp
+	}
+
 	bossDie := bossActor.Hp <= 0
 	if bossActor.Hp <= 0 {
 		bossActor.Hp = 0
+		for i := 0; i < len(CurrentAttackCardList); i++ {
+			UsedCardList = append(UsedCardList, CurrentAttackCardList[i])
+			client.RoomInfo.RoomPack.MuDiCards = UsedCardList
+		}
+		CurrentAttackCardList = CurrentAttackCardList[0:0]
 		client.RoomInfo.InitBoss()
 	}
 	logger.Debug("bossActor:", bossActor)

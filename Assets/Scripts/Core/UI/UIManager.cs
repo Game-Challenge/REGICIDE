@@ -50,6 +50,18 @@ public class UIManager : Singleton<UIManager>
 
     private uint uiid;
 
+    public T GetWindow<T>() where T : UIWindow
+    {
+        string typeName = GetWindowTypeName<T>();
+        UIWindow window;
+        if( m_windowDic.TryGetValue(typeName,out window))
+        {
+            return window as T;
+        }
+
+        return null;
+    }
+
     public T ShowWindow<T>(UI_Layer layer = UI_Layer.Mid, UnityAction<T> callback = null) where T : UIWindow, new()
     {
         string typeName = GetWindowTypeName<T>();

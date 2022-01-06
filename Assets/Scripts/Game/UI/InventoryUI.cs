@@ -57,9 +57,23 @@ class InventoryUI : UIWindowWidget
     {
         GameMgr.Instance.RestartGame();
     }
+
+    /// <summary>
+    /// 多人游戏
+    /// </summary>
     private void OnClickMenuBtn()
     {
-        UISys.ShowTipMsg("敬请期待");
+        //UISys.ShowTipMsg("敬请期待");
+        if (GameDataMgr.Instance.HadLogin)
+        {
+            UISys.Mgr.CloseWindow<GameUI>();
+            UISys.Mgr.CloseWindow<GameUILand>();
+            UISys.Mgr.ShowWindow<RoomUI>();
+        }
+        else
+        {
+            UISys.ShowTipMsg("多人模式请先登录或注册哦~");
+        }
     }
     private void OnClickChoiceLvBtn()
     {

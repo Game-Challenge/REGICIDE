@@ -38,9 +38,9 @@ sealed partial class GameApp : UnitySingleton<GameApp>
 
     private void Init()
     {
-//#if UNITY_EDITOR
+#if UNITY_EDITOR
         BugglyMgr.Instance.OnInit();
-//#endif
+#endif
 
         SetTargetFrameRate();
         InitLibImp();

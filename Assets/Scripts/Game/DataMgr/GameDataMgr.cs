@@ -98,7 +98,7 @@ public class GameDataMgr : DataCenterModule<GameDataMgr>
             return;
         }
         GameOnlineMgr.Instance.InitMyData(mainPack);
-
+        UISys.ShowTipMsg("登录成功，感谢游玩~");
         HadLogin = true;
         UISys.Mgr.CloseWindow<GameLoginUI>();
         CacheData(m_cacheUserId, mainPack.LoginPack.Password);

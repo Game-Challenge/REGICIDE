@@ -18,6 +18,7 @@ func InitRoomController() {
 	controller.Funcs, _ = controller.AddFunction("FindRoom", FindRoom)
 	controller.Funcs, _ = controller.AddFunction("StartGame", StartGame)
 	controller.Funcs, _ = controller.AddFunction("CreateRoom", CreateRoom)
+	controller.Funcs, _ = controller.AddFunction("Exit", ExitRoom)
 	server.RegisterController(GameProto.RequestCode_Room, controller)
 }
 
@@ -127,6 +128,58 @@ func FindRoom(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (
 	}
 
 	mainpack.Returncode = GameProto.ReturnCode_Success
+	return mainpack, nil
+}
+
+func ExitRoom(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*GameProto.MainPack, error) {
+	if client == nil {
+		return nil, errors.New("client is nil")
+	}
+	room := client.RoomInfo
+	if room == nil {
+		return nil, errors.New("room is nil")
+	}
+	if room.RoomPack == nil {
+		return nil, errors.New("room is error")
+	}
+	if room.RoomPack.State == 1 {
+		mainpack.Returncode = GameProto.ReturnCode_Fail
+		mainpack.Str = "房间已经开始游戏了~"
+		return mainpack, nil
+	}
+	var hadClient bool
+	for i := 0; i < len(room.ClientList); i++ {
+		if client == room.ClientList[i] {
+			hadClient = true
+			break
+		}
+	}
+	if hadClient == false {
+		mainpack.Returncode = GameProto.ReturnCode_Fail
+		mainpack.Str = "该用户已经退出房间了~"
+		return mainpack, nil
+	}
+
+	roomLeftCount := len(room.ClientList) - 1
+	room.OnlinePlayerCount--
+	room.RoomPack.Curnum--
+	mainpack.Returncode = GameProto.ReturnCode_Success
+
+	if roomLeftCount <= 0 {
+		room.Destroy()
+		return mainpack, nil
+	} else {
+		room.ClientList = server.RemoveC(room.ClientList, client)
+		room.RoomPack.ActorPack = server.RemoveActor(room.RoomPack.ActorPack, client.Actor)
+		for i := 0; i < len(room.ClientList); i++ {
+			mainpack.Roompack = append(mainpack.Roompack, room.RoomPack)
+		}
+		mainpack.Actioncode = GameProto.ActionCode_JoinRoom
+		mainpack.Returncode = GameProto.ReturnCode_Success
+		room.BroadcastTCP(client, mainpack)
+	}
+	mainpack.Actioncode = GameProto.ActionCode_Exit
+	mainpack.Roompack = nil
 	return mainpack, nil
 }
 

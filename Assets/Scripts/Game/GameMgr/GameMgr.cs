@@ -459,7 +459,7 @@ partial class GameMgr : Singleton<GameMgr>
         {
             if (count == 0)
             {
-                return false;
+                return true;
             }
             else
             {

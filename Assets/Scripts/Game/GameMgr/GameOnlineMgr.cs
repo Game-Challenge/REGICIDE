@@ -28,12 +28,11 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
         }
     } //当前状态
 
+    public int LeftCardCount;
     public int MyGameIndex { private set; get; }//我是几号,第几个出牌的
     public int PlayerNum { private set; get; }  //玩家数目
     public int GameId { private set; get; }     //游戏ID
     public int CurrentGameIndex { private set; get; }  //当前是玩家几号
-
-
     public string MyName { private set; get; }  //我的用户名
     public int MyActorId { private set; get; }  //我的唯一编号
 
@@ -43,6 +42,10 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
     public BossActor BossActor { private set; get; }
 
     public Dictionary<int, List<global::CardData>> CardDictionary = new Dictionary<int, List<global::CardData>>();
+
+    public List<RegicideProtocol.CardData> CurrentUsedCardDatas = new List<RegicideProtocol.CardData>();
+
+    public List<RegicideProtocol.CardData> MuDiCardDatas = new List<RegicideProtocol.CardData>();
 
     public void InitMyData(MainPack mainPack)
     {
@@ -66,8 +69,11 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
         GameClient.Instance.RegActionHandle((int)ActionCode.Hurt, AbordRes);
     }
 
+    public int CurrentBossIndex = 0;
     public void InitGame(MainPack mainPack)
     {
+        CurrentBossIndex = 0;
+
         var roomPack = mainPack.Roompack[0];
 
         PlayerNum = roomPack.ActorPack.Count;
@@ -83,6 +89,8 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
         var bossActorPack = roomPack.BossActor;
 
         BossActor = ActorMgr.Instance.InstanceBossActor(bossActorPack.ActorId);
+
+        LeftCardCount = roomPack.LeftCardCount;
 
         InitCards();
     }
@@ -232,6 +240,10 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
             RefreshCardDataByActorId(player.ActorId, player.CuttrntCards);
         }
 
+        LeftCardCount = roomPack.LeftCardCount;
+        SetMuDiUsedCards(roomPack.MuDiCards);
+        SetCurrentUsedCards(roomPack.CurrentUseCards);
+
         Gamestate = roomPack.Gamestate.State;
         BossActor.Refresh(roomPack.BossActor);
         EventCenter.Instance.EventTrigger("RefreshGameUI");
@@ -250,8 +262,16 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
     }
 
     #region Attack
-    public void AttackReq()
+    public void AttackReq(bool choiceIndex = false,int index = 0)
     {
+        if (choiceIndex)
+        {
+            MainPack mainPack_ = ProtoUtil.BuildMainPack(RequestCode.Game, ActionCode.Attack);
+            mainPack_.Str = "JKR";
+            mainPack_.User = index.ToString();
+            GameClient.Instance.SendCSMsg(mainPack_);
+        }
+
         if (CurrentGameIndex!=MyGameIndex)
         {
             UISys.ShowTipMsg("当前阶段不是您出牌");
@@ -273,6 +293,12 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
             UISys.ShowTipMsg(string.Format("玩家{0}跳过出牌",ActorPacks[CurrentGameIndex].ActorName));
         }
 
+        if (!GameMgr.Instance.CheckCardInvild(list))
+        {
+            UISys.ShowTipMsg("您选择的卡片不符合规定");
+            return;
+        }
+
         RoomPack roomPack = new RoomPack();
         ActorPack actorPack = new ActorPack();
 
@@ -291,7 +317,16 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
     {
         GameMgr.Instance.m_choiceList.Clear();
 
+        if (ChekJoker(mainPack))
+        {
+            return;
+        }
+
         var roomPack = mainPack.Roompack[0];
+
+        LeftCardCount = roomPack.LeftCardCount;
+
+        SetCurrentUsedCards(roomPack.CurrentUseCards);
 
         CurrentGameIndex = roomPack.CurrentIndex;
 
@@ -308,53 +343,86 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
         }
 
         Gamestate = roomPack.Gamestate.State;
-        BossActor.Refresh(roomPack.BossActor);
+        bool bossDie = BossActor.Refresh(roomPack.BossActor);
         EventCenter.Instance.EventTrigger("RefreshGameUI");
-
-        UISys.ShowTipMsg(string.Format("当前{0}号玩家{1}攻击结束，请弃点数{2}的牌！",CurrentGameIndex, playerPack[CurrentGameIndex].ActorName, BossActor.Atk));
-
-    }
-    #endregion
-
-    #endregion
-
-
-    #region List
-    public const int TotalCardNum = 54;
-    private List<global::CardData> m_totalList = new List<global::CardData>(TotalCardNum);  //总牌堆
-    private List<global::CardData> m_myList = new List<global::CardData>(TotalCardNum);     //可抽卡
-    private List<global::CardData> m_useList = new List<global::CardData>(TotalCardNum);    //墓地
-    private List<global::CardData> m_bossList = new List<global::CardData>();                       //boss堆
-
-    public List<global::CardData> UseCardDatas
-    {
-        get
+        if (bossDie&&CurrentBossIndex>=13)
         {
-            return m_useList;
+            UISys.Mgr.ShowWindow<GameWinUI>();
+            return;
+        }
+        if (bossDie)
+        {
+            UISys.ShowTipMsg(string.Format("当前{0}号玩家{1}击败boss，直接进入阶段一", CurrentGameIndex, playerPack[CurrentGameIndex].ActorName));
+        }
+        else
+        {
+            UISys.ShowTipMsg(string.Format("当前{0}号玩家{1}攻击结束，请弃点数{2}的牌！", CurrentGameIndex, playerPack[CurrentGameIndex].ActorName, BossActor.Atk));
         }
     }
+
+    private bool ChekJoker(MainPack mainPack)
+    {
+        if (mainPack.Str.Equals("JKR")) //打出了Joker
+        {
+            var playerPack = mainPack.Roompack[0].ActorPack;
+
+            UISys.ShowTipMsg(string.Format("当前{0}号玩家{1}打出了Joker，BOSS技能失效，请选择下一个出牌的玩家！", CurrentGameIndex, playerPack[CurrentGameIndex].ActorName));
+
+            if (CurrentGameIndex == MyGameIndex)
+            {
+                UISys.Mgr.ShowWindow<JokerChoiceUI>();
+            }
+        }
+        else if (mainPack.Str.Equals("JKRCH")) 
+        {
+
+            var roomPack = mainPack.Roompack[0];
+
+            var playerPack = roomPack.ActorPack;
+
+            UISys.ShowTipMsg(string.Format("当前{0}号玩家{1}选择了{2}号玩家{3}出牌！", CurrentGameIndex, playerPack[CurrentGameIndex].ActorName, roomPack.CurrentIndex, playerPack[roomPack.CurrentIndex].ActorName));
+
+            CurrentGameIndex = roomPack.CurrentIndex;
+        }
+
+        return false;
+    }
     #endregion
 
-    private List<PlayerActor> m_players = new List<PlayerActor>();
+    #endregion
 
-    public void Attack(int actorIndex)
+    #region CurrentCards
+
+    public void SetCurrentUsedCards(RepeatedField<RegicideProtocol.CardData> list)
     {
-        var actor = m_players[actorIndex];
+        CurrentUsedCardDatas.Clear();
 
-        ActorEventHelper.Send(actor,"Attack");
+        if (list == null ||list.Count<0)
+        {
+            return;
+        }
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            CurrentUsedCardDatas.Add(list[i]);
+        }
     }
 
-    public void Hurt(int actorIndex)
+    public void SetMuDiUsedCards(RepeatedField<RegicideProtocol.CardData> list)
     {
-        var actor = m_players[actorIndex];
+        MuDiCardDatas.Clear();
 
-        ActorEventHelper.Send(actor, "Hurt");
+        if (list == null || list.Count < 0)
+        {
+            return;
+        }
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            MuDiCardDatas.Add(list[i]);
+        }
     }
 
-    public int GetMyIndex()
-    {
-        //我自己必须是index0
 
-        return 0;
-    }
+    #endregion
 }

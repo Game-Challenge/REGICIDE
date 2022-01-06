@@ -39,17 +39,20 @@ public class BossActor : GameActor
         DeRegisterEvent();
     }
 
-    public void Refresh(RegicideProtocol.ActorPack bossActorPack)
+    public bool Refresh(RegicideProtocol.ActorPack bossActorPack)
     {
+        bool bossDie = false;
         if (cardData.CardInt != bossActorPack.ActorId)
         {
-            //bossDie
+            GameOnlineMgr.Instance.CurrentBossIndex++;
             GameOnlineMgr.Instance.SetGameSate(GAMESTATE.State1);
             cardData = CardMgr.Instance.InstanceData(bossActorPack.ActorId);
             MaxHp = bossActorPack.Hp;
+            bossDie = true;
         }
         Atk = bossActorPack.ATK;
         Hp = bossActorPack.Hp;
+        return bossDie;
     }
 
     private void RegisterEvent()
