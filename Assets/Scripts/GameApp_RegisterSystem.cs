@@ -26,7 +26,7 @@ sealed partial class GameApp
                 case (HostPoint.WinServer):
                     return "ws://1.14.132.143:8767/ws";
             }
-            return "ws://127.0.0.1:12345/ws";
+            return "ws://127.0.0.1:8767/ws";
         }
     }
 

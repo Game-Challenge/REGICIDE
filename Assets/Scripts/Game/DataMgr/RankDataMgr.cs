@@ -13,13 +13,13 @@ public class RankDataMgr : Singleton<RankDataMgr>
             switch (GameApp.Instance.hostPoint)
             {
                 case (GameApp.HostPoint.LocalHost):
-                    return "http://127.0.0.1:12345/";
+                    return "http://127.0.0.1:8767/";
                 case (GameApp.HostPoint.LinuxServer):
-                    return "http://1.12.241.46:12345/";
+                    return "http://1.12.241.46:8767/";
                 case (GameApp.HostPoint.WinServer):
-                    return "http://1.14.132.143:12345/";
+                    return "http://1.14.132.143:8767/";
             }
-            return "ws://127.0.0.1:12345/ws";
+            return "ws://127.0.0.1:8767/ws";
         }
     }
     public void GetRankDatas(int rankIndex)

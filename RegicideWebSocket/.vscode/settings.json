@@ -1,0 +1,41 @@
+{
+    "deploy": {
+        "showPopupOnSuccess": false,
+        "displayNetworkInfo": false,
+        "packages": [
+        {
+            "name": "WinECS",
+            "description": "Package version 2.3.4",
+            "files": [
+                "/**/*"
+            ],
+            "exclude": [
+
+            ],
+            "deployOnSave": false,
+            "useTargetListForDeployOnSave" : false,
+            "button": {
+                "text": "Deploy to '腾讯云'",
+                "tooltip": "deploy to the server",
+                "targets": [ "server" ]
+            },
+            "targets": [ "server" ]
+        }
+
+        ],
+        "targets": [
+            {
+            "type": "sftp",
+            "name": "server",
+            "description": "A SFTP folder",
+            "dir": "/root/deployTest",
+            "host": "1.12.241.46", "port": 22,
+            "user": "root", 
+            "password": "txtx54TX!",
+            "hashAlgorithm": "sha1",
+            }
+        ],
+    },
+   
+    "git.enabled": false
+}
