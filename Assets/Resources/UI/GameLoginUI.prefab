@@ -602,7 +602,7 @@ MonoBehaviour:
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
-  m_DialogTitle: "\u8BF7\u8F93\u5165\u5BC6\u7801"
+  m_DialogTitle: "\u8BF7\u8F93\u5165\u4E2A\u9753\u4ED4\u7684\u540D\u5B57"
   m_DialogOkBtn: "\u786E\u8BA4"
   m_DialogCancelBtn: "\u53D6\u6D88"
   m_DialogType: 1

@@ -336,7 +336,7 @@ class GameOnlineUI : UIWindow
         m_textPlayerIndex.text = string.Format("当前回合玩家:{0}", GameOnlineMgr.Instance.ActorPacks[GameOnlineMgr.Instance.CurrentGameIndex].ActorName);
 
         m_textLeft.text = string.Format("酒馆剩余:{0}", GameOnlineMgr.Instance.LeftCardCount);
-        m_textMudi.text = string.Format("弃牌堆:{0}", GameOnlineMgr.Instance.CurrentUsedCardDatas.Count);
+        m_textMudi.text = string.Format("弃牌堆:{0}", GameOnlineMgr.Instance.MuDiCardDatas.Count);
     }
 
     private void UpdateGameState()

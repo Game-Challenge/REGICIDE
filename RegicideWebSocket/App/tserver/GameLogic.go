@@ -328,6 +328,7 @@ func ImpactSkill(client *Client, bossActor *GameProto.ActorPack, attackData Atta
 	if bossActor.Hp <= 0 {
 		bossActor.Hp = 0
 		for i := 0; i < len(room.CurrentAttackCardList); i++ {
+			//boss死亡时 本局攻击过的卡放入墓地
 			room.UsedCardList = append(room.UsedCardList, room.CurrentAttackCardList[i])
 			room.RoomPack.MuDiCards = room.UsedCardList
 		}

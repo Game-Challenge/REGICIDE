@@ -349,7 +349,8 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
 
         var playerPack = mainPack.Roompack[0].ActorPack;
 
-        //SetCurrentUsedCards(roomPack.CurrentUseCards);
+        SetMuDiUsedCards(roomPack.MuDiCards);
+
         UISys.Mgr.ShowWindow<GameOnlineTips>(UI_Layer.Top).ShowTip("玩家" + playerPack[CurrentGameIndex].ActorName + "打出卡牌", roomPack.CurrentUseCards);
 
         CurrentGameIndex = roomPack.CurrentIndex;

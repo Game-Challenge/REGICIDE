@@ -65,6 +65,7 @@ func CreateRoom(roomName string) Room {
 	roompack := &GameProto.RoomPack{}
 	roompack.Roomname = roomName
 	roompack.Maxnum = 4
+	roompack.Curnum = 4
 	roompack.RoomID = RoomID
 	room := InstanceRoom(roompack)
 	room.RoomPack.State = 1

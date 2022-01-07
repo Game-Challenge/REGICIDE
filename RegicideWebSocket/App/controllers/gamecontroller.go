@@ -79,7 +79,7 @@ func Attack(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*G
 		if hadJoker {
 			for i := 0; i < choiceCardCount; i++ {
 				client.Actor.CuttrntCards = tserver.RemoveCardData(client.Actor.CuttrntCards, choiceCards[i])
-				//放进弃牌堆
+				//放进弃牌堆		//攻击的时候放入boss未死亡的堆
 				client.RoomInfo.CurrentAttackCardList = append(client.RoomInfo.UsedCardList, choiceCards[i])
 				//放入协议通知客户端
 				client.RoomInfo.RoomPack.CurrentUseCards = append(client.RoomInfo.RoomPack.CurrentUseCards, choiceCards[i])
@@ -101,7 +101,7 @@ func Attack(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*G
 		for i := 0; i < choiceCardCount; i++ {
 			client.Actor.CuttrntCards = tserver.RemoveCardData(client.Actor.CuttrntCards, choiceCards[i])
 			//放进弃牌堆
-			client.RoomInfo.CurrentAttackCardList = append(client.RoomInfo.UsedCardList, choiceCards[i])
+			client.RoomInfo.CurrentAttackCardList = append(client.RoomInfo.CurrentAttackCardList, choiceCards[i])
 			//放入协议通知客户端
 			client.RoomInfo.RoomPack.CurrentUseCards = append(client.RoomInfo.RoomPack.CurrentUseCards, choiceCards[i])
 		}
@@ -181,6 +181,7 @@ func Hurt(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*Gam
 		client.Actor.CuttrntCards = tserver.RemoveCardData(client.Actor.CuttrntCards, choiceCards[i])
 		//放进弃牌堆
 		client.RoomInfo.UsedCardList = append(client.RoomInfo.UsedCardList, choiceCards[i])
+		client.RoomInfo.RoomPack.MuDiCards = client.RoomInfo.UsedCardList
 		//放入协议通知客户端
 		client.RoomInfo.RoomPack.CurrentUseCards = append(client.RoomInfo.RoomPack.CurrentUseCards, choiceCards[i])
 	}

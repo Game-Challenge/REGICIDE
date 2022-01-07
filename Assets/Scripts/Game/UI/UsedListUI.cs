@@ -38,7 +38,7 @@ class UsedListUI : UIWindow
 
     public void InitOnlineUI()
     {
-        var list = GameOnlineMgr.Instance.CurrentUsedCardDatas;
+        var list = GameOnlineMgr.Instance.MuDiCardDatas;
         AdjustIconNum(m_items, list.Count, m_tfContent, m_ItemCard);
         for (int i = 0; i < m_items.Count; i++)
         {

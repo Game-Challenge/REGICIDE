@@ -1,4 +1,5 @@
 ﻿using RegicideProtocol;
+using System.Collections;
 using UnityEngine;
 using UnityEngine;
 using UnityEngine.UI;
@@ -45,6 +46,17 @@ class StartUI : UIWindow
         {
             m_btnCloseAuto.gameObject.Show(true);
         }
+
+        if (PlayerPrefs.GetInt("FirstShow")!=1)
+        {
+            StartCoroutine("FirstShow1", ShowUI());
+        }
+    }
+
+    IEnumerator ShowUI()
+    {
+        yield return new WaitForSeconds(1.0f);
+        UISys.Mgr.ShowWindow<RuleFirstUI>().Init("FirstShow", "");
     }
 
     private void OnClickRuleBtn()
