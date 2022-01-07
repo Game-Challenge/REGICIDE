@@ -7,16 +7,19 @@ class RuleFirstUI : UIWindow
     private TypeWriter m_typeWriter;
     #region 脚本工具生成的代码
     private Button m_btnClose;
+    private Button m_btnClose2;
     private Text m_textSpecial;
     private Text m_text;
     private GameObject m_goTypeWriter;
     protected override void ScriptGenerator()
     {
         m_btnClose = FindChildComponent<Button>("m_btnClose");
+        m_btnClose2 = FindChildComponent<Button>("m_btnClose2");
         m_textSpecial = FindChildComponent<Text>("m_textSpecial");
         m_text = FindChildComponent<Text>("ScrollView/Viewport/Content/m_text");
         m_goTypeWriter = FindChild("ScrollView/Viewport/Content/m_text/m_goTypeWriter").gameObject;
         m_btnClose.onClick.AddListener(OnClickCloseBtn);
+        m_btnClose2.onClick.AddListener(OnClickCloseBtn);
         m_typeWriter = m_goTypeWriter.GetComponent<TypeWriter>();
     }
     #endregion
