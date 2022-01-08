@@ -130,8 +130,11 @@ func (client *Client) TurnCardDiamond(number int) {
 	index := myIndex
 	continueCount := 0
 	for {
-		// logger.Debug(i, index, continueCount)
+		logger.Emer(i, index, continueCount)
 		if i > turnCount || continueCount > turnCount {
+			break
+		}
+		if i > len(room.MyCardList)-1 {
 			break
 		}
 		if index >= clientCount {
@@ -213,7 +216,12 @@ func (room *Room) InitBoss() *GameProto.ActorPack {
 		bossPower = 12
 	} else if room.CURRENT_BOSS_INDEX <= 12 {
 		bossPower = 13
+	} else {
+		logger.Emer("监控：这个index有问题:room.CURRENT_BOSS_INDEX ", room.CURRENT_BOSS_INDEX)
+		bossPower = 13
 	}
+
+	logger.Emer("监控:room.CURRENT_BOSS_INDEX ", room.CURRENT_BOSS_INDEX)
 
 	var cacheList []*CardData
 	for i := 0; i < count; i++ {
@@ -221,6 +229,8 @@ func (room *Room) InitBoss() *GameProto.ActorPack {
 			cacheList = append(cacheList, room.BossList[i])
 		}
 	}
+
+	logger.Emer("监控:cacheList", cacheList, "监控:cacheList.count:", len(cacheList))
 
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	index := r.Intn(len(cacheList))
