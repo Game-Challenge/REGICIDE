@@ -8,7 +8,7 @@ public class WebSocketMgr : UnitySingleton<WebSocketMgr>
 {
     //string address = "wss://echo.websocket.org";
     //public string address = "ws://127.0.0.1:12345/ws";
-    WebSocket webSocket;
+    public WebSocket webSocket;
     private Action m_Action = null;
     public void Init(Action callback = null)
     {
@@ -102,6 +102,7 @@ public class WebSocketMgr : UnitySingleton<WebSocketMgr>
         Debug.LogFormat("OnClosed: code={0}, msg={1}", code, message);
         webSocket = null;
         GameClient.Instance.Status = GameClientStatus.StatusClose;
+        GameDataMgr.Instance.HadLogin = false;
     }
 
     void OnError(WebSocket ws, string reason)
@@ -117,6 +118,7 @@ public class WebSocketMgr : UnitySingleton<WebSocketMgr>
         Debug.LogFormat("OnError: error occured: {0}\n", ("Unknown Error " + errorMsg));
         Debug.Log(reason);
         webSocket = null;
+        GameDataMgr.Instance.HadLogin = false;
     }
 
 
@@ -137,4 +139,18 @@ public class WebSocketMgr : UnitySingleton<WebSocketMgr>
         request.AddField("FieldName", "Field Value");
         request.Send();
     }
+
+#if UNITY_EDITOR
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            if (webSocket != null)
+            {
+                webSocket.Close();
+                webSocket = null;
+            }
+        }
+    }
+#endif
 }

@@ -96,8 +96,12 @@ func RemoveClient(client *Client) {
 	room := client.RoomInfo
 	if room != nil {
 		room.OnlinePlayerCount--
+		room.OffLinePlayerCount++
+		room.HadPlayerOutLine = true
 		if room.OnlinePlayerCount == 0 {
 			room.Destroy()
+		} else {
+			room.SendMsg("您的队友已掉线", client)
 		}
 	}
 
