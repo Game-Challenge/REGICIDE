@@ -10,8 +10,11 @@ public class WebSocketMgr : UnitySingleton<WebSocketMgr>
     //public string address = "ws://127.0.0.1:12345/ws";
     public WebSocket webSocket;
     private Action m_Action = null;
+    public bool m_useReconnect = true;
+    private bool m_hadInit = true;
     public void Init(Action callback = null)
     {
+        m_hadInit = true;
         var address = GameApp.Instance.Host;
 
         m_Action = callback;
@@ -140,9 +143,11 @@ public class WebSocketMgr : UnitySingleton<WebSocketMgr>
         request.Send();
     }
 
-#if UNITY_EDITOR
+    private bool m_enableReConnect;
     void Update()
     {
+#if UNITY_EDITOR
+
         if (Input.GetKeyDown(KeyCode.A))
         {
             if (webSocket != null)
@@ -151,6 +156,20 @@ public class WebSocketMgr : UnitySingleton<WebSocketMgr>
                 webSocket = null;
             }
         }
-    }
 #endif
+        if (m_useReconnect && !m_enableReConnect)
+        {
+            if (m_hadInit && GameClient.Instance.Status == GameClientStatus.StatusClose)
+            {
+                m_enableReConnect = true;
+
+                GameClient.Instance.CheckReconnectInGames();
+            }
+        }
+    }
+
+    public void ReconnectSuccessed()
+    {
+        m_enableReConnect = false;
+    }
 }

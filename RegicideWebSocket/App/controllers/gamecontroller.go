@@ -86,18 +86,14 @@ func Attack(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*G
 	var bossDie bool
 	var gameLose bool
 	if choiceCardCount > 0 {
-		bossdie, err := client.AttackBoss(choiceCards)
-
-		if err != nil {
-			logger.Error(err)
-			return nil, err
-		}
 
 		if hadJoker {
 			for i := 0; i < choiceCardCount; i++ {
 				client.Actor.CuttrntCards = tserver.RemoveCardData(client.Actor.CuttrntCards, choiceCards[i])
 				//放进弃牌堆		//攻击的时候放入boss未死亡的堆
 				client.RoomInfo.CurrentAttackCardList = append(client.RoomInfo.UsedCardList, choiceCards[i])
+
+				client.RoomInfo.RoomPack.MuDiCards = client.RoomInfo.UsedCardList
 				//放入协议通知客户端
 				client.RoomInfo.RoomPack.CurrentUseCards = append(client.RoomInfo.RoomPack.CurrentUseCards, choiceCards[i])
 			}
@@ -113,7 +109,6 @@ func Attack(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*G
 			client.RoomInfo.Broadcast(mainpack)
 			return nil, nil
 		}
-		bossDie = bossdie
 
 		for i := 0; i < choiceCardCount; i++ {
 			client.Actor.CuttrntCards = tserver.RemoveCardData(client.Actor.CuttrntCards, choiceCards[i])
@@ -122,6 +117,18 @@ func Attack(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*G
 			//放入协议通知客户端
 			client.RoomInfo.RoomPack.CurrentUseCards = append(client.RoomInfo.RoomPack.CurrentUseCards, choiceCards[i])
 		}
+
+		bossdie, err := client.AttackBoss(choiceCards)
+
+		bossDie = bossdie
+
+		if err != nil {
+			logger.Error(err)
+			return nil, err
+		}
+
+		client.RoomInfo.RoomPack.MuDiCards = client.RoomInfo.UsedCardList
+
 		var currentCardsValue int32
 		for i := 0; i < len(client.Actor.CuttrntCards); i++ {
 			if client.Actor.CuttrntCards[i].CardType == GameProto.CardType_JOKER || int(client.Actor.CuttrntCards[i].CardType) == 6 {

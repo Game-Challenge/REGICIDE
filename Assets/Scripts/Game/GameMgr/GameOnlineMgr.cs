@@ -412,11 +412,7 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
         Gamestate = roomPack.Gamestate.State;
         bool bossDie = BossActor.Refresh(roomPack.BossActor);
         EventCenter.Instance.EventTrigger("RefreshGameUI");
-        if (bossDie&&CurrentBossIndex>=13)
-        {
-            UISys.Mgr.ShowWindow<GameWinUI>();
-            return;
-        }
+
         if (bossDie)
         {
             CurrentBossBeJokerAtk = false;

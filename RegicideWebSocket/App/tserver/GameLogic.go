@@ -11,24 +11,10 @@ import (
 
 var GMMODE bool
 
-const (
-	// TOTAL_CARD_COUNT = 54
-	TOTAL_BOSS_COUNT = 12
-)
-
 var TOTAL_CARD_COUNT int
 
 //InitCards 初始化所有卡牌
 func (room *Room) InitCards() {
-	// clientCount := len(room.ClientList)
-	// if clientCount <= 2 {
-	// 	TOTAL_CARD_COUNT = 52
-	// } else if clientCount == 3 {
-	// 	TOTAL_CARD_COUNT = 53
-	// } else if clientCount == 4 {
-	// 	TOTAL_CARD_COUNT = 54
-	// }
-
 	TOTAL_CARD_COUNT = 52
 	for i := 0; i < TOTAL_CARD_COUNT; i++ {
 		cardData := InstanceCardData(i)
@@ -45,6 +31,10 @@ func (room *Room) InitMyCards() {
 			room.MyCardList = append(room.MyCardList, cardData)
 		}
 	}
+	cardDataBigJoker := InstanceCardData(53)
+	cardDataBigJoker.IsJoker = true
+	room.BossList = append(room.BossList, &cardDataBigJoker)
+
 	RandomSort(room.MyCardList)
 	room.RoomPack.LeftCardCount = int32(len(room.MyCardList))
 }
@@ -108,7 +98,7 @@ func (client *Client) AddHp(number int) {
 
 // 方块抽卡
 func (client *Client) TurnCardDiamond(number int) {
-	logger.Debug("TurnCardDiamond number=>", number)
+	logger.Emer("client Username:", client.Username, "TurnCardDiamond number=>", number)
 	room := client.RoomInfo
 	turnCount := number
 	if turnCount == 0 {
@@ -123,16 +113,16 @@ func (client *Client) TurnCardDiamond(number int) {
 	myIndex := 0
 	clientCount := len(room.ClientList)
 	for i := 0; i < len(room.ClientList); i++ {
-		if room.ClientList[i] == client {
+		if room.ClientList[i].ActorID == client.ActorID {
 			myIndex = i
 			break
 		}
 	}
 	i := 0
 	index := myIndex
+	logger.Emer("Index", myIndex)
 	continueCount := 0
 	for {
-		logger.Emer(i, index, continueCount)
 		if i > turnCount || continueCount > turnCount {
 			break
 		}
@@ -148,15 +138,14 @@ func (client *Client) TurnCardDiamond(number int) {
 			continueCount++
 			continue
 		}
+		logger.Emer("Username:", room.ClientList[index].Username, "抽到手中：", i, "玩家：", index, "continueCount：", continueCount)
 		cardData := room.MyCardList[i]
 		room.MyCardList = RemoveCard(room.MyCardList, cardData)
 		cardProtoData := &GameProto.CardData{CardInt: int32(cardData.CardInt), CardValue: int32(cardData.CardValue)}
 		room.ClientList[index].Actor.CuttrntCards = append(room.ClientList[index].Actor.CuttrntCards, cardProtoData)
 		i++
 		index++
-		if i > turnCount {
-			break
-		}
+		logger.Emer("index", index)
 	}
 	client.RoomInfo.RoomPack.LeftCardCount = int32(len(room.MyCardList))
 }
@@ -218,6 +207,8 @@ func (room *Room) InitBoss() *GameProto.ActorPack {
 		bossPower = 12
 	} else if room.CURRENT_BOSS_INDEX <= 12 {
 		bossPower = 13
+	} else if room.CURRENT_BOSS_INDEX == 13 {
+		bossPower = 0
 	} else {
 		logger.Emer("监控：这个index有问题:room.CURRENT_BOSS_INDEX ", room.CURRENT_BOSS_INDEX)
 		bossPower = 13
@@ -259,10 +250,13 @@ func (room *Room) InitBoss() *GameProto.ActorPack {
 		hp = 20
 	} else if cardData.CardValue == 12 {
 		atk = 15
-		hp = 25
+		hp = 30
 	} else if cardData.CardValue == 13 {
 		atk = 20
-		hp = 30
+		hp = 40
+	} else if cardData.IsJoker && cardData.CardType == 6 {
+		atk = 30
+		hp = 55
 	} else {
 		atk = 30
 		hp = 50
@@ -328,11 +322,11 @@ func ImpactSkill(client *Client, bossActor *GameProto.ActorPack, attackData Atta
 			bossActor.ATK = 0
 		}
 	}
-	if attackData.CouldAddHp && (room.CurrentBossType != GameProto.CardType_HEART) {
+	if attackData.CouldAddHp && (room.CurrentBossType != GameProto.CardType_HEART) && room.RoomPack.BossActor.ActorId != 53 {
 		client.AddHp(int(attackData.Damage))
 	}
 
-	if attackData.CouldTurnCard && (room.CurrentBossType != GameProto.CardType_DIAMOND) {
+	if attackData.CouldTurnCard && (room.CurrentBossType != GameProto.CardType_DIAMOND) && room.RoomPack.BossActor.ActorId != 53 {
 		client.TurnCardDiamond(int(attackData.Damage))
 	}
 
@@ -344,10 +338,11 @@ func ImpactSkill(client *Client, bossActor *GameProto.ActorPack, attackData Atta
 		bossActor.Hp -= attackData.Damage
 	}
 
-	if bossActor.Hp < 0 {
-		cardData := InstanceCardData(int(bossActor.ActorId))
-		room.MyCardList = append(room.MyCardList, &cardData)
-	} else if bossActor.Hp == 0 {
+	if bossActor.Hp < 0 && bossActor.ActorId != 53 {
+		cardData := GameProto.CardData{CardInt: bossActor.ActorId, CardType: GameProto.CardType(bossActor.ActorJob)}
+		room.UsedCardList = append(room.UsedCardList, &cardData)
+		room.RoomPack.MuDiCards = room.UsedCardList
+	} else if bossActor.Hp == 0 && bossActor.ActorId != 53 {
 		cardData := InstanceCardData(int(bossActor.ActorId))
 		room.MyCardList = append(room.MyCardList, &cardData)
 
@@ -365,7 +360,7 @@ func ImpactSkill(client *Client, bossActor *GameProto.ActorPack, attackData Atta
 			room.RoomPack.MuDiCards = room.UsedCardList
 		}
 		room.CurrentAttackCardList = room.CurrentAttackCardList[0:0]
-		if room.CURRENT_BOSS_INDEX < 13 {
+		if room.CURRENT_BOSS_INDEX <= 13 {
 			room.InitBoss()
 			if room.ISGAMEWIN {
 				mainpack := &GameProto.MainPack{}

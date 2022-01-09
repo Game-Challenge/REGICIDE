@@ -486,6 +486,7 @@ public class GameClient : Singleton<GameClient>
                 WebSocketMgr.Instance.Init((() =>
                 {
                     Status = GameClientStatus.StatusConnect;
+                    WebSocketMgr.Instance.ReconnectSuccessed();
                     if (GameDataMgr.Instance.HadCacheLoginData())
                     {
                         var userId = PlayerPrefs.GetString("userId");
@@ -540,6 +541,13 @@ public class GameClient : Singleton<GameClient>
 
     public void Reconnect()
     {
+        if (m_UseWebSocket && Status == GameClientStatus.StatusClose)
+        {
+            MonoManager.Instance.StartCoroutine(IEReconnect());
+
+            return;
+        }
+
         Status = GameClientStatus.StatusReconnect;
 
         if (string.IsNullOrEmpty(m_Host) || m_Port <= 0)
