@@ -26,6 +26,9 @@ type Room struct {
 
 	CURRENT_BOSS_INDEX     int
 	CURRENT_MAX_TURN_COUNT int
+
+	ISGAMELOSE bool
+	ISGAMEWIN  bool
 }
 
 type BossActor struct {

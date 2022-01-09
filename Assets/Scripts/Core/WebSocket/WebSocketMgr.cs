@@ -106,6 +106,7 @@ public class WebSocketMgr : UnitySingleton<WebSocketMgr>
 
     void OnError(WebSocket ws, string reason)
     {
+        GameClient.Instance.Status = GameClientStatus.StatusClose;
         string errorMsg = string.Empty;
 #if !UNITY_WEBGL || UNITY_EDITOR
         if (ws.InternalRequest.Response != null)

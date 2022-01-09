@@ -463,6 +463,11 @@ public class GameClient : Singleton<GameClient>
 
     private bool DoSendData(MainPack pack)
     {
+        if (Status == GameClientStatus.StatusClose)
+        {
+            UISys.ShowTipMsg("您的网络断开了");
+            return false;
+        }
 
         if (m_UseWebSocket)
         {

@@ -230,6 +230,8 @@ class ItemCard : UIWindowWidget
         }
         if (m_isOnlieCards)
         {
+            UISys.ShowTipMsg("不能查看他人的牌哦~");
+            return;
             UISys.Mgr.ShowWindow<OtherListUI>().Init(m_onlineCardDatas);
             return;
         }

@@ -17,6 +17,8 @@ func main() {
 	InitControllers()
 	InitLogger()
 
+	tserver.GMMODE = false
+
 	tserver.StartServer(":8767")
 	select {}
 }

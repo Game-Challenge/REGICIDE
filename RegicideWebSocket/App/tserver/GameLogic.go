@@ -9,6 +9,8 @@ import (
 	"github.com/wonderivan/logger"
 )
 
+var GMMODE bool
+
 const (
 	// TOTAL_CARD_COUNT = 54
 	TOTAL_BOSS_COUNT = 12
@@ -230,10 +232,21 @@ func (room *Room) InitBoss() *GameProto.ActorPack {
 		}
 	}
 
-	logger.Emer("监控:cacheList", cacheList, "监控:cacheList.count:", len(cacheList))
+	cacheListCount := len(cacheList)
 
-	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-	index := r.Intn(len(cacheList))
+	logger.Emer("监控:cacheList", cacheList, "监控:cacheList.count:", cacheListCount)
+
+	var index int
+
+	if cacheListCount <= 0 {
+		room.ISGAMEWIN = true
+		logger.Emer("监控有问题！！！:cacheList", cacheList, "监控:cacheList.count:", cacheListCount)
+		index = 0
+		return nil
+	} else {
+		r := rand.New(rand.NewSource(time.Now().UnixNano()))
+		index = r.Intn(cacheListCount)
+	}
 
 	var atk int32
 	var hp int32
@@ -289,6 +302,13 @@ func (client *Client) AttackBoss(cardData []*GameProto.CardData) (bool, error) {
 }
 
 func ImpactSkill(client *Client, bossActor *GameProto.ActorPack, attackData AttackData) bool {
+	if client == nil {
+		return false
+	}
+	if bossActor == nil {
+		return false
+	}
+
 	room := client.RoomInfo
 
 	if attackData.HadJoker {
@@ -316,7 +336,9 @@ func ImpactSkill(client *Client, bossActor *GameProto.ActorPack, attackData Atta
 		client.TurnCardDiamond(int(attackData.Damage))
 	}
 
-	if coubldDouble {
+	if GMMODE {
+		bossActor.Hp -= 999
+	} else if coubldDouble {
 		bossActor.Hp -= 2 * attackData.Damage
 	} else {
 		bossActor.Hp -= attackData.Damage
@@ -343,7 +365,25 @@ func ImpactSkill(client *Client, bossActor *GameProto.ActorPack, attackData Atta
 			room.RoomPack.MuDiCards = room.UsedCardList
 		}
 		room.CurrentAttackCardList = room.CurrentAttackCardList[0:0]
-		room.InitBoss()
+		if room.CURRENT_BOSS_INDEX < 13 {
+			room.InitBoss()
+			if room.ISGAMEWIN {
+				mainpack := &GameProto.MainPack{}
+				mainpack.Requestcode = GameProto.RequestCode_Room
+				mainpack.Actioncode = GameProto.ActionCode_Chat
+				mainpack.Returncode = GameProto.ReturnCode_Success
+				mainpack.Str = "游戏胜利！！！"
+				room.Broadcast(mainpack)
+			}
+		} else {
+			logger.Debug("GAME WIN")
+			mainpack := &GameProto.MainPack{}
+			mainpack.Requestcode = GameProto.RequestCode_Room
+			mainpack.Actioncode = GameProto.ActionCode_Chat
+			mainpack.Returncode = GameProto.ReturnCode_Success
+			mainpack.Str = "游戏胜利！！！"
+			room.Broadcast(mainpack)
+		}
 	}
 	logger.Debug("bossActor:", bossActor)
 	return bossDie

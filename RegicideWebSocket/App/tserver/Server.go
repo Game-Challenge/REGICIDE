@@ -31,7 +31,7 @@ func Start(server Server) {
 	CreateRoom("断剑重铸之日")
 	print("START REGICIDE SERVER")
 	r := gin.Default()
-	f, _ := os.Create("regicide.log")
+	f, _ := os.Create("log/regicide.log")
 	gin.DefaultWriter = io.MultiWriter(f)
 
 	r.Use(middleware.CrosMiddleWare())

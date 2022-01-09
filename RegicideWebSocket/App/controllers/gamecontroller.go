@@ -36,6 +36,23 @@ func Attack(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*G
 	if mainpack.Roompack[0].ActorPack == nil || len(mainpack.Roompack[0].ActorPack) <= 0 {
 		return nil, errors.New("mainpack.Roompack[0].ActorPack[0] is nil")
 	}
+	if client.RoomInfo.ISGAMEWIN {
+		mainpack := &GameProto.MainPack{}
+		mainpack.Requestcode = GameProto.RequestCode_Room
+		mainpack.Actioncode = GameProto.ActionCode_Chat
+		mainpack.Returncode = GameProto.ReturnCode_Success
+		mainpack.Str = "游戏胜利！！！"
+		client.RoomInfo.Broadcast(mainpack)
+		return nil, nil
+	} else if client.RoomInfo.ISGAMELOSE {
+		mainpack := &GameProto.MainPack{}
+		mainpack.Requestcode = GameProto.RequestCode_Room
+		mainpack.Actioncode = GameProto.ActionCode_Chat
+		mainpack.Returncode = GameProto.ReturnCode_Success
+		mainpack.Str = "游戏失败！！！"
+		client.RoomInfo.Broadcast(mainpack)
+		return nil, nil
+	}
 
 	client.RoomInfo.RoomPack.CurrentUseCards = client.RoomInfo.RoomPack.CurrentUseCards[0:0]
 	if mainpack.Str == "JKR" {
@@ -114,6 +131,7 @@ func Attack(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*G
 		}
 		if currentCardsValue < client.RoomInfo.RoomPack.BossActor.ATK && !bossDie {
 			gameLose = true
+			client.RoomInfo.ISGAMELOSE = true
 		}
 	}
 
@@ -124,6 +142,12 @@ func Attack(client *server.Client, mainpack *GameProto.MainPack, isUdp bool) (*G
 	mainpack.Returncode = GameProto.ReturnCode_Success
 	if gameLose {
 		mainpack.Str = "GAMELOSE"
+		client.RoomInfo.RoomPack.State = 0
+		client.RoomInfo.RoomPack.Gamestate.State = GameProto.GAMESTATE_STATE1
+		client.RoomInfo.Broadcast(mainpack)
+		return nil, nil
+	} else if client.RoomInfo.ISGAMEWIN {
+		mainpack.Str = "GAMEWIN"
 		client.RoomInfo.RoomPack.State = 0
 		client.RoomInfo.RoomPack.Gamestate.State = GameProto.GAMESTATE_STATE1
 		client.RoomInfo.Broadcast(mainpack)

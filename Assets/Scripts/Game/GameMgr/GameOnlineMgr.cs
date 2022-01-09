@@ -360,7 +360,12 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
         {
             UISys.Mgr.ShowWindow<GameLoseUI>().InitUI("游戏失败，"+ playerPack[CurrentGameIndex].ActorName + "的牌不足以抵挡本次攻击！！");
         }
-       
+
+        if (mainPack.Str.Equals("GAMEWIN"))
+        {
+            UISys.Mgr.ShowWindow<GameLoseUI>().InitUI("游戏胜利！！！恭喜你们！！！");
+        }
+
         foreach (var player in playerPack)
         {
             RefreshCardDataByActorId(player.ActorId,player.CuttrntCards);
