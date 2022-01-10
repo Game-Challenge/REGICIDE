@@ -125,7 +125,7 @@ func (client *Client) TurnCardDiamond(number int) {
 	logger.Emer("Index", myIndex)
 	continueCount := 0
 	for {
-		if i > turnCount || continueCount > turnCount {
+		if i > turnCount || continueCount > 2*turnCount {
 			break
 		}
 		if i > len(room.MyCardList)-1 {
@@ -257,8 +257,8 @@ func (room *Room) InitBoss() *GameProto.ActorPack {
 		atk = 20
 		hp = 40
 	} else if cardData.IsJoker && cardData.CardType == 6 {
-		atk = 30
-		hp = 55
+		atk = 25
+		hp = 50
 	} else {
 		atk = 30
 		hp = 50
@@ -347,6 +347,7 @@ func ImpactSkill(client *Client, bossActor *GameProto.ActorPack, attackData Atta
 	} else if bossActor.Hp == 0 && bossActor.ActorId != 53 {
 		cardData := InstanceCardData(int(bossActor.ActorId))
 		room.MyCardList = append(room.MyCardList, &cardData)
+		room.RoomPack.MuDiCards = room.UsedCardList
 
 		cache := []*CardData{&cardData}
 		temp := append(cache, room.MyCardList...)

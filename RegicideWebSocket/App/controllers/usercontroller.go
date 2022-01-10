@@ -123,6 +123,7 @@ func CheckClientInRoom(client *server.Client) {
 			continue
 		}
 		clientCount := len(room.ClientList)
+
 		for i := 0; i < clientCount; i++ {
 			if client.ActorID == room.ClientList[i].ActorID {
 				room.OffLinePlayerCount--
@@ -130,9 +131,11 @@ func CheckClientInRoom(client *server.Client) {
 				if room.OffLinePlayerCount <= 0 {
 					room.HadPlayerOutLine = false
 				}
+				client.Actor = room.ClientList[i].Actor
+
 				room.ClientList[i] = client
+
 				client.RoomInfo = room
-				//todo
 				isInRoom = true
 				room.SendMsg("您的队友重连成功", client)
 			}

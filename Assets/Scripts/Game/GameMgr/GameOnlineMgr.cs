@@ -103,6 +103,23 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
             {
                 BossActor.Refresh(roomPack.BossActor);
             }
+            else
+            {
+                var bossActorPack_ = roomPack.BossActor;
+
+                BossActor = ActorMgr.Instance.InstanceBossActor(bossActorPack_.ActorId);
+
+                BossActor.Atk = bossActorPack_.ATK;
+
+                BossActor.Hp = bossActorPack_.Hp;
+            }
+
+            ActorPacks = roomPack.ActorPack.ToList();
+
+            LeftCardCount = roomPack.LeftCardCount;
+
+            InitCards();
+
             EventCenter.Instance.EventTrigger("RefreshGameUI");
             return;
         }
@@ -506,12 +523,13 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
 
     public void SetMuDiUsedCards(RepeatedField<RegicideProtocol.CardData> list)
     {
-        MuDiCardDatas.Clear();
 
         if (list == null || list.Count < 0)
         {
             return;
         }
+
+        MuDiCardDatas.Clear();
 
         for (int i = 0; i < list.Count; i++)
         {

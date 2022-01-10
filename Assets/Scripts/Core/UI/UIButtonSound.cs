@@ -14,7 +14,7 @@ public class UIButtonSound : MonoBehaviour, IPointerClickHandler
 {
     private static Action<string> s_playSoundAction = null;
 
-    public string m_clickSound = "click1";
+    public string m_clickSound = "click_btn";
 
     public void OnPointerClick(PointerEventData eventData)
     {

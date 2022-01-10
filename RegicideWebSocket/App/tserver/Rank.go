@@ -89,11 +89,12 @@ func GetRankList(ctx *gin.Context) {
 		{
 			var ranks []model.OnlineRank
 			common.DB.Find(&ranks)
-			response.Success(ctx, gin.H{"ranks": ranks}, "Info success")
+			response.Success(ctx, gin.H{"ranks": ranks}, "Online")
 			ctx.JSON(http.StatusOK, gin.H{
 				"code": 200,
 				"data": gin.H{
-					"ranks": ranks,
+					"online": 1,
+					"ranks":  ranks,
 				},
 			})
 		}
