@@ -1,6 +1,8 @@
 package tserver
 
 import (
+	"Regicide/App/common"
+	"Regicide/App/model"
 	GameProto "Regicide/GameProto"
 	"errors"
 	"math/rand"
@@ -378,10 +380,47 @@ func ImpactSkill(client *Client, bossActor *GameProto.ActorPack, attackData Atta
 			mainpack.Returncode = GameProto.ReturnCode_Success
 			mainpack.Str = "游戏胜利！！！"
 			room.Broadcast(mainpack)
+
+			PostOnlineWinRank(room)
 		}
 	}
 	logger.Debug("bossActor:", bossActor)
 	return bossDie
+}
+
+func PostOnlineWinRank(room *Room) {
+	roomWinTime := time.Now().Unix()
+
+	totalTime := roomWinTime - room.RoomStartTime
+
+	if room == nil {
+		return
+	}
+	if room.ClientList == nil {
+		return
+	}
+
+	clients := room.ClientList
+
+	clientCount := len(clients)
+
+	var names string
+	for i := 0; i < clientCount; i++ {
+		client := clients[i]
+		if client == nil {
+			continue
+		}
+
+		if i != clientCount-1 {
+			names += client.ActorName + ","
+		} else {
+			names += client.ActorName
+		}
+	}
+
+	onlineRank := &model.OnlineRank{WinTime: totalTime, Usersname: names}
+
+	common.DB.Create(onlineRank)
 }
 
 func GenAttackData(cardData []*GameProto.CardData) AttackData {

@@ -144,13 +144,28 @@ func CheckClientInRoom(client *server.Client) {
 			ticker := time.NewTimer(time.Second * 1)
 			<-ticker.C //阻塞，1秒以后继续执行
 			ticker.Stop()
+			if client == nil {
+				runtime.Goexit()
+				return
+			}
+			if client.RoomInfo == nil {
+				runtime.Goexit()
+				return
+			}
 			room := client.RoomInfo
 			mainPack := &GameProto.MainPack{}
 			mainPack.Requestcode = GameProto.RequestCode_Room
 			mainPack.Actioncode = GameProto.ActionCode_StartGame
 			mainPack.Returncode = GameProto.ReturnCode_Success
+			if room.ClientList == nil {
+				runtime.Goexit()
+				return
+			}
 			for i := 0; i < len(room.ClientList); i++ {
 				_client := room.ClientList[i]
+				if _client == nil {
+					continue
+				}
 				playerpack := &GameProto.PlayerPack{}
 				playerpack.Playername = _client.Username
 				playerpack.PlayerID = strconv.Itoa(int(_client.ActorID))
