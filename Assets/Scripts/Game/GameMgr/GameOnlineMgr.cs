@@ -389,7 +389,7 @@ class GameOnlineMgr:DataCenterModule<GameOnlineMgr>
         }
 
         GameClient.Instance.SendCSMsg(mainPack);
-
+        AudioMgr.Instance.PlaySound("AttackBoss");
         m_attacking = true;
     }
 
