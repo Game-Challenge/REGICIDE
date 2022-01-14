@@ -410,9 +410,9 @@ func PostOnlineWinRank(room *Room) {
 		}
 
 		if i != clientCount-1 {
-			names += client.ActorName + ","
+			names += client.Username + ","
 		} else {
-			names += client.ActorName
+			names += client.Username
 		}
 	}
 
