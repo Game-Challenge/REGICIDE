@@ -139,6 +139,7 @@ public class BuffMgr
             return;
         }
 
+        int value;
         switch ((BuffType)buff.BuffType)
         {
             case BuffType.BUFF_QUICK_ATTACK:
@@ -150,10 +151,14 @@ public class BuffMgr
                 }
                 break;
             case BuffType.BUFF_ADD_HEALTH:
-                bossActor.Hp += (int) (bossActor.Hp * buff.BuffValue);
+                value = (int)(bossActor.MaxHp * buff.BuffValue);
+                bossActor.Hp += value;
+                UISys.ShowTipMsg(string.Format("君主使用了回复,回复了<color=#13FF00>{0}</color>HP", value));
                 break;
             case BuffType.BUFF_HUIFU:
-                bossActor.Hp += (int)(buff.BuffValue);
+                value = (int)(buff.BuffValue);
+                bossActor.Hp += value;
+                UISys.ShowTipMsg(string.Format("君主使用了恢复,恢复了<color=#13FF00>{0}</color>HP", value));
                 break;
             case BuffType.BUFF_WEIYA:
 
@@ -167,6 +172,8 @@ public class BuffMgr
 
     public void SetBuffByFeatures(List<FeatureConfig> featureConfigs, BossActor bossActor = null)
     {
+        m_buffDic.Clear();
+        m_buffList.Clear();
         if (featureConfigs == null)
         {
             return;

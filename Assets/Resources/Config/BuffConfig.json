@@ -28,7 +28,7 @@
     "BuffType": 3,
     "BuffValue": 0.1,
     "BuffValue2": 0,
-    "BuffName": "恢复血量",
+    "BuffName": "恢复",
     "HandleState": 1,
     "DescArray": [
       "抵挡",

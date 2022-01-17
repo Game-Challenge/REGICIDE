@@ -49,7 +49,7 @@ public class BossActor : GameActor
         Init();
         m_features.Clear();
         HadChongFeng = false;
-        FeatureMgr.Instance.GenBossFeature(this);
+        FeatureMgr.Instance.GenBossFeature(this,3);
     }
 
     ~BossActor()

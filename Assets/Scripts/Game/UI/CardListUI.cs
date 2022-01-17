@@ -177,7 +177,15 @@ class ItemCard : UIWindowWidget
                 m_textFeature.text = "君主天赋：";
                 for (int i = 0; i < actor.Features.Count; i++)
                 {
-                    m_textFeature.text += actor.Features[i].Name;
+                    var feature = actor.Features[i];
+                    if (feature.UseColor == 1)
+                    {
+                        m_textFeature.text += feature.Name.ToColor(feature.ColorStr) + " ";
+                    }
+                    else
+                    {
+                        m_textFeature.text += feature.Name + " ";
+                    }
                 }
             }
         }
