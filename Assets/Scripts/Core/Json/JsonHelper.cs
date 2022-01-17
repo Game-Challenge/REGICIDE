@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using LitJson;
 
 public class JsonHelper : Singleton<JsonHelper>
 {
@@ -19,5 +20,15 @@ public class JsonHelper : Singleton<JsonHelper>
     public string Serialize(DJsonData jsonData)
     {
         return jsonImp.Serialize(jsonData);
+    }
+
+    public T Deserialize<T>(string json)
+    {
+        return JsonMapper.ToObject<T>(json);
+    }
+
+    public string Serialize(Object jsonData)
+    {
+        return JsonMapper.ToJson(jsonData);
     }
 }
