@@ -140,7 +140,6 @@ class GameUI : UIWindow
     protected override void OnCreate()
     {
         base.OnCreate();
-        GameMgr.Instance.InitBoss();
         GameMgr.Instance.TurnCard();
         GameMgr.Instance.StartNewMode();
         RefreshGameUI();

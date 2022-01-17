@@ -3,11 +3,8 @@
     "ID": 1001,
     "Name": "冲锋",
     "BuffIDArray": [
-      0,
-      0
+      1007
     ],
-    "FeatureValue": 0.6,
-    "FeatureValue2": 0,
     "Rate": 10
   },
   "1002": {
@@ -17,8 +14,6 @@
       0,
       0
     ],
-    "FeatureValue": 0,
-    "FeatureValue2": 0,
     "Rate": 10
   },
   "1003": {
@@ -28,29 +23,22 @@
       0,
       0
     ],
-    "FeatureValue": 0,
-    "FeatureValue2": 0,
     "Rate": 10
   },
   "1004": {
     "ID": 1004,
     "Name": "再生",
     "BuffIDArray": [
-      0,
-      0
+      1003
     ],
-    "FeatureValue": 0.1,
-    "FeatureValue2": 0,
     "Rate": 10
   },
   "1005": {
     "ID": 1005,
     "Name": "穿刺",
     "BuffIDArray": [
-      1001
+      1006
     ],
-    "FeatureValue": 5,
-    "FeatureValue2": 0,
     "Rate": 10
   },
   "1006": {
@@ -60,19 +48,14 @@
       0,
       0
     ],
-    "FeatureValue": 1,
-    "FeatureValue2": 0,
     "Rate": 10
   },
   "1007": {
     "ID": 1007,
     "Name": "威压",
     "BuffIDArray": [
-      0,
-      0
+      1008
     ],
-    "FeatureValue": 10,
-    "FeatureValue2": 0,
     "Rate": 10
   },
   "1008": {
@@ -81,8 +64,6 @@
     "BuffIDArray": [
       1002
     ],
-    "FeatureValue": 0.5,
-    "FeatureValue2": 0,
     "Rate": 10
   },
   "1009": {
@@ -92,8 +73,6 @@
       1001,
       1002
     ],
-    "FeatureValue": 1,
-    "FeatureValue2": -0.5,
     "Rate": 10
   },
   "1010": {
@@ -103,19 +82,22 @@
       1001,
       1002
     ],
-    "FeatureValue": -0.3,
-    "FeatureValue2": 0.5,
     "Rate": 10
   },
   "1011": {
     "ID": 1011,
     "Name": "荆棘",
     "BuffIDArray": [
-      0,
-      0
+      1010
     ],
-    "FeatureValue": 0.3,
-    "FeatureValue2": 0,
+    "Rate": 10
+  },
+  "1012": {
+    "ID": 1012,
+    "Name": "回复",
+    "BuffIDArray": [
+      1003
+    ],
     "Rate": 10
   }
 }

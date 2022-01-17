@@ -13,6 +13,7 @@ public class BuffConfig
 	public float BuffValue; // Buff数值
 	public float BuffValue2; // Buff数值2
 	public string BuffName; // Buff名称
+	public int HandleState; // 生效阶段
 	public string[] DescArray; // 描述数组
 }
 

@@ -357,13 +357,10 @@ partial class GameMgr : Singleton<GameMgr>
     public void InitBoss()
     {
         var currentBoss = TotalKillBossCount;
-
         var cardData = m_bossList[0];
-
         BossActor = ActorMgr.Instance.InstanceBossActor(cardData);
         EventCenter.Instance.EventTrigger("RefreshBoss", BossActor);
         EventCenter.Instance.EventTrigger("BossDataRefresh", BossActor);
-        SetState(GameState.STATEONE);
     }
 
     public void AttackBoss(int value)
@@ -610,7 +607,6 @@ partial class GameMgr : Singleton<GameMgr>
                 TurnJokerCard();
                 LeftJokerCount--;
                 EventCenter.Instance.EventTrigger("RefreshGameUI");
-                
             }
         }
 
@@ -780,6 +776,9 @@ partial class GameMgr : Singleton<GameMgr>
         m_stateIndex = (int)state;
         UISys.ShowTipMsg("当前阶段:" + GetCurrentStateStr());
         EventCenter.Instance.EventTrigger("UpdateGameState");
+
+        BossActor?.HandleBuff();
+
         if (gameState == GameState.STATEONE)
         {
             if (m_curList.Count <= 0 && LeftJokerCount <= 0)

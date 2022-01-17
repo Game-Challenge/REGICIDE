@@ -11,8 +11,6 @@ public class FeatureConfig
 	public int ID; // 特性ID
 	public string Name; // 特性名称
 	public int[] BuffIDArray; // BuffID数组
-	public float FeatureValue; // 特性数值
-	public float FeatureValue2; // 特性数值2
 	public float Rate; // 概率
 }
 

@@ -28,6 +28,8 @@ public class BossActor : GameActor
         }
     }
 
+    public bool HadChongFeng = false;
+
     private List<FeatureConfig> m_features = new List<FeatureConfig>();
 
     public List<FeatureConfig> Features
@@ -46,7 +48,7 @@ public class BossActor : GameActor
         RegisterEvent();
         Init();
         m_features.Clear();
-
+        HadChongFeng = false;
         FeatureMgr.Instance.GenBossFeature(this);
     }
 
@@ -58,10 +60,10 @@ public class BossActor : GameActor
     public void SetFeature(List<FeatureConfig> featureConfigs)
     {
         m_features = featureConfigs;
-        ActorBuffMgr.SetBuffByFeatures(m_features);
+        ActorBuffMgr.SetBuffByFeatures(m_features,this);
     }
 
-    public bool Refresh(RegicideProtocol.ActorPack bossActorPack)
+    public bool Refresh(ActorPack bossActorPack)
     {
         bool bossDie = false;
         if (cardData.CardInt != bossActorPack.ActorId)
@@ -100,6 +102,7 @@ public class BossActor : GameActor
         m_cacheAtk = 0;
         Init();
         m_features.Clear();
+        HadChongFeng = false;
         ActorBuffMgr?.ClearBuff();
     }
 

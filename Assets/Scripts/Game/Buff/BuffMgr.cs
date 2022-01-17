@@ -1,11 +1,71 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+public static class BuffHelper
+{
+    public static void HandleBuff(this BossActor bossActor)
+    {
+        if (bossActor == null)
+        {
+            return;
+        }
+
+        var buffMgr = bossActor.ActorBuffMgr;
+
+        if (buffMgr == null)
+        {
+            return;
+        }
+
+        if (buffMgr.BuffCount <= 0)
+        {
+            return;
+        }
+
+        foreach (var buff in buffMgr.buffList)
+        {
+            buffMgr.HandleBuff(bossActor, buff);
+        }
+    }
+
+    public static void InitBuff(this BossActor bossActor)
+    {
+        if (bossActor == null)
+        {
+            return;
+        }
+
+        var buffMgr = bossActor.ActorBuffMgr;
+
+        if (buffMgr == null)
+        {
+            return;
+        }
+
+        if (buffMgr.BuffCount <= 0)
+        {
+            return;
+        }
+
+        foreach (var buff in buffMgr.buffList)
+        {
+            buffMgr.InitBuff(bossActor, buff);
+        }
+    }
+}
 
 public class BuffMgr
 {
     Dictionary<int,BuffConfig> m_buffDic = new Dictionary<int, BuffConfig>();
     List<BuffConfig> m_buffList = new List<BuffConfig>();
+
+    public List<BuffConfig> buffList
+    {
+        get
+        {
+            return m_buffList;
+        }
+    }
 
     public Dictionary<int, BuffConfig> buffDic
     {
@@ -28,9 +88,16 @@ public class BuffMgr
         m_buffDic.Clear();
     }
 
-    public void HandleBuff(BossActor bossActor,BuffConfig buff)
+    /// <summary>
+    /// 初始化BUFF 属性增幅
+    /// </summary>
+    /// <param name="bossActor"></param>
+    /// <param name="buff"></param>
+    public void InitBuff(BossActor bossActor, BuffConfig buff)
     {
-        if (bossActor == null||buff == null)
+        var handleState = (GameMgr.GameState)buff.HandleState;
+
+        if (handleState != GameMgr.GameState.NONE)
         {
             return;
         }
@@ -43,28 +110,57 @@ public class BuffMgr
             case BuffType.BUFF_ADD_HP:
                 bossActor.Hp += (int)(bossActor.Hp * buff.BuffValue);
                 break;
+            case BuffType.BUFF_ADD_DEMAGE_VALUE:
+                bossActor.Atk += (int)(buff.BuffValue);
+                break;
         }
-        EventCenter.Instance.EventTrigger("BossDataRefresh",bossActor);
+        EventCenter.Instance.EventTrigger("BossDataRefresh", bossActor);
+
     }
 
-    public void CheckBuffValue(BossActor bossActor)
+    public void HandleBuff(BossActor bossActor,BuffConfig buff)
     {
-        if (bossActor == null)
+        if (bossActor == null||buff == null)
         {
             return;
         }
 
-        var buffMgr = bossActor.ActorBuffMgr;
+        var currentState = GameMgr.Instance.gameState;
 
-        if (buffMgr == null)
+        var handleState = (GameMgr.GameState) buff.HandleState;
+
+        if (handleState == GameMgr.GameState.NONE)
         {
             return;
         }
 
-        foreach (var buff in m_buffList)
+        if (handleState != currentState)
         {
-            HandleBuff(bossActor, buff);
+            return;
         }
+
+        switch ((BuffType)buff.BuffType)
+        {
+            case BuffType.BUFF_QUICK_ATTACK:
+                if (!bossActor.HadChongFeng)
+                {
+                    bossActor.HadChongFeng = true;
+                    UISys.ShowTipMsg("君主使用了冲锋！！！");
+                    GameMgr.Instance.SetState(GameMgr.GameState.STATEFOUR);
+                }
+                break;
+            case BuffType.BUFF_ADD_HEALTH:
+                bossActor.Hp += (int) (bossActor.Hp * buff.BuffValue);
+                break;
+            case BuffType.BUFF_HUIFU:
+                bossActor.Hp += (int)(buff.BuffValue);
+                break;
+            case BuffType.BUFF_WEIYA:
+
+                break;
+            
+        }
+        EventCenter.Instance.EventTrigger("BossDataRefresh",bossActor);
     }
 
     #region 设置BUFF
@@ -112,7 +208,7 @@ public class BuffMgr
 #endif
                 m_buffDic.Add(buffID, buff);
                 m_buffList.Add(buff);
-                CheckBuffValue(bossActor);
+                bossActor.InitBuff();
             }
         }
     }
