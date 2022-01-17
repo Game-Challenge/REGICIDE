@@ -1,0 +1,57 @@
+{
+  "1001": {
+    "BuffID": 1001,
+    "BuffType": 0,
+    "BuffValue": 0.5,
+    "BuffValue2": 0,
+    "BuffName": "伤害增加",
+    "DescArray": [
+      "芜湖",
+      "起飞"
+    ]
+  },
+  "1002": {
+    "BuffID": 1002,
+    "BuffType": 1,
+    "BuffValue": 0.5,
+    "BuffValue2": 0,
+    "BuffName": "生命值增加",
+    "DescArray": [
+      "抵挡",
+      "起飞"
+    ]
+  },
+  "1003": {
+    "BuffID": 1003,
+    "BuffType": 3,
+    "BuffValue": 0.1,
+    "BuffValue2": 0,
+    "BuffName": "恢复血量",
+    "DescArray": [
+      "抵挡",
+      "起飞"
+    ]
+  },
+  "1004": {
+    "BuffID": 1004,
+    "BuffType": 0,
+    "BuffValue": -0.1,
+    "BuffValue2": 0,
+    "BuffName": "伤害降低",
+    "DescArray": [
+      "抵挡",
+      "起飞"
+    ]
+  },
+  "1005": {
+    "BuffID": 1005,
+    "BuffType": 1,
+    "BuffValue": -0.3,
+    "BuffValue2": 0,
+    "BuffName": "生命值降低",
+    "DescArray": [
+      "抵挡",
+      "起飞"
+    ]
+  }
+}

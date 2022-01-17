@@ -47,7 +47,7 @@ class GameUI : UIWindow
         m_btnAttack = FindChildComponent<Button>("m_goContent/m_goMiddle/m_goAttackOrAbort/m_btnAttack");
         m_btnAbord = FindChildComponent<Button>("m_goContent/m_goMiddle/m_goAttackOrAbort/m_btnAbord");
 
-        m_goInventoryRoot = FindChild("m_goContent/m_goMiddle/m_goInventoryRoot");
+        m_goInventoryRoot = FindChild("m_goContent/m_goTop/m_goInventoryRoot");
         m_btnUsed = FindChildComponent<Button>("m_goContent/m_goMiddle/m_btnUsed");
         m_textLeft = FindChildComponent<Text>("m_goContent/m_goMiddle/m_btnLeft/m_textLeft");
         m_textLeftKill = FindChildComponent<Text>("m_goContent/m_goTop/m_textLeftKill");
@@ -107,7 +107,7 @@ class GameUI : UIWindow
         }
         if (GameMgr.Instance.gameState == GameMgr.GameState.STATETHREE)
         {
-            m_btnNewMode.gameObject.Show(false); //.transform.localScale = Vector2.zero;
+            m_btnNewMode.gameObject.Show(false);
         }
     }
 
@@ -188,10 +188,10 @@ class GameUI : UIWindow
                 break;
             }
             case 5:
-                {
-                    value = "地狱";
-                    break;
-                }
+            {
+                value = "地狱";
+                break;
+            }
         }
 
         m_textCurrentLevel.text = String.Format("当前难度：{0}", value);

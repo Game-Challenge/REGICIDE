@@ -1,0 +1,121 @@
+{
+  "1001": {
+    "ID": 1001,
+    "Name": "冲锋",
+    "BuffIDArray": [
+      0,
+      0
+    ],
+    "FeatureValue": 0.6,
+    "FeatureValue2": 0,
+    "Rate": 10
+  },
+  "1002": {
+    "ID": 1002,
+    "Name": "刚毅",
+    "BuffIDArray": [
+      0,
+      0
+    ],
+    "FeatureValue": 0,
+    "FeatureValue2": 0,
+    "Rate": 10
+  },
+  "1003": {
+    "ID": 1003,
+    "Name": "疯狂",
+    "BuffIDArray": [
+      0,
+      0
+    ],
+    "FeatureValue": 0,
+    "FeatureValue2": 0,
+    "Rate": 10
+  },
+  "1004": {
+    "ID": 1004,
+    "Name": "再生",
+    "BuffIDArray": [
+      0,
+      0
+    ],
+    "FeatureValue": 0.1,
+    "FeatureValue2": 0,
+    "Rate": 10
+  },
+  "1005": {
+    "ID": 1005,
+    "Name": "穿刺",
+    "BuffIDArray": [
+      1001
+    ],
+    "FeatureValue": 5,
+    "FeatureValue2": 0,
+    "Rate": 10
+  },
+  "1006": {
+    "ID": 1006,
+    "Name": "凋零",
+    "BuffIDArray": [
+      0,
+      0
+    ],
+    "FeatureValue": 1,
+    "FeatureValue2": 0,
+    "Rate": 10
+  },
+  "1007": {
+    "ID": 1007,
+    "Name": "威压",
+    "BuffIDArray": [
+      0,
+      0
+    ],
+    "FeatureValue": 10,
+    "FeatureValue2": 0,
+    "Rate": 10
+  },
+  "1008": {
+    "ID": 1008,
+    "Name": "强壮",
+    "BuffIDArray": [
+      1002
+    ],
+    "FeatureValue": 0.5,
+    "FeatureValue2": 0,
+    "Rate": 10
+  },
+  "1009": {
+    "ID": 1009,
+    "Name": "血肉",
+    "BuffIDArray": [
+      1001,
+      1002
+    ],
+    "FeatureValue": 1,
+    "FeatureValue2": -0.5,
+    "Rate": 10
+  },
+  "1010": {
+    "ID": 1010,
+    "Name": "狂战",
+    "BuffIDArray": [
+      1001,
+      1002
+    ],
+    "FeatureValue": -0.3,
+    "FeatureValue2": 0.5,
+    "Rate": 10
+  },
+  "1011": {
+    "ID": 1011,
+    "Name": "荆棘",
+    "BuffIDArray": [
+      0,
+      0
+    ],
+    "FeatureValue": 0.3,
+    "FeatureValue2": 0,
+    "Rate": 10
+  }
+}

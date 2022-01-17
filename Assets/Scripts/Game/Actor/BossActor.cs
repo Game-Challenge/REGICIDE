@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using RegicideProtocol;
 using UnityEngine;
 
@@ -27,16 +28,37 @@ public class BossActor : GameActor
         }
     }
 
+    private List<FeatureConfig> m_features = new List<FeatureConfig>();
+
+    public List<FeatureConfig> Features
+    {
+        get
+        {
+            return m_features;
+        }
+    }
+
+    public BuffMgr ActorBuffMgr = new BuffMgr();
+
     public BossActor(CardData cardData)
     {
         this.cardData = cardData;
         RegisterEvent();
         Init();
+        m_features.Clear();
+
+        FeatureMgr.Instance.GenBossFeature(this);
     }
 
     ~BossActor()
     {
         DeRegisterEvent();
+    }
+
+    public void SetFeature(List<FeatureConfig> featureConfigs)
+    {
+        m_features = featureConfigs;
+        ActorBuffMgr.SetBuffByFeatures(m_features);
     }
 
     public bool Refresh(RegicideProtocol.ActorPack bossActorPack)
@@ -77,6 +99,8 @@ public class BossActor : GameActor
         JokerAtk = false;
         m_cacheAtk = 0;
         Init();
+        m_features.Clear();
+        ActorBuffMgr?.ClearBuff();
     }
 
     private void Init()
@@ -157,24 +181,6 @@ public class BossActor : GameActor
     public void Hurt(int value)
     {
         MonoManager.Instance.StartCoroutine(Hurt(value, 0.5f));
-        return;
-        Hp -= value;
-        if (Hp <= 0)
-        {
-            EventCenter.Instance.EventTrigger("BossDie", Hp == 0); //boss被归化，变成卡堆第一张
-            Hp = 0;
-        }
-        else
-        {
-            MonoManager.Instance.StartCoroutine(BossAttack());
-        }
-#if UNITY_EDITOR
-        Debug.Log("Boss Hp:" + Hp);
-#endif
-        if (Hp != 0)
-        {
-            EventCenter.Instance.EventTrigger("BossDataRefresh", this);
-        }
     }
 
     IEnumerator Hurt(int value ,float waitsecond)

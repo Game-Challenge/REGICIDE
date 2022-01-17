@@ -61,6 +61,7 @@ class ItemCard : UIWindowWidget
     private Image m_imgCardValue;
     private Image m_imgCardType;
     private Image m_imgBoss;
+    private Text m_textFeature;
     protected override void ScriptGenerator()
     {
         m_imgIcon = FindChildComponent<Image>("m_imgIcon");
@@ -77,6 +78,8 @@ class ItemCard : UIWindowWidget
         m_textInfo = FindChildComponent<Text>("m_goCardInfo/m_goInfo/m_InfoBlock/m_textInfo");
         m_imgHp = FindChildComponent<Image>("m_goCardInfo/m_goHp/m_bg/m_imgHp");
         m_textCardCount = FindChildComponent<Text>("m_textCardCount");
+
+        m_textFeature = FindChildComponent<Text>("m_goCardInfo/m_textFeature");
 
         var bosstf = FindChild("m_goBoss");
         if (bosstf != null)
@@ -167,6 +170,18 @@ class ItemCard : UIWindowWidget
         m_goBoss?.SetActive(false);
         Refresh();
 
+        if (actor.Features.Count>0)
+        {
+            if (m_textFeature != null)
+            {
+                m_textFeature.text = "君主天赋：";
+                for (int i = 0; i < actor.Features.Count; i++)
+                {
+                    m_textFeature.text += actor.Features[i].Name;
+                }
+            }
+        }
+       
         if (GameMgr.Instance.IsLandScape)
         {
             gameObject.transform.localScale = new Vector3(2, 2, 2);

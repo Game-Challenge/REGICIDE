@@ -266,16 +266,32 @@ partial class GameMgr : Singleton<GameMgr>
             }
         }
 
-        int myValue = 0;
+        int point = 0;
 
         foreach (var card in m_choiceList)
         {
-            myValue += card.CardPower;
+            if (card.CardValue == 11)
+            {
+                point += 10;
+            }
+            else if (card.CardValue == 12)
+            {
+                point += 15;
+            }
+            else if (card.CardValue == 13)
+            {
+                point += 20;
+            }
+            else
+            {
+                point += card.CardPower;
+            }
         }
 
-        if (myValue < m_needAbordValue)
+        if (point < m_needAbordValue)
         {
             UISys.ShowTipMsg(string.Format("您需要遗弃:{0}点数的牌",m_needAbordValue));
+            UISys.ShowTipMsg(string.Format("弃牌点数还差{0}点", m_needAbordValue - point));
             return;
         }
 
@@ -414,6 +430,11 @@ partial class GameMgr : Singleton<GameMgr>
             m_useList.Insert(0, BossActor.cardData);
             InitBoss();
         }
+
+        //Boss死亡后当场攻击的卡进墓地
+        m_useList.AddRange(m_CurrentAttacksList);
+        m_CurrentAttacksList.Clear();
+
         EventCenter.Instance.EventTrigger("RefreshGameUI");
     }
     #endregion
@@ -544,7 +565,8 @@ partial class GameMgr : Singleton<GameMgr>
 
             if (!card.IsJoker)
             {
-                m_useList.Add(card);
+                //m_useList.Add(card);
+                m_CurrentAttacksList.Add(card);
             }
         }
 
@@ -816,7 +838,8 @@ partial class GameMgr : Singleton<GameMgr>
         m_curList.Clear();
         m_useList.Clear();
         m_choiceList.Clear();
-        
+        m_CurrentAttacksList.Clear();
+
         InitBoss();
         TurnCard();
         SetState(GameState.STATEONE);
