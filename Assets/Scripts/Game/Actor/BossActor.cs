@@ -35,6 +35,8 @@ public class BossActor : GameActor
     }
 
     public bool HadChongFeng = false;
+    public bool UseChongFengIng = false;
+    public float ChongFengRate = 1f;
 
     private List<FeatureConfig> m_features = new List<FeatureConfig>();
 

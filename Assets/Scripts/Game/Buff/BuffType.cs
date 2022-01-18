@@ -13,7 +13,7 @@
     /// </summary>
     BUFF_ADD_DEMAGE_VALUE = 2,
     /// <summary>
-    /// 回血
+    /// 回血 恢复百分比血量
     /// </summary>
     BUFF_ADD_HEALTH = 3,
     /// <summary>
@@ -32,6 +32,17 @@
     /// 反甲
     /// </summary>
     BUFF_FANJIA = 7,
+    /// <summary>
+    /// 回复 回复固定血量
+    /// </summary>
     BUFF_HUIFU,
+    /// <summary>
+    /// 不屈
+    /// </summary>
+    BUFF_BUQU,
+    /// <summary>
+    /// 凋零
+    /// </summary>
+    BUFF_DIAOLING
 }
 

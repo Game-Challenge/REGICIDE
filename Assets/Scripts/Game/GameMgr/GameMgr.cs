@@ -53,11 +53,13 @@ partial class GameMgr : Singleton<GameMgr>
         }
     }
     public const int TotalCardNum = 54;
+
+    private int m_maxCardNum = 8;
     public int MyMaxCardNum
     {
         get
         {
-            return 8;
+            return m_maxCardNum;
         }
     }
 
@@ -288,12 +290,19 @@ partial class GameMgr : Singleton<GameMgr>
             }
         }
 
+        if (BossActor.UseChongFengIng)
+        {
+            m_needAbordValue = (int)(m_needAbordValue * BossActor.ChongFengRate);
+        }
+
         if (point < m_needAbordValue)
         {
             UISys.ShowTipMsg(string.Format("您需要遗弃:{0}点数的牌",m_needAbordValue));
             UISys.ShowTipMsg(string.Format("弃牌点数还差{0}点", m_needAbordValue - point));
             return;
         }
+
+        BossActor.UseChongFengIng = false;
 
         for (int i = 0; i < m_choiceList.Count; i++)
         {

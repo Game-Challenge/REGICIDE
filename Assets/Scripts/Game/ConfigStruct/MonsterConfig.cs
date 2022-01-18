@@ -6,14 +6,11 @@
 
 // Generate From MonsterConfig.xlsx
 
-using System.Collections.Generic;
-
 public class MonsterBaseConfig
 {
 	public int ID; // ID
 	public string Name; // 名称
 	public int IsBoss; // 是否为Boss
-	public Dictionary<int,float> AttrDic; // 初始属性字典
 }
 
 

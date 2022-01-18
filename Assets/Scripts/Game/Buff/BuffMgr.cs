@@ -148,6 +148,8 @@ public class BuffMgr
                 if (!bossActor.HadChongFeng)
                 {
                     bossActor.HadChongFeng = true;
+                    bossActor.UseChongFengIng = true;
+                    bossActor.ChongFengRate = buff.BuffValue;
                     UISys.ShowTipMsg("君主使用了冲锋！！！");
                     GameMgr.Instance.SetState(GameMgr.GameState.STATEFOUR);
                 }
