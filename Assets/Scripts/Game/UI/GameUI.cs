@@ -191,6 +191,11 @@ class GameUI : UIWindow
                 value = "地狱";
                 break;
             }
+            case 10:
+            {
+                value = "RogueLike";
+                break;
+            }
         }
 
         m_textCurrentLevel.text = String.Format("当前难度：{0}", value);

@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using RegicideProtocol;
 using UnityEngine;
+using Random = System.Random;
 
 public class BossActor : GameActor
 {
@@ -12,6 +14,10 @@ public class BossActor : GameActor
     public int Hp;
 
     public int Atk;
+
+    public bool IsSamllJoker;
+
+    public bool IsBigJoker;
 
     public bool JokerAtk { private set; get; }
 
@@ -49,7 +55,34 @@ public class BossActor : GameActor
         Init();
         m_features.Clear();
         HadChongFeng = false;
-        FeatureMgr.Instance.GenBossFeature(this,3);
+        InitFeatures();
+    }
+
+    private void InitFeatures()
+    {
+        if (GameMgr.Instance.Roguelike)
+        {
+            var featureCount = 1;
+
+            System.Random ran = new Random((int)DateTime.Now.Ticks);
+            var idx = ran.Next(0, 10);
+
+            if (idx >=8)
+            {
+                featureCount++;
+            }
+
+            if (IsSamllJoker)
+            {
+                featureCount = 3;
+            }
+            else if (IsBigJoker)
+            {
+                featureCount = 3;
+            }
+
+            FeatureMgr.Instance.GenBossFeature(this, featureCount);
+        }
     }
 
     ~BossActor()
@@ -108,6 +141,8 @@ public class BossActor : GameActor
 
     private void Init()
     {
+        IsSamllJoker = false;
+        IsBigJoker = false;
         switch ((CardValue)cardData.CardValue)
         {
             case CardValue.J:
@@ -132,12 +167,14 @@ public class BossActor : GameActor
             {
                 Hp = 50;
                 Atk = 25;
+                IsSamllJoker = true;
                 break;
             }
             case CardValue.Joker:
             {
                 Hp = 50;
                 Atk = 25;
+                IsBigJoker = true;
                 break;
             }
         }

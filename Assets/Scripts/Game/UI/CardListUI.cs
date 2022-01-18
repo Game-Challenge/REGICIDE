@@ -62,6 +62,11 @@ class ItemCard : UIWindowWidget
     private Image m_imgCardType;
     private Image m_imgBoss;
     private Text m_textFeature;
+
+    private GameObject m_goFeature;
+    private List<Text> m_textFeatures = new List<Text>();
+    private bool m_showFeature;
+    private BossActor m_BossActor;
     protected override void ScriptGenerator()
     {
         m_imgIcon = FindChildComponent<Image>("m_imgIcon");
@@ -81,6 +86,15 @@ class ItemCard : UIWindowWidget
 
         m_textFeature = FindChildComponent<Text>("m_goCardInfo/m_textFeature");
 
+        m_goFeature = FindChild("m_goCardInfo/m_goFeature")?.gameObject;
+        if (m_goFeature!=null)
+        {
+            for (int i = 1; i < 5; i++)
+            {
+                m_textFeatures.Add(FindChildComponent<Text>("m_goCardInfo/m_goFeature/m_InfoBlock/m_textFeature" + i));
+            }
+        }
+
         var bosstf = FindChild("m_goBoss");
         if (bosstf != null)
         {
@@ -88,6 +102,7 @@ class ItemCard : UIWindowWidget
             m_imgCardValue = FindChildComponent<Image>("m_goBoss/m_imgCardValue");
             m_imgCardType = FindChildComponent<Image>("m_goBoss/m_imgCardType");
             m_imgBoss = FindChildComponent<Image>("m_goBoss/m_imgBoss");
+            m_goBoss.GetComponent<Button>().onClick.AddListener(Choice);
         }
     }
     #endregion
@@ -163,6 +178,7 @@ class ItemCard : UIWindowWidget
     /// <param name="actor"></param>
     public void Init(BossActor actor)
     {
+        m_BossActor = actor;
         IsBoss = true;
         m_cardData = actor.cardData;
         m_imgIcon.sprite = m_cardData.sprite;
@@ -181,10 +197,20 @@ class ItemCard : UIWindowWidget
                     if (feature.UseColor == 1)
                     {
                         m_textFeature.text += feature.Name.ToColor(feature.ColorStr) + " ";
+
+                        if (m_goFeature != null)
+                        {
+                            m_textFeatures[i].text = feature.Name.ToColor(feature.ColorStr) + ":" + feature.Desc;
+                        }
                     }
                     else
                     {
                         m_textFeature.text += feature.Name + " ";
+
+                        if (m_goFeature != null)
+                        {
+                            m_textFeatures[i].text = feature.Name.ToColor(feature.ColorStr) + ":" + feature.Desc;
+                        }
                     }
                 }
             }
@@ -412,6 +438,14 @@ class ItemCard : UIWindowWidget
 
         if (IsBoss)
         {
+            if (m_goFeature!= null)
+            {
+                if (m_BossActor!= null && m_BossActor.Features.Count > 0)
+                {
+                    m_showFeature = !m_showFeature;
+                    m_goFeature.SetActive(m_showFeature);
+                }
+            }
             return;
         }
         m_choice = !m_choice;

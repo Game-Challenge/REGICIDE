@@ -14,6 +14,7 @@ public class FeatureConfig
 	public int UseColor; // 使用颜色
 	public string ColorStr; // 颜色Str
 	public float Rate; // 概率
+	public string Desc; // 特性描述
 }
 
 

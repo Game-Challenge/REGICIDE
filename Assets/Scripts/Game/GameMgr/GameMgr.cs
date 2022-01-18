@@ -804,6 +804,7 @@ partial class GameMgr : Singleton<GameMgr>
         return str;
     }
 
+    public bool Roguelike = false;
     public int GameLevel = 0;
     public void RestartGame()
     {
@@ -812,6 +813,7 @@ partial class GameMgr : Singleton<GameMgr>
 
         TotalKillBossCount = 0;
         LeftJokerCount = 2;
+        Roguelike = false;
         switch (GameLevel)
         {
             case 1:
@@ -829,8 +831,11 @@ partial class GameMgr : Singleton<GameMgr>
             case 5:
                 NeedKillBossCount = 14;
                 break;
+            case 10:
+                Roguelike = true;
+                NeedKillBossCount = 14;
+                break;
         }
-        //UISys.ShowTipMsg("重新开始！！");
         
         InitTotalCards();
         InitMyCards();

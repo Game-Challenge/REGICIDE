@@ -5,9 +5,10 @@
     "BuffIDArray": [
       1007
     ],
-    "UseColor": 0,
-    "ColorStr": "F",
-    "Rate": 10
+    "UseColor": 1,
+    "ColorStr": "FF0000",
+    "Rate": 10,
+    "Desc": "君主入场即攻击"
   },
   "1002": {
     "ID": 1002,
@@ -16,9 +17,10 @@
       0,
       0
     ],
-    "UseColor": 0,
-    "ColorStr": "F",
-    "Rate": 10
+    "UseColor": 1,
+    "ColorStr": "FFD200",
+    "Rate": 10,
+    "Desc": "非感化会受到君主伤害"
   },
   "1003": {
     "ID": 1003,
@@ -27,9 +29,10 @@
       0,
       0
     ],
-    "UseColor": 0,
-    "ColorStr": "F",
-    "Rate": 10
+    "UseColor": 1,
+    "ColorStr": "FF00F0",
+    "Rate": 10,
+    "Desc": "君主无法被感化"
   },
   "1004": {
     "ID": 1004,
@@ -39,7 +42,8 @@
     ],
     "UseColor": 1,
     "ColorStr": "13FF00",
-    "Rate": 10
+    "Rate": 10,
+    "Desc": "回合开始恢复10%最大血量"
   },
   "1005": {
     "ID": 1005,
@@ -47,9 +51,10 @@
     "BuffIDArray": [
       1006
     ],
-    "UseColor": 0,
-    "ColorStr": "F",
-    "Rate": 10
+    "UseColor": 1,
+    "ColorStr": "FF0000",
+    "Rate": 10,
+    "Desc": "增加50%伤害"
   },
   "1006": {
     "ID": 1006,
@@ -60,7 +65,8 @@
     ],
     "UseColor": 0,
     "ColorStr": "F",
-    "Rate": 10
+    "Rate": 10,
+    "Desc": "每打出1张牌，必须丢弃1张"
   },
   "1007": {
     "ID": 1007,
@@ -70,7 +76,8 @@
     ],
     "UseColor": 0,
     "ColorStr": "F",
-    "Rate": 10
+    "Rate": 10,
+    "Desc": "抵挡10以上的伤害"
   },
   "1008": {
     "ID": 1008,
@@ -78,9 +85,10 @@
     "BuffIDArray": [
       1002
     ],
-    "UseColor": 0,
-    "ColorStr": "F",
-    "Rate": 10
+    "UseColor": 1,
+    "ColorStr": "FFD200",
+    "Rate": 10,
+    "Desc": "增加生命值"
   },
   "1009": {
     "ID": 1009,
@@ -89,9 +97,10 @@
       1001,
       1002
     ],
-    "UseColor": 0,
-    "ColorStr": "F",
-    "Rate": 10
+    "UseColor": 1,
+    "ColorStr": "FF0000",
+    "Rate": 10,
+    "Desc": "生命值增加，攻击力减少"
   },
   "1010": {
     "ID": 1010,
@@ -100,9 +109,10 @@
       1001,
       1002
     ],
-    "UseColor": 0,
-    "ColorStr": "F",
-    "Rate": 10
+    "UseColor": 1,
+    "ColorStr": "FF0000",
+    "Rate": 10,
+    "Desc": "生命值减少，攻击力增加"
   },
   "1011": {
     "ID": 1011,
@@ -110,9 +120,10 @@
     "BuffIDArray": [
       1010
     ],
-    "UseColor": 0,
-    "ColorStr": "F",
-    "Rate": 10
+    "UseColor": 1,
+    "ColorStr": "00F9FF",
+    "Rate": 10,
+    "Desc": "根据本回合的伤害弃牌增加"
   },
   "1012": {
     "ID": 1012,
@@ -122,6 +133,7 @@
     ],
     "UseColor": 1,
     "ColorStr": "13FF00",
-    "Rate": 10
+    "Rate": 10,
+    "Desc": "回合开始回复5血量"
   }
 }

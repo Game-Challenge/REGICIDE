@@ -114,8 +114,10 @@ public class BuffMgr
                 bossActor.Atk += (int)(buff.BuffValue);
                 break;
         }
+#if UNITY_EDITOR
+        Debug.LogFormat("bossActor Init Buff:{0},bossAtk:{1},bossHp,{2}",buff.BuffName,bossActor.Atk,bossActor.Hp);
+#endif
         EventCenter.Instance.EventTrigger("BossDataRefresh", bossActor);
-
     }
 
     public void HandleBuff(BossActor bossActor,BuffConfig buff)
@@ -168,7 +170,7 @@ public class BuffMgr
         EventCenter.Instance.EventTrigger("BossDataRefresh",bossActor);
     }
 
-    #region 设置BUFF
+#region 设置BUFF
 
     public void SetBuffByFeatures(List<FeatureConfig> featureConfigs, BossActor bossActor = null)
     {
@@ -184,6 +186,7 @@ public class BuffMgr
             var feature = featureConfigs[i];
             SetBuffByFeature(feature,bossActor);
         }
+        bossActor.InitBuff();
     }
 
     public void SetBuffByFeature(FeatureConfig featureConfig, BossActor bossActor = null)
@@ -215,11 +218,10 @@ public class BuffMgr
 #endif
                 m_buffDic.Add(buffID, buff);
                 m_buffList.Add(buff);
-                bossActor.InitBuff();
             }
         }
     }
 
 
-    #endregion
+#endregion
 }
