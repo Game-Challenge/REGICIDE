@@ -109,6 +109,7 @@ public class BuffMgr
                 break;
             case BuffType.BUFF_ADD_HP:
                 bossActor.Hp += (int)(bossActor.Hp * buff.BuffValue);
+                bossActor.MaxHp = bossActor.Hp;
                 break;
             case BuffType.BUFF_ADD_DEMAGE_VALUE:
                 bossActor.Atk += (int)(buff.BuffValue);
@@ -147,11 +148,13 @@ public class BuffMgr
             case BuffType.BUFF_QUICK_ATTACK:
                 if (!bossActor.HadChongFeng)
                 {
-                    bossActor.HadChongFeng = true;
-                    bossActor.UseChongFengIng = true;
-                    bossActor.ChongFengRate = buff.BuffValue;
                     UISys.ShowTipMsg("君主使用了冲锋！！！");
-                    GameMgr.Instance.SetState(GameMgr.GameState.STATEFOUR);
+                    MonoManager.Instance.StartCoroutine(Utils.Wait(1.0f,(() =>
+                    {
+                        bossActor.HadChongFeng = true;
+                        value = (int)(bossActor.Atk * buff.BuffValue);
+                        EventCenter.Instance.EventTrigger("BossAttack", value);
+                    })));
                 }
                 break;
             case BuffType.BUFF_ADD_HEALTH:

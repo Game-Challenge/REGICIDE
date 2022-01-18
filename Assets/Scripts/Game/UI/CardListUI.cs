@@ -186,6 +186,11 @@ class ItemCard : UIWindowWidget
         m_goBoss?.SetActive(false);
         Refresh();
 
+        for (int i = 0; i < m_textFeatures.Count; i++)
+        {
+            m_textFeatures[i].text = "";
+        }
+
         if (actor.Features.Count>0)
         {
             if (m_textFeature != null)

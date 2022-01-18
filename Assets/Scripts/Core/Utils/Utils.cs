@@ -1,4 +1,6 @@
-﻿using RegicideProtocol;
+﻿using System;
+using System.Collections;
+using RegicideProtocol;
 using System.Collections.Generic;
 using Google.Protobuf.Collections;
 using UnityEngine;
@@ -87,5 +89,11 @@ public static class Utils
         }
 
         return list;
+    }
+
+    public static IEnumerator Wait(float second = 1.0f,Action callBack = null)
+    {
+        yield return new WaitForSeconds(second);
+        callBack?.Invoke();
     }
 }

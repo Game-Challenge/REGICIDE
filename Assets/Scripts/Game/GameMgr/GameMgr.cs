@@ -290,19 +290,12 @@ partial class GameMgr : Singleton<GameMgr>
             }
         }
 
-        if (BossActor.UseChongFengIng)
-        {
-            m_needAbordValue = (int)(m_needAbordValue * BossActor.ChongFengRate);
-        }
-
         if (point < m_needAbordValue)
         {
             UISys.ShowTipMsg(string.Format("您需要遗弃:{0}点数的牌",m_needAbordValue));
             UISys.ShowTipMsg(string.Format("弃牌点数还差{0}点", m_needAbordValue - point));
             return;
         }
-
-        BossActor.UseChongFengIng = false;
 
         for (int i = 0; i < m_choiceList.Count; i++)
         {
@@ -370,6 +363,7 @@ partial class GameMgr : Singleton<GameMgr>
         BossActor = ActorMgr.Instance.InstanceBossActor(cardData);
         EventCenter.Instance.EventTrigger("RefreshBoss", BossActor);
         EventCenter.Instance.EventTrigger("BossDataRefresh", BossActor);
+        SetState(GameState.STATEONE);
     }
 
     public void AttackBoss(int value)
@@ -855,7 +849,6 @@ partial class GameMgr : Singleton<GameMgr>
 
         InitBoss();
         TurnCard();
-        SetState(GameState.STATEONE);
         EventCenter.Instance.EventTrigger("RefreshGameUI");
         EventCenter.Instance.EventTrigger("GameStart");
     }
