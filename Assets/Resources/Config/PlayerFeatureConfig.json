@@ -7,7 +7,7 @@
     ],
     "UseColor": 1,
     "ColorStr": "FF0000",
-    "Rate": 7,
+    "Rate": 10,
     "Desc": "君主入场即攻击"
   },
   "row_3": {
@@ -18,8 +18,8 @@
     ],
     "UseColor": 1,
     "ColorStr": "FFD200",
-    "Rate": 8,
-    "Desc": "未被感化会舍身一击"
+    "Rate": 10,
+    "Desc": "非感化会受到君主伤害"
   },
   "row_4": {
     "ID": 1003,
@@ -29,7 +29,7 @@
     ],
     "UseColor": 1,
     "ColorStr": "FF00F0",
-    "Rate": 0,
+    "Rate": 10,
     "Desc": "君主无法被感化"
   },
   "row_5": {
@@ -41,11 +41,11 @@
     "UseColor": 1,
     "ColorStr": "13FF00",
     "Rate": 10,
-    "Desc": "每回合再生20%最大血量"
+    "Desc": "回合开始恢复20%最大血量"
   },
   "row_6": {
     "ID": 1005,
-    "Name": "增伤",
+    "Name": "穿刺",
     "BuffIDArray": [
       1006
     ],
@@ -62,7 +62,7 @@
     ],
     "UseColor": 0,
     "ColorStr": "F",
-    "Rate": 3,
+    "Rate": 10,
     "Desc": "每打出1张牌，必须丢弃1张"
   },
   "row_8": {
@@ -141,7 +141,7 @@
     ],
     "UseColor": 1,
     "ColorStr": "FF00F0",
-    "Rate": 0,
+    "Rate": 3,
     "Desc": "贪婪阴霾"
   }
 }

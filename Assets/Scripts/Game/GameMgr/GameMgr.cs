@@ -376,9 +376,8 @@ partial class GameMgr : Singleton<GameMgr>
         }
     }
 
-    private void BossDie(bool beFriend = false)
+    private bool CheckGameWin()
     {
-        TotalKillBossCount++;
 
         if (TotalKillBossCount >= NeedKillBossCount)
         {
@@ -386,7 +385,7 @@ partial class GameMgr : Singleton<GameMgr>
             UISys.ShowTipMsg(string.Format("游戏胜利，您已经弑杀了{0}位君主！！！", TotalKillBossCount));
             var ui = UISys.Mgr.ShowWindow<GameWinUI>();
             ui.InitUI(string.Format("游戏胜利，您已经弑杀了{0}位君主！！！", TotalKillBossCount));
-            return;
+            return true;
         }
 
         if (m_bossList.Count <= 0)
@@ -395,14 +394,45 @@ partial class GameMgr : Singleton<GameMgr>
             UISys.ShowTipMsg("游戏胜利！！！，您已经弑杀了12位君主");
             var ui = UISys.Mgr.ShowWindow<GameWinUI>();
             ui.InitUI(string.Format("游戏胜利，您已经弑杀了{0}位君主！！！", TotalKillBossCount));
+            return true;
+        }
+
+        return false;
+    }
+
+    private void BossDie(bool beFriend = false)
+    {
+        TotalKillBossCount++;
+
+        if (CheckGameWin())
+        {
             return;
+        }
+
+        if (beFriend)
+        {
+            UISys.ShowTipMsg("你劝服了这位君主！");
+        }
+        else
+        {
+            UISys.ShowTipMsg("你击杀了这位君主！");
         }
 
         if (startNewMode)
         {
-            UISys.Mgr.ShowWindow<GameChoiceUI>();
+            var ui = UISys.Mgr.ShowWindow<GameChoiceUI>();
+            if (Roguelike)
+            {
+                ui?.RegisterCloseAction((() => { NextBoss(beFriend); }));
+                return;
+            }
         }
-        
+
+        NextBoss(beFriend);
+    }
+
+    private void NextBoss(bool beFriend)
+    {
         if (GameLevel <= 3)
         {
             for (int a = 0; a < 4 - GameLevel; a++)
@@ -414,19 +444,17 @@ partial class GameMgr : Singleton<GameMgr>
         {
             m_bossList.RemoveAt(0);
         }
-        
+
         if (beFriend)
         {
-            if(BossActor.cardData.cardType!=CardType.BLACK_JOKER && BossActor.cardData.cardType != CardType.RED_JOKER)
+            if (BossActor.cardData.cardType != CardType.BLACK_JOKER && BossActor.cardData.cardType != CardType.RED_JOKER)
             {
-                UISys.ShowTipMsg("你劝服了这位君主！");
-                m_myList.Insert(0,BossActor.cardData);
+                m_myList.Insert(0, BossActor.cardData);
             }
             InitBoss();
         }
         else
         {
-            UISys.ShowTipMsg("你击杀了这位君主！");
             m_useList.Insert(0, BossActor.cardData);
             InitBoss();
         }
@@ -565,14 +593,13 @@ partial class GameMgr : Singleton<GameMgr>
 
             if (!card.IsJoker)
             {
-                //m_useList.Add(card);
                 m_CurrentAttacksList.Add(card);
             }
         }
 
         m_choiceList.Clear();
 
-        AudioMgr.Instance.PlaySound("AttackBoss");
+        //AudioMgr.Instance.PlaySound("AttackBoss");
 
         EventCenter.Instance.EventTrigger("RefreshGameUI");
     }
@@ -784,6 +811,7 @@ partial class GameMgr : Singleton<GameMgr>
 
         if (gameState == GameState.STATEONE)
         {
+            BossActor?.CheckBossDie();
             if (m_curList.Count <= 0 && LeftJokerCount <= 0)
             {
                 UISys.Mgr.ShowWindow<GameLoseUI>().InitUI("游戏失败，你被君主击败了！");
@@ -835,6 +863,10 @@ partial class GameMgr : Singleton<GameMgr>
                 NeedKillBossCount = 14;
                 break;
             case 10:
+                Roguelike = true;
+                NeedKillBossCount = 14;
+                break;
+            case 11:
                 Roguelike = true;
                 NeedKillBossCount = 14;
                 break;

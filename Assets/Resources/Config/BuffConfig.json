@@ -5,7 +5,8 @@
     "BuffValue": 0.5,
     "BuffValue2": 0,
     "BuffName": "伤害增加",
-    "HandleState": 0
+    "HandleState": 0,
+    "CanAddBuff": 1
   },
   "1002": {
     "BuffID": 1002,
@@ -13,15 +14,17 @@
     "BuffValue": 0.5,
     "BuffValue2": 0,
     "BuffName": "生命值增加",
-    "HandleState": 0
+    "HandleState": 0,
+    "CanAddBuff": 1
   },
   "1003": {
     "BuffID": 1003,
     "BuffType": 3,
-    "BuffValue": 0.1,
-    "BuffValue2": 0,
+    "BuffValue": 0.2,
+    "BuffValue2": 0.3,
     "BuffName": "恢复",
-    "HandleState": 1
+    "HandleState": 1,
+    "CanAddBuff": 1
   },
   "1004": {
     "BuffID": 1004,
@@ -29,7 +32,8 @@
     "BuffValue": -0.3,
     "BuffValue2": 0,
     "BuffName": "伤害降低",
-    "HandleState": 0
+    "HandleState": 0,
+    "CanAddBuff": 1
   },
   "1005": {
     "BuffID": 1005,
@@ -37,7 +41,8 @@
     "BuffValue": -0.3,
     "BuffValue2": 0,
     "BuffName": "生命值降低",
-    "HandleState": 0
+    "HandleState": 0,
+    "CanAddBuff": 1
   },
   "1006": {
     "BuffID": 1006,
@@ -45,7 +50,8 @@
     "BuffValue": 5,
     "BuffValue2": 0,
     "BuffName": "伤害增加固定值",
-    "HandleState": 0
+    "HandleState": 0,
+    "CanAddBuff": 1
   },
   "1007": {
     "BuffID": 1007,
@@ -53,7 +59,8 @@
     "BuffValue": 0.6,
     "BuffValue2": 0,
     "BuffName": "冲锋",
-    "HandleState": 1
+    "HandleState": 1,
+    "CanAddBuff": 0
   },
   "1008": {
     "BuffID": 1008,
@@ -61,7 +68,8 @@
     "BuffValue": 10,
     "BuffValue2": 0,
     "BuffName": "威压",
-    "HandleState": 2
+    "HandleState": 2,
+    "CanAddBuff": 0
   },
   "1009": {
     "BuffID": 1009,
@@ -69,7 +77,8 @@
     "BuffValue": 0.4,
     "BuffValue2": 0,
     "BuffName": "威压倍率",
-    "HandleState": 2
+    "HandleState": 2,
+    "CanAddBuff": 1
   },
   "1010": {
     "BuffID": 1010,
@@ -77,7 +86,8 @@
     "BuffValue": 0.1,
     "BuffValue2": 0,
     "BuffName": "荆棘",
-    "HandleState": 4
+    "HandleState": 4,
+    "CanAddBuff": 0
   },
   "1011": {
     "BuffID": 1011,
@@ -85,7 +95,8 @@
     "BuffValue": 5,
     "BuffValue2": 0,
     "BuffName": "回复",
-    "HandleState": 1
+    "HandleState": 1,
+    "CanAddBuff": 1
   },
   "1012": {
     "BuffID": 1012,
@@ -93,14 +104,16 @@
     "BuffValue": 0,
     "BuffValue2": 0,
     "BuffName": "不屈",
-    "HandleState": 3
+    "HandleState": 3,
+    "CanAddBuff": 0
   },
   "1013": {
     "BuffID": 1013,
     "BuffType": 10,
     "BuffValue": 1,
     "BuffValue2": 0,
-    "BuffName": "凋零",
-    "HandleState": 2
+    "BuffName": "暴政",
+    "HandleState": 2,
+    "CanAddBuff": 0
   }
 }
