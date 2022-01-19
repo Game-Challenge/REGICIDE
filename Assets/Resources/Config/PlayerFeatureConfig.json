@@ -1,18 +1,20 @@
 {
   "row_2": {
     "ID": 1001,
-    "Name": "先攻",
+    "Name": "戏法",
+    "SR": 0,
     "BuffIDArray": [
       1007
     ],
     "UseColor": 1,
     "ColorStr": "FF0000",
     "Rate": 10,
-    "Desc": "君主入场即攻击"
+    "Desc": "Joker数目+1"
   },
   "row_3": {
     "ID": 1002,
-    "Name": "不屈",
+    "Name": "炼狱",
+    "SR": 0,
     "BuffIDArray": [
       1012
     ],
@@ -23,7 +25,8 @@
   },
   "row_4": {
     "ID": 1003,
-    "Name": "疯狂",
+    "Name": "神曲",
+    "SR": 0,
     "BuffIDArray": [
       0
     ],
@@ -34,7 +37,8 @@
   },
   "row_5": {
     "ID": 1004,
-    "Name": "再生",
+    "Name": "圣道",
+    "SR": 0,
     "BuffIDArray": [
       1003
     ],
@@ -45,7 +49,8 @@
   },
   "row_6": {
     "ID": 1005,
-    "Name": "穿刺",
+    "Name": "深渊",
+    "SR": 0,
     "BuffIDArray": [
       1006
     ],
@@ -56,7 +61,8 @@
   },
   "row_7": {
     "ID": 1006,
-    "Name": "暴政",
+    "Name": "断罪",
+    "SR": 0,
     "BuffIDArray": [
       1013
     ],
@@ -67,7 +73,8 @@
   },
   "row_8": {
     "ID": 1007,
-    "Name": "威压",
+    "Name": "日落",
+    "SR": 0,
     "BuffIDArray": [
       1008
     ],
@@ -78,7 +85,8 @@
   },
   "row_9": {
     "ID": 1008,
-    "Name": "强壮",
+    "Name": "破颅者",
+    "SR": 0,
     "BuffIDArray": [
       1002
     ],
@@ -89,53 +97,8 @@
   },
   "row_10": {
     "ID": 1009,
-    "Name": "血肉",
-    "BuffIDArray": [
-      1004,
-      1002
-    ],
-    "UseColor": 1,
-    "ColorStr": "FF0000",
-    "Rate": 10,
-    "Desc": "生命值增加，攻击力减少"
-  },
-  "row_11": {
-    "ID": 1010,
-    "Name": "狂战",
-    "BuffIDArray": [
-      1001,
-      1005
-    ],
-    "UseColor": 1,
-    "ColorStr": "FF0000",
-    "Rate": 10,
-    "Desc": "生命值减少，攻击力增加"
-  },
-  "row_12": {
-    "ID": 1011,
-    "Name": "反伤",
-    "BuffIDArray": [
-      1010
-    ],
-    "UseColor": 1,
-    "ColorStr": "00F9FF",
-    "Rate": 10,
-    "Desc": "根据受到的伤害增加弃牌"
-  },
-  "row_13": {
-    "ID": 1012,
-    "Name": "回复",
-    "BuffIDArray": [
-      1003
-    ],
-    "UseColor": 1,
-    "ColorStr": "13FF00",
-    "Rate": 10,
-    "Desc": "每回合开始回复5血量"
-  },
-  "row_14": {
-    "ID": 1013,
     "Name": "畸变",
+    "SR": 0,
     "BuffIDArray": [
       0
     ],

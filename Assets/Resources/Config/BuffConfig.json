@@ -20,7 +20,7 @@
   "1003": {
     "BuffID": 1003,
     "BuffType": 3,
-    "BuffValue": 0.2,
+    "BuffValue": 0.1,
     "BuffValue2": 0.3,
     "BuffName": "恢复",
     "HandleState": 1,
@@ -92,7 +92,7 @@
   "1011": {
     "BuffID": 1011,
     "BuffType": 8,
-    "BuffValue": 5,
+    "BuffValue": 4,
     "BuffValue2": 0,
     "BuffName": "回复",
     "HandleState": 1,

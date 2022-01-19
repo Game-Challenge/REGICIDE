@@ -10,6 +10,7 @@ public class PlayerFeatureConfig
 {
 	public int ID; // 特性ID
 	public string Name; // 特性名称
+	public int SR; // 稀有度
 	public int[] BuffIDArray; // BuffID数组
 	public int UseColor; // 使用颜色
 	public string ColorStr; // 颜色Str

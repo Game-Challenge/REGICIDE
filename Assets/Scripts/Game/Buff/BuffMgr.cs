@@ -222,7 +222,7 @@ public class BuffMgr
                 }
                 break;
             case BuffType.BUFF_ADD_HEALTH:
-                if (bossActor.Hp<=0)
+                if (bossActor.Hp<=0 || bossActor.Hp >= bossActor.MaxHp)
                 {
                     return;
                 }
@@ -231,7 +231,7 @@ public class BuffMgr
                 UISys.ShowTipMsg(string.Format("君主使用了回复,回复了<color=#13FF00>{0}</color>HP", value));
                 break;
             case BuffType.BUFF_HUIFU:
-                if (bossActor.Hp <= 0)
+                if (bossActor.Hp <= 0 || bossActor.Hp >= bossActor.MaxHp)
                 {
                     return;
                 }
@@ -378,14 +378,15 @@ public class BuffMgr
 #endif
                 m_buffDic.Add(buffID, buff);
                 m_buffList.Add(buff);
-            }else if (canAddBuff)
-            {
-                BuffConfig buffConfig;
-                if (m_buffDic.TryGetValue(buffID,out buffConfig))
-                {
-                    buffConfig.BuffValue += buffConfig.BuffValue;
-                }
             }
+            //else if (canAddBuff)
+            //{
+            //    BuffConfig buffConfig;
+            //    if (m_buffDic.TryGetValue(buffID,out buffConfig))
+            //    {
+            //        buffConfig.BuffValue += buffConfig.BuffValue;
+            //    }
+            //}
         }
     }
 
