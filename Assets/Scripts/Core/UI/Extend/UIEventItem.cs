@@ -194,3 +194,92 @@ class UIEventItem<T> : UIWindowWidget where T : UIEventItem<T>
         m_eventParam = arg;
     }
 }
+
+
+
+//public enum UIDragType
+//{
+//    Draging,
+//    Drop
+//}
+//private UIDragType m_dragState = UIDragType.Drop;
+//private Vector3 m_itemOldPos;
+//#region 脚本工具生成的代码
+//private Image m_imgHeadIcon;
+//private Image m_imgHeadFrame;
+//private Text m_textName;
+//private GameObject m_goJieYiIndex;
+//private Text m_textJieYiIndex;
+//public bool CanDrag = false;
+//protected override void ScriptGenerator()
+//{
+//    m_imgHeadIcon = FindChildComponent<Image>("m_imgHeadIcon");
+//    m_imgHeadFrame = FindChildComponent<Image>("m_imgHeadFrame");
+//    m_textName = FindChildComponent<Text>("m_textName");
+//    m_goJieYiIndex = FindChild("m_goJieYiIndex").gameObject;
+//    m_textJieYiIndex = FindChildComponent<Text>("m_goJieYiIndex/m_textJieYiIndex");
+//}
+
+//#endregion
+
+//protected override void OnCreate()
+//{
+//    base.OnCreate();
+//    BindBeginDragEvent(delegate (JieYiHeadIcon item, PointerEventData data)
+//    {
+//        if (!CanDrag)
+//        {
+//            return;
+//        }
+//        StartDragItem(UIDragType.Draging);
+//    });
+
+//    BindEndDragEvent(delegate (JieYiHeadIcon item, PointerEventData data)
+//    {
+//        if (!CanDrag)
+//        {
+//            return;
+//        }
+//        EndDrag();
+//    });
+//}
+
+
+//private void StartDragItem(UIDragType type)
+//{
+//    if (type != UIDragType.Drop)
+//    {
+//        Vector3 pos;
+//        UISys.Mgr.GetMouseDownUiPos(out pos);
+//        m_itemOldPos = pos;
+//        UpdateDragPos();
+//        m_dragState = type;
+//    }
+//}
+
+//private void EndDrag()
+//{
+//    m_dragState = UIDragType.Drop;
+//}
+
+//private void UpdateDragPos()
+//{
+//    if (m_dragState == UIDragType.Drop)
+//    {
+//        return;
+//    }
+
+//    Vector3 pos;
+//    UISys.Mgr.GetMouseDownUiPos(out pos);
+//    transform.position += (pos - m_itemOldPos);
+//    m_itemOldPos = pos;
+//}
+
+//protected override void OnUpdate()
+//{
+//    if (!CanDrag)
+//    {
+//        return;
+//    }
+//    UpdateDragPos();
+//}
