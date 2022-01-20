@@ -873,7 +873,8 @@ partial class GameMgr : Singleton<GameMgr>
                 NeedKillBossCount = 14;
                 break;
         }
-        
+
+        m_maxCardNum = 8;
         InitTotalCards();
         InitMyCards();
         m_curList.Clear();

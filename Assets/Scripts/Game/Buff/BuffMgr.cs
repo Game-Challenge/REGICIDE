@@ -150,6 +150,23 @@ public class BuffMgr
     public void ClearBuff()
     {
         m_buffDic.Clear();
+        m_buffList.Clear();
+    }
+
+    public void RemoveBuff(int buffID)
+    {
+        if (m_buffDic.ContainsKey(buffID))
+        {
+            for (int i = 0; i < m_buffList.Count; i++)
+            {
+                if (m_buffList[i].BuffID == buffID)
+                {
+                    m_buffList.Remove(m_buffList[i]);
+                    break;
+                }
+            }
+            m_buffDic.Remove(buffID);
+        }
     }
 
     /// <summary>
