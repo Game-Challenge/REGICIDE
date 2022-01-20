@@ -242,7 +242,17 @@ public class BuffMgr
             case BuffType.BUFF_BUQU:
 
                 break;
-            
+            case BuffType.BUFF_ADD_DEMAGE:
+                value = (int)(bossActor.Atk * buff.BuffValue);
+                UISys.ShowTipMsg(string.Format("君主发动了<color=#FF00F0>炼狱</color>增加<color=#FF0000>{0}</color>ATK", value));
+                bossActor.Atk += value;
+                break;
+            case BuffType.BUFF_ADD_DEMAGE_VALUE:
+                value = (int)(buff.BuffValue);
+                UISys.ShowTipMsg(string.Format("君主发动了<color=#FF00F0>炼狱</color>增加<color=#FF0000>{0}</color>ATK", value));
+                bossActor.Atk += value;
+                break;
+
         }
         EventCenter.Instance.EventTrigger("BossDataRefresh",bossActor);
     }
@@ -274,6 +284,7 @@ public class BuffMgr
             case BuffType.BUFF_WEIYA:
                 if (attackValue > buff.BuffValue)
                 {
+                    UISys.ShowTipMsg("Boss发动了<color=#00F9FF>霜寒</color>，降低所受伤害");
                     attackValue = (int)buff.BuffValue;
                 }
                 break;
@@ -309,7 +320,6 @@ public class BuffMgr
         {
             case BuffType.BUFF_BUQU:
                 handleBuff = true;
-                //UISys.ShowTipMsg("领主发动不屈！！！");
                 bossActor.HadBuQuIng = true;
                 EventCenter.Instance.EventTrigger("BossAttack", bossActor.Atk);
                 MonoManager.Instance.StartCoroutine(Utils.Wait(0.5f, (() =>

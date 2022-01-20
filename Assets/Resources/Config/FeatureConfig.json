@@ -1,13 +1,15 @@
 {
   "row_2": {
     "ID": 1001,
-    "Name": "先攻",
+    "Name": "先攻I",
     "BuffIDArray": [
-      1007
+      1019
     ],
+    "Type": 1,
+    "OnlyOne": 1,
     "UseColor": 1,
     "ColorStr": "FF0000",
-    "Rate": 7,
+    "Rate": 5,
     "Desc": "君主入场即攻击"
   },
   "row_3": {
@@ -16,6 +18,8 @@
     "BuffIDArray": [
       1012
     ],
+    "Type": 2,
+    "OnlyOne": 1,
     "UseColor": 1,
     "ColorStr": "FFD200",
     "Rate": 8,
@@ -27,6 +31,8 @@
     "BuffIDArray": [
       0
     ],
+    "Type": 3,
+    "OnlyOne": 1,
     "UseColor": 1,
     "ColorStr": "FF00F0",
     "Rate": 0,
@@ -38,17 +44,21 @@
     "BuffIDArray": [
       1003
     ],
+    "Type": 4,
+    "OnlyOne": 1,
     "UseColor": 1,
     "ColorStr": "13FF00",
-    "Rate": 10,
+    "Rate": 9,
     "Desc": "每回合再生10%最大血量"
   },
   "row_6": {
     "ID": 1005,
-    "Name": "增伤",
+    "Name": "增伤I",
     "BuffIDArray": [
       1006
     ],
+    "Type": 5,
+    "OnlyOne": 1,
     "UseColor": 1,
     "ColorStr": "FF0000",
     "Rate": 10,
@@ -60,6 +70,8 @@
     "BuffIDArray": [
       1013
     ],
+    "Type": 6,
+    "OnlyOne": 1,
     "UseColor": 0,
     "ColorStr": "F",
     "Rate": 3,
@@ -67,14 +79,16 @@
   },
   "row_8": {
     "ID": 1007,
-    "Name": "威压",
+    "Name": "霜寒",
     "BuffIDArray": [
       1008
     ],
-    "UseColor": 0,
-    "ColorStr": "F",
+    "Type": 7,
+    "OnlyOne": 1,
+    "UseColor": 1,
+    "ColorStr": "00F9FF",
     "Rate": 10,
-    "Desc": "抵挡10以上的伤害"
+    "Desc": "抵挡12以上的伤害"
   },
   "row_9": {
     "ID": 1008,
@@ -82,6 +96,8 @@
     "BuffIDArray": [
       1002
     ],
+    "Type": 8,
+    "OnlyOne": 1,
     "UseColor": 1,
     "ColorStr": "FFD200",
     "Rate": 10,
@@ -94,6 +110,8 @@
       1004,
       1002
     ],
+    "Type": 9,
+    "OnlyOne": 1,
     "UseColor": 1,
     "ColorStr": "FF0000",
     "Rate": 10,
@@ -106,6 +124,8 @@
       1001,
       1005
     ],
+    "Type": 10,
+    "OnlyOne": 1,
     "UseColor": 1,
     "ColorStr": "FF0000",
     "Rate": 10,
@@ -117,21 +137,25 @@
     "BuffIDArray": [
       1010
     ],
+    "Type": 11,
+    "OnlyOne": 1,
     "UseColor": 1,
     "ColorStr": "00F9FF",
-    "Rate": 10,
+    "Rate": 0,
     "Desc": "根据受到的伤害增加弃牌"
   },
   "row_13": {
     "ID": 1012,
-    "Name": "回复",
+    "Name": "回复I",
     "BuffIDArray": [
-      1003
+      1011
     ],
+    "Type": 12,
+    "OnlyOne": 1,
     "UseColor": 1,
     "ColorStr": "13FF00",
     "Rate": 10,
-    "Desc": "每回合开始回复4血量"
+    "Desc": "每回合开始回复3血量"
   },
   "row_14": {
     "ID": 1013,
@@ -139,9 +163,102 @@
     "BuffIDArray": [
       0
     ],
+    "Type": 0,
+    "OnlyOne": 1,
     "UseColor": 1,
     "ColorStr": "FF00F0",
     "Rate": 0,
     "Desc": "贪婪阴霾"
+  },
+  "row_15": {
+    "ID": 1014,
+    "Name": "回复II",
+    "BuffIDArray": [
+      1014
+    ],
+    "Type": 12,
+    "OnlyOne": 1,
+    "UseColor": 1,
+    "ColorStr": "13FF00",
+    "Rate": 3,
+    "Desc": "每回合开始回复4血量"
+  },
+  "row_16": {
+    "ID": 1015,
+    "Name": "炼狱I",
+    "BuffIDArray": [
+      1015
+    ],
+    "Type": 13,
+    "OnlyOne": 1,
+    "UseColor": 1,
+    "ColorStr": "FF00F0",
+    "Rate": 8,
+    "Desc": "每回合开始增加2伤害"
+  },
+  "row_17": {
+    "ID": 1016,
+    "Name": "炼狱II",
+    "BuffIDArray": [
+      1016
+    ],
+    "Type": 13,
+    "OnlyOne": 1,
+    "UseColor": 1,
+    "ColorStr": "FF00F0",
+    "Rate": 3,
+    "Desc": "每回合开始增加3伤害"
+  },
+  "row_18": {
+    "ID": 1017,
+    "Name": "增伤II",
+    "BuffIDArray": [
+      1017
+    ],
+    "Type": 5,
+    "OnlyOne": 1,
+    "UseColor": 1,
+    "ColorStr": "FF0000",
+    "Rate": 4,
+    "Desc": "君主增加8伤害"
+  },
+  "row_19": {
+    "ID": 1018,
+    "Name": "神曲",
+    "BuffIDArray": [
+      1018
+    ],
+    "Type": 4,
+    "OnlyOne": 1,
+    "UseColor": 1,
+    "ColorStr": "FFD200",
+    "Rate": 2,
+    "Desc": "神曲庇护恢复15%HP"
+  },
+  "row_20": {
+    "ID": 1019,
+    "Name": "先攻II",
+    "BuffIDArray": [
+      1007
+    ],
+    "Type": 1,
+    "OnlyOne": 1,
+    "UseColor": 1,
+    "ColorStr": "FF0000",
+    "Rate": 4,
+    "Desc": "君主入场即攻击"
+  },
+  "row_21": {
+    "ID": 1020,
+    "Name": "深渊",
+    "BuffIDArray": [
+      1008
+    ],
+    "Type": 7,
+    "OnlyOne": 1,
+    "UseColor": 1,
+    "ColorStr": "FFFFFF",
+    "Rate": 1,
+    "Desc": "抵挡8以上的伤害"
   }
 }
