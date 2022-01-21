@@ -251,4 +251,4 @@ MonoBehaviour:
   UseWebSocket: 1
   UseBuggly: 1
   IsGmMode: 0
-  hostPoint: 0
+  hostPoint: 2

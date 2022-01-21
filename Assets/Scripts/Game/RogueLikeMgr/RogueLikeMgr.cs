@@ -5,16 +5,40 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class RogeLikeMgr:Singleton<RogeLikeMgr>
+public class PlayerData
+{
+    public int ExAtk;
+    public int ExDef;
+    public bool NeedCheckCards = true;
+
+    public int MaxFeatureSlot = 3;
+    public int CurrentFeature = 0;
+
+    public int Talent1;
+    public int Talent2;
+    public int Talent3;
+
+    public void Clear()
+    {
+        ExAtk = 0;
+        ExDef = 0;
+        NeedCheckCards = true;
+        CurrentFeature = 0;
+    }
+}
+
+
+public class RogueLikeMgr:Singleton<RogueLikeMgr>
 {
     private Dictionary<int,PlayerFeatureConfig> m_dicFeatures = new Dictionary<int, PlayerFeatureConfig>();
-
-    public RogeLikeMgr()
+    public PlayerData playerData;
+    public RogueLikeMgr()
     {
+        playerData = new PlayerData();
         buffMgr = new PlayerBuffMgr();
     }
 
-    ~RogeLikeMgr()
+    ~RogueLikeMgr()
     {
         buffMgr.ClearBuff();
         buffMgr = null;

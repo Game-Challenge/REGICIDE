@@ -554,7 +554,7 @@ partial class GameMgr : Singleton<GameMgr>
             UISys.ShowTipMsg(string.Format("当前阶段是：{0}，无法攻击", stateMsgDic[gameState]));
             return;
         }
-        if (!CheckCardInvild(m_choiceList))
+        if (RogueLikeMgr.Instance.playerData.NeedCheckCards && !CheckCardInvild(m_choiceList))
         {
             UISys.ShowTipMsg("您选择的卡片不符合规定");
             return;

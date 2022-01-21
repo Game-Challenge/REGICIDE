@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using RegicideProtocol;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 class CardListUI : UIWindow
@@ -35,7 +37,7 @@ class CardListUI : UIWindow
 
 }
 
-class ItemCard : UIWindowWidget
+partial class ItemCard : UIEventItem<ItemCard>
 {
     private List<Heart> m_listHeart = new List<Heart>();
     private CardData m_cardData;
@@ -160,6 +162,7 @@ class ItemCard : UIWindowWidget
         m_choice = false;
         m_goCardInfo.gameObject.SetActive(false);
         Refresh();
+        m_CanDrag = true;
     }
 
     public void Init(RegicideProtocol.CardData data, bool isRandomCard = false)
@@ -506,4 +509,109 @@ class ItemCard : UIWindowWidget
 class Heart : UIWindowWidget
 {
 
+}
+
+partial class ItemCard
+{
+    public enum UIDragType
+    {
+        Draging,
+        Drop
+    }
+    private UIDragType m_dragState = UIDragType.Drop;
+    private Vector3 m_itemOldPos;
+    private Vector3 m_itemCachePos;
+    public bool m_CanDrag = false;
+
+    protected override void OnCreate()
+    {
+        base.OnCreate();
+
+        BindBeginDragEvent(delegate (ItemCard item, PointerEventData data)
+        {
+            if (!m_CanDrag)
+            {
+                return;
+            }
+            StartDragItem(UIDragType.Draging);
+        });
+
+        BindEndDragEvent(delegate (ItemCard item, PointerEventData data)
+        {
+            if (!m_CanDrag)
+            {
+                return;
+            }
+            EndDrag();
+        });
+    }
+
+    protected override void OnUpdate()
+    {
+        if (!m_CanDrag)
+        {
+            return;
+        }
+        UpdateDragPos();
+    }
+
+    private void StartDragItem(UIDragType type)
+    {
+        Debug.Log("Start Drag" + type);
+        if (type != UIDragType.Drop)
+        {
+            Choice();
+            m_itemOldPos = transform.position;
+            Vector3 pos;
+            UISys.Mgr.GetMouseDownUiPos(out pos);
+            m_itemCachePos = pos;
+            UpdateDragPos();
+            m_dragState = type;
+        }
+    }
+
+    private void EndDrag()
+    {
+        m_dragState = UIDragType.Drop;
+        transform.position = m_itemOldPos;
+        Debug.LogError("m_itemCachePos.y - m_itemOldPos.y "+( m_itemCachePos.y - m_itemOldPos.y));
+        if (m_itemCachePos.y - m_itemOldPos.y > 3)
+        {
+            if (GameOnlineMgr.Instance.IsOnlineGameIng)
+            {
+                if (GameOnlineMgr.Instance.Gamestate == GAMESTATE.State1)
+                {
+                    GameOnlineMgr.Instance.AttackReq();
+                }
+                else if (GameOnlineMgr.Instance.Gamestate == GAMESTATE.State4)
+                {
+                    GameOnlineMgr.Instance.AbordReq();
+                }
+            }
+            else
+            {
+                if (GameMgr.Instance.gameState == GameMgr.GameState.STATEONE)
+                {
+                    GameMgr.Instance.Attack();
+                }
+                else if (GameMgr.Instance.gameState == GameMgr.GameState.STATEFOUR)
+                {
+                    EventCenter.Instance.EventTrigger("AbordCard");
+                }
+            }
+        }
+    }
+
+    private void UpdateDragPos()
+    {
+        if (m_dragState == UIDragType.Drop)
+        {
+            return;
+        }
+
+        Vector3 pos;
+        UISys.Mgr.GetMouseDownUiPos(out pos);
+        transform.position += (pos - m_itemCachePos);
+        m_itemCachePos = pos;
+    }
 }
