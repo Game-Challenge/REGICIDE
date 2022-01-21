@@ -560,7 +560,10 @@ partial class ItemCard
         Debug.Log("Start Drag" + type);
         if (type != UIDragType.Drop)
         {
-            Choice();
+            if (!m_choice)
+            {
+                Choice();
+            }
             m_itemOldPos = transform.position;
             Vector3 pos;
             UISys.Mgr.GetMouseDownUiPos(out pos);
