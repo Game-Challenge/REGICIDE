@@ -866,14 +866,19 @@ partial class GameMgr : Singleton<GameMgr>
                 Roguelike = true;
                 ShowRogueRuleUI();
                 NeedKillBossCount = 14;
-                break;
+                return;
             case 11:
                 Roguelike = true;
                 ShowRogueRuleUI();
                 NeedKillBossCount = 14;
-                break;
+                return;
         }
 
+        ImpRestartGame();
+    }
+
+    private void ImpRestartGame()
+    {
         m_maxCardNum = 8;
         InitTotalCards();
         InitMyCards();
@@ -895,7 +900,20 @@ partial class GameMgr : Singleton<GameMgr>
         {
             UISys.Mgr.ShowWindow<RuleFirstUI>().Init("FirstRogShow",
                 "RogueLike模式为新难度的模式 \n \n在RogueLike模式中 Boss君主会有随机天赋 \n \n比如<color=#FF0000>增伤</color> 君主增加5伤害 \n \n或者是稀有天赋 <color=#13FF00>回复</color> 、<color=#13FF00>炼狱</color> 、<color=#FFD200>畸变</color> 等60种不同的天赋组合 \n \n如果这还不能满足您的探索欲 \n \n请试试RoguLike魂模式 \n\n去探索吧玩家，在这片随机的王国土地 \n \n以及最耀眼的荣誉榜留下属于你的事迹。", 
-                false);
+                false,(() =>
+                {
+                    UISys.Mgr.ShowWindow<FeatureChoiceUI>().RegisterCloseBack((() =>
+                    {
+                        ImpRestartGame();
+                    }));
+                }));
+        }
+        else
+        {
+            UISys.Mgr.ShowWindow<FeatureChoiceUI>().RegisterCloseBack((() =>
+            {
+                ImpRestartGame();
+            }));
         }
     }
 }

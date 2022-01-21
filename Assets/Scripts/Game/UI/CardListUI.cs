@@ -557,7 +557,6 @@ partial class ItemCard
 
     private void StartDragItem(UIDragType type)
     {
-        Debug.Log("Start Drag" + type);
         if (type != UIDragType.Drop)
         {
             if (!m_choice)
@@ -577,7 +576,9 @@ partial class ItemCard
     {
         m_dragState = UIDragType.Drop;
         transform.position = m_itemOldPos;
-        Debug.LogError("m_itemCachePos.y - m_itemOldPos.y "+( m_itemCachePos.y - m_itemOldPos.y));
+#if UNITY_EDITOR
+        Debug.LogError("m_itemCachePos.y - m_itemOldPos.y " + (m_itemCachePos.y - m_itemOldPos.y));
+#endif
         if (m_itemCachePos.y - m_itemOldPos.y > 3)
         {
             if (GameOnlineMgr.Instance.IsOnlineGameIng)

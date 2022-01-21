@@ -12,6 +12,12 @@ public class PlayerFeatureConfigMgr : Singleton<PlayerFeatureConfigMgr>
     }
     private int RankdTotalRate = 0;
 
+    private List<PlayerFeatureConfig> m_listPlayerFeatureChoiceList = new List<PlayerFeatureConfig>();
+    public List<PlayerFeatureConfig> PlayerFeatureChoiceList
+    {
+        get { return m_listPlayerFeatureChoiceList; }
+    }
+
     public PlayerFeatureConfigMgr()
     {
         m_dictFeatureBaseConfig = ResConfigUtil.ReadConfigRes<PlayerFeatureConfig>("PlayerFeatureConfig");
@@ -20,6 +26,10 @@ public class PlayerFeatureConfigMgr : Singleton<PlayerFeatureConfigMgr>
             foreach (var config in m_dictFeatureBaseConfig)
             {
                 m_listPlayerFeatureConfig.Add(config.Value);
+                if (config.Value.Rate<=2)
+                {
+                    m_listPlayerFeatureChoiceList.Add(config.Value);
+                }
             }
         }
 
@@ -32,7 +42,10 @@ public class PlayerFeatureConfigMgr : Singleton<PlayerFeatureConfigMgr>
         {
             FeatureRate featureRate = new FeatureRate(RankdTotalRate, RankdTotalRate + (int)config.Rate);
             RankdTotalRate += (int)config.Rate;
-            m_randPlayerFeatureConfig.Add(featureRate, config);
+            if (!PlayerFeatureChoiceList.Contains(config))
+            {
+                m_randPlayerFeatureConfig.Add(featureRate, config);
+            }
         }
     }
 

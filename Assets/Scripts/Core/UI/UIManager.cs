@@ -325,16 +325,6 @@ public class UIManager : Singleton<UIManager>
             hadMouseDown = false;
         }
 #endif
-        //else if (Input.touchCount > 0)
-        //{
-        //    mousePos = Input.GetTouch(0).position;
-        //    hadMouseDown = true;
-        //}
-        //else
-        //{
-        //    hadMouseDown = false;
-        //}
-
         Vector2 pos;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas as RectTransform, Input.mousePosition,
             uiCamera, out pos);

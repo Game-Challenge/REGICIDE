@@ -11,8 +11,7 @@ public class PlayerData
     public int ExDef;
     public bool NeedCheckCards = true;
 
-    public int MaxFeatureSlot = 3;
-    public int CurrentFeature = 0;
+    public int LeftFeatureSlot = 3;
 
     public int Talent1;
     public int Talent2;
@@ -23,7 +22,7 @@ public class PlayerData
         ExAtk = 0;
         ExDef = 0;
         NeedCheckCards = true;
-        CurrentFeature = 0;
+        LeftFeatureSlot = 3;
     }
 }
 
@@ -50,6 +49,8 @@ public class RogueLikeMgr:Singleton<RogueLikeMgr>
     {
         if (!m_dicFeatures.ContainsKey(playerFeature.ID))
         {
+            playerData.LeftFeatureSlot -= playerFeature.Slot;
+
             m_dicFeatures.Add(playerFeature.ID,playerFeature);
 
             buffMgr.AddFeature(playerFeature);
