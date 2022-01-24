@@ -116,26 +116,27 @@ partial class GameMgr : Singleton<GameMgr>
 
     #region 战斗中卡排操作
 
-    public void RandChangeCards()
+    public bool RandChangeCards()
     {
         var choiceCount = m_choiceList.Count;
         var choiceRandCount = m_choiceRandomList.Count;
         if (choiceRandCount == 0 && choiceCount == 0)
         {
             UISys.Mgr.CloseWindow<GameChoiceUI>();
-            return;
+            return false;
         }
 
         if (choiceRandCount != choiceCount)
         {
             UISys.ShowTipMsg("随机牌库与我的手牌数目需要相同！");
-            return;
+            return false;
         }
+
         var ableChangeCard = (5 - GameLevel) < 1 ? 1 : (5 - GameLevel);
         if (choiceRandCount > ableChangeCard)
         {
             UISys.ShowTipMsg(string.Format("该难度下一次最多调度 {0} 张手牌！",ableChangeCard));
-            return;
+            return false;
         }
 
         for (int i = 0; i < m_choiceRandomList.Count; i++)
@@ -156,6 +157,7 @@ partial class GameMgr : Singleton<GameMgr>
         m_choiceRandomList.Clear();
         UISys.Mgr.CloseWindow<GameChoiceUI>();
         EventCenter.Instance.EventTrigger("RefreshGameUI");
+        return true;
     }
 
     public List<CardData> RandTurnCards()
@@ -559,6 +561,11 @@ partial class GameMgr : Singleton<GameMgr>
             UISys.ShowTipMsg("您选择的卡片不符合规定");
             return;
         }
+        else if (!RogueLikeMgr.Instance.CheckCardInvild())
+        {
+            UISys.ShowTipMsg("您选择的卡片不符合规定");
+            return;
+        }
 
         if (m_choiceList.Count > 0 && m_choiceList[0].IsJoker)
         {
@@ -845,30 +852,40 @@ partial class GameMgr : Singleton<GameMgr>
         TotalKillBossCount = 0;
         LeftJokerCount = 2;
         Roguelike = false;
+
         switch (GameLevel)
         {
             case 1:
                 NeedKillBossCount = 4;
+                UISys.Mgr.CloseWindow<FeatureUI>();
                 break;
             case 2:
                 NeedKillBossCount = 6;
+                UISys.Mgr.CloseWindow<FeatureUI>();
                 break;
             case 3:
                 NeedKillBossCount = 12;
+                UISys.Mgr.CloseWindow<FeatureUI>();
                 break;
             case 4:
                 NeedKillBossCount = 14;
+                UISys.Mgr.CloseWindow<FeatureUI>();
                 break;
             case 5:
                 NeedKillBossCount = 14;
+                UISys.Mgr.CloseWindow<FeatureUI>();
                 break;
             case 10:
                 Roguelike = true;
+                UISys.Mgr.ShowWindow<FeatureUI>(UI_Layer.Top);
+                RogueLikeMgr.Instance.Clear();
                 ShowRogueRuleUI();
                 NeedKillBossCount = 14;
                 return;
             case 11:
                 Roguelike = true;
+                UISys.Mgr.ShowWindow<FeatureUI>(UI_Layer.Top);
+                RogueLikeMgr.Instance.Clear();
                 ShowRogueRuleUI();
                 NeedKillBossCount = 14;
                 return;

@@ -61,7 +61,11 @@ class RuleFirstUI : UIWindow
     #region 事件
     private void OnClickCloseBtn()
     {
-        m_action?.Invoke();
+        if (m_action != null)
+        {
+            m_action();
+            m_action = null;
+        }
         Close();
     }
     #endregion

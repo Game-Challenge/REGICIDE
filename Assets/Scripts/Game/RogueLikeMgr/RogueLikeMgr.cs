@@ -27,9 +27,18 @@ public class PlayerData
 }
 
 
-public class RogueLikeMgr:Singleton<RogueLikeMgr>
+partial class RogueLikeMgr:Singleton<RogueLikeMgr>
 {
     private Dictionary<int,PlayerFeatureConfig> m_dicFeatures = new Dictionary<int, PlayerFeatureConfig>();
+
+    public Dictionary<int, PlayerFeatureConfig> DicFeatures
+    {
+        get { return m_dicFeatures; }
+    }
+
+    public List<PlayerFeatureConfig> FeaturesList = new List<PlayerFeatureConfig>();
+
+
     public PlayerData playerData;
     public RogueLikeMgr()
     {
@@ -54,7 +63,10 @@ public class RogueLikeMgr:Singleton<RogueLikeMgr>
             m_dicFeatures.Add(playerFeature.ID,playerFeature);
 
             buffMgr.AddFeature(playerFeature);
+
+            FeaturesList.Add(playerFeature);
         }
+        EventCenter.Instance.EventTrigger("RefreshFeature");
     }
 
     public void RemoveFeature(int featureId)
@@ -65,6 +77,8 @@ public class RogueLikeMgr:Singleton<RogueLikeMgr>
         {
             return;
         }
+
+        FeaturesList.Remove(feature);
 
         if (m_dicFeatures.ContainsKey(featureId))
         {
@@ -80,6 +94,9 @@ public class RogueLikeMgr:Singleton<RogueLikeMgr>
     public void Clear()
     {
         m_dicFeatures.Clear();
+        buffMgr.ClearBuff();
+        playerData.Clear();
+        FeaturesList.Clear();
     }
 }
 
@@ -184,12 +201,37 @@ public class PlayerBuffMgr
             if (buff!=null)
             {
                 m_buffDic.Add(buffID,buff);
+                InitBuff(buff);
             }
             else
             {
                 Debug.LogError("Buff is null buffID => "+ buffID);
             }
         }
+    }
+
+    public void InitBuff(PlayerBuffConfig buff)
+    {
+        var handleState = (GameMgr.GameState)buff.HandleState;
+
+        if (handleState != GameMgr.GameState.NONE)
+        {
+            return;
+        }
+
+        switch ((PlayerBuffType)buff.BuffType)
+        {
+            case PlayerBuffType.BUFF_ADD_DEMAGE:
+               
+                break;
+            case PlayerBuffType.BUFF_KUXINGSENG:
+                RogueLikeMgr.Instance.playerData.NeedCheckCards = false;
+                break;
+        }
+#if UNITY_EDITOR
+        Debug.LogFormat("Player Init Buff:{0}", buff.BuffName);
+#endif
+        //EventCenter.Instance.EventTrigger("BossDataRefresh", bossActor);
     }
     #endregion
 

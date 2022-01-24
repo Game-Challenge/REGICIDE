@@ -230,8 +230,11 @@ partial class ItemCard : UIEventItem<ItemCard>
         else
         {
             m_showFeature = false;
-            m_goFeature.SetActive(false);
-            m_textFeature.text = "";
+            if (m_goFeature != null)
+            {
+                m_goFeature?.SetActive(false);
+                m_textFeature.text = "";
+            }
         }
        
         if (GameMgr.Instance.IsLandScape)
@@ -265,11 +268,12 @@ partial class ItemCard : UIEventItem<ItemCard>
                     break;
                 case CardType.BLACK_JOKER:
                     m_textInfo.text = ("当前黑桃和草花 <color=#000000>♠ ♣</color> 无效");
+                    m_imgIcon.sprite = CardMgr.Instance.BigJoker;
                     break;
             }
         }
 
-        if (m_goBoss != null && /*(m_cardData.cardType != CardType.RED_JOKER) && */(m_cardData.cardType != CardType.BLACK_JOKER))
+        if (m_goBoss != null && (m_cardData.cardType == CardType.RED_JOKER)|| (m_cardData.cardType == CardType.BLACK_JOKER))
         {
             m_goBoss.SetActive(true);
             m_imgIcon.gameObject.SetActive(false);
@@ -277,6 +281,16 @@ partial class ItemCard : UIEventItem<ItemCard>
             if (m_cardData.cardType == CardType.RED_JOKER)
             {
                 var strBoss = "BOSSBIGJOKER";
+                m_imgBoss.sprite = CardMgr.Instance.GetCardSprite(strBoss);
+                m_imgBoss.SetNativeSize();
+                m_imgBoss.transform.localScale = new Vector2(0.3f, 0.3f);
+                m_imgCardValue.sprite = CardMgr.Instance.GetCardSprite("Joker");
+                m_imgCardType.gameObject.SetActive(false);
+                return;
+            }
+            else if(m_cardData.cardType == CardType.BLACK_JOKER)
+            {
+                var strBoss = "BOSSJOKER2";
                 m_imgBoss.sprite = CardMgr.Instance.GetCardSprite(strBoss);
                 m_imgBoss.SetNativeSize();
                 m_imgBoss.transform.localScale = new Vector2(0.3f, 0.3f);

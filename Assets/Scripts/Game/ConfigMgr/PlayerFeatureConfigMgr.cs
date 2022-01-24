@@ -26,7 +26,8 @@ public class PlayerFeatureConfigMgr : Singleton<PlayerFeatureConfigMgr>
             foreach (var config in m_dictFeatureBaseConfig)
             {
                 m_listPlayerFeatureConfig.Add(config.Value);
-                if (config.Value.Rate<=2)
+
+                if (config.Value.SR <= 2)
                 {
                     m_listPlayerFeatureChoiceList.Add(config.Value);
                 }
@@ -40,6 +41,10 @@ public class PlayerFeatureConfigMgr : Singleton<PlayerFeatureConfigMgr>
     {
         foreach (var config in m_listPlayerFeatureConfig)
         {
+            if ((int)config.Rate <=0)
+            {
+                continue;
+            }
             FeatureRate featureRate = new FeatureRate(RankdTotalRate, RankdTotalRate + (int)config.Rate);
             RankdTotalRate += (int)config.Rate;
             if (!PlayerFeatureChoiceList.Contains(config))

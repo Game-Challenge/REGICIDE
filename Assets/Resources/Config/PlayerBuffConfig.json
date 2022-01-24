@@ -41,7 +41,7 @@
     "BuffType": 5,
     "BuffValue": 11,
     "BuffValue2": 21,
-    "HandleState": 1,
+    "HandleState": 0,
     "CanAddBuff": 0
   }
 }

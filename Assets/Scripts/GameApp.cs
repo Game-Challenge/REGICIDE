@@ -45,7 +45,6 @@ sealed partial class GameApp : UnitySingleton<GameApp>
             Debug.Log("是横屏");
             UISys.Mgr.ShowWindow<StartUI>();
             UISys.Mgr.ShowWindow<MsgUI>(UI_Layer.Top);
-            //UISys.Mgr.ShowWindow<FeatureUI>(UI_Layer.Top);
         }
         else
         { 
@@ -57,7 +56,6 @@ sealed partial class GameApp : UnitySingleton<GameApp>
             var ui = UISys.Mgr.ShowWindow<MsgUI>(UI_Layer.Top);
             ui.gameObject.transform.localScale = new Vector3(2, 2, 1);
             UISys.Mgr.ShowWindow<StartUILand>();
-            //UISys.Mgr.ShowWindow<FeatureUI>(UI_Layer.Top);
         }
     }
 }

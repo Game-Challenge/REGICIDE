@@ -3,6 +3,7 @@
     "ID": 1001,
     "Name": "戏法",
     "SR": 5,
+    "Start": 0,
     "BuffIDArray": [
       1007
     ],
@@ -16,6 +17,7 @@
     "ID": 1002,
     "Name": "炼狱",
     "SR": 5,
+    "Start": 0,
     "BuffIDArray": [
       1012
     ],
@@ -29,6 +31,7 @@
     "ID": 1003,
     "Name": "神曲",
     "SR": 5,
+    "Start": 0,
     "BuffIDArray": [
       0
     ],
@@ -42,6 +45,7 @@
     "ID": 1004,
     "Name": "圣道",
     "SR": 5,
+    "Start": 0,
     "BuffIDArray": [
       1003
     ],
@@ -55,6 +59,7 @@
     "ID": 1005,
     "Name": "深渊",
     "SR": 5,
+    "Start": 0,
     "BuffIDArray": [
       1006
     ],
@@ -68,6 +73,7 @@
     "ID": 1006,
     "Name": "断罪",
     "SR": 5,
+    "Start": 0,
     "BuffIDArray": [
       1013
     ],
@@ -81,6 +87,7 @@
     "ID": 1007,
     "Name": "日落",
     "SR": 5,
+    "Start": 0,
     "BuffIDArray": [
       1008
     ],
@@ -94,6 +101,7 @@
     "ID": 1008,
     "Name": "破颅者",
     "SR": 5,
+    "Start": 0,
     "BuffIDArray": [
       1002
     ],
@@ -107,6 +115,7 @@
     "ID": 1009,
     "Name": "畸变",
     "SR": 5,
+    "Start": 0,
     "BuffIDArray": [
       0
     ],
@@ -120,13 +129,14 @@
     "ID": 1010,
     "Name": "苦行僧",
     "SR": 1,
+    "Start": 1,
     "BuffIDArray": [
       1005
     ],
     "UseColor": 1,
     "ColorStr": "FFD200",
     "Rate": 10,
-    "Slot": 3,
-    "Desc": "只能打出11/21点数的卡，而且无法感化君主，但是可以无视出牌规则"
+    "Slot": 2,
+    "Desc": "只能打出11/21点数的卡，但是可以无视出牌规则"
   }
 }

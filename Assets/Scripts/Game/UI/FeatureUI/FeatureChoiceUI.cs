@@ -48,7 +48,11 @@ class FeatureChoiceUI : UIWindow
     public void OnClickChoiceBtn()
     {
         Close();
-        m_action?.Invoke();
+        if (m_action!= null)
+        {
+            m_action();
+            m_action = null;
+        }
     }
     #endregion
 

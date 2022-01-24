@@ -22,7 +22,7 @@ public class BuffConfigMgr : Singleton<BuffConfigMgr>
 
     public PlayerBuffConfig GetPlayerBuff(int buffD)
     {
-        if (m_diffConfigDic.ContainsKey(buffD.ToString()))
+        if (m_PlayerBuffConfigDic.ContainsKey(buffD.ToString()))
         {
             return m_PlayerBuffConfigDic[buffD.ToString()];
         }
