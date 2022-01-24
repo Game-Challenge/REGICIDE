@@ -879,6 +879,7 @@ partial class GameMgr : Singleton<GameMgr>
                 Roguelike = true;
                 UISys.Mgr.ShowWindow<FeatureUI>(UI_Layer.Top);
                 RogueLikeMgr.Instance.Clear();
+                EventCenter.Instance.EventTrigger("RefreshFeature");
                 ShowRogueRuleUI();
                 NeedKillBossCount = 14;
                 return;
@@ -886,6 +887,7 @@ partial class GameMgr : Singleton<GameMgr>
                 Roguelike = true;
                 UISys.Mgr.ShowWindow<FeatureUI>(UI_Layer.Top);
                 RogueLikeMgr.Instance.Clear();
+                EventCenter.Instance.EventTrigger("RefreshFeature");
                 ShowRogueRuleUI();
                 NeedKillBossCount = 14;
                 return;

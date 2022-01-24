@@ -10,7 +10,7 @@ public class PlayerData
     public int ExAtk;
     public int ExDef;
     public bool NeedCheckCards = true;
-
+    public bool CanSeeAllCards = false;
     public int LeftFeatureSlot = 3;
 
     public int Talent1;
@@ -23,6 +23,7 @@ public class PlayerData
         ExDef = 0;
         NeedCheckCards = true;
         LeftFeatureSlot = 3;
+        CanSeeAllCards = false;
     }
 }
 
@@ -224,6 +225,9 @@ public class PlayerBuffMgr
             case PlayerBuffType.BUFF_ADD_DEMAGE:
                
                 break;
+            case PlayerBuffType.BUFF_TALUO_WORLD7:
+                RogueLikeMgr.Instance.playerData.CanSeeAllCards = true;
+                break;
             case PlayerBuffType.BUFF_KUXINGSENG:
                 RogueLikeMgr.Instance.playerData.NeedCheckCards = false;
                 break;
@@ -231,7 +235,6 @@ public class PlayerBuffMgr
 #if UNITY_EDITOR
         Debug.LogFormat("Player Init Buff:{0}", buff.BuffName);
 #endif
-        //EventCenter.Instance.EventTrigger("BossDataRefresh", bossActor);
     }
     #endregion
 

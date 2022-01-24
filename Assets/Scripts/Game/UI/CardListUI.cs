@@ -541,23 +541,26 @@ partial class ItemCard
     {
         base.OnCreate();
 
-        BindBeginDragEvent(delegate (ItemCard item, PointerEventData data)
+        if (m_CanDrag)
         {
-            if (!m_CanDrag)
+            BindBeginDragEvent(delegate (ItemCard item, PointerEventData data)
             {
-                return;
-            }
-            StartDragItem(UIDragType.Draging);
-        });
+                if (!m_CanDrag)
+                {
+                    return;
+                }
+                StartDragItem(UIDragType.Draging);
+            });
 
-        BindEndDragEvent(delegate (ItemCard item, PointerEventData data)
-        {
-            if (!m_CanDrag)
+            BindEndDragEvent(delegate (ItemCard item, PointerEventData data)
             {
-                return;
-            }
-            EndDrag();
-        });
+                if (!m_CanDrag)
+                {
+                    return;
+                }
+                EndDrag();
+            });
+        }
     }
 
     protected override void OnUpdate()
@@ -591,7 +594,7 @@ partial class ItemCard
         m_dragState = UIDragType.Drop;
         transform.position = m_itemOldPos;
 #if UNITY_EDITOR
-        Debug.LogError("m_itemCachePos.y - m_itemOldPos.y " + (m_itemCachePos.y - m_itemOldPos.y));
+        //Debug.LogError("m_itemCachePos.y - m_itemOldPos.y " + (m_itemCachePos.y - m_itemOldPos.y));
 #endif
         if (m_itemCachePos.y - m_itemOldPos.y > 3)
         {

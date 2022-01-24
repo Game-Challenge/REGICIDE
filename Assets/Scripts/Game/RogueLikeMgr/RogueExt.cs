@@ -8,6 +8,7 @@ public enum PlayerBuffType
 {
     BUFF_ADD_DEMAGE,
     BUFF_KUXINGSENG=5,
+    BUFF_TALUO_WORLD7 = 7,
 }
 
 partial class RogueLikeMgr
@@ -22,7 +23,7 @@ partial class RogueLikeMgr
 
             foreach (var card in list)
             {
-                value += card.CardValue;
+                value += card.CardPower;
                 if (card.cardType == CardType.BLACK_JOKER|| card.cardType == CardType.RED_JOKER)
                 {
                     return true;
