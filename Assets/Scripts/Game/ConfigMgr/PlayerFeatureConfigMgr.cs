@@ -12,7 +12,13 @@ public class PlayerFeatureConfigMgr : Singleton<PlayerFeatureConfigMgr>
     }
     private int RankdTotalRate = 0;
 
+    /// <summary>
+    /// 一开始可选择的玩家特性
+    /// </summary>
     private List<PlayerFeatureConfig> m_listPlayerFeatureChoiceList = new List<PlayerFeatureConfig>();
+    /// <summary>
+    /// 一开始可选择的玩家特性
+    /// </summary>
     public List<PlayerFeatureConfig> PlayerFeatureChoiceList
     {
         get { return m_listPlayerFeatureChoiceList; }
@@ -27,7 +33,7 @@ public class PlayerFeatureConfigMgr : Singleton<PlayerFeatureConfigMgr>
             {
                 m_listPlayerFeatureConfig.Add(config.Value);
 
-                if (config.Value.SR <= 2)
+                if (config.Value.Start == 1)
                 {
                     m_listPlayerFeatureChoiceList.Add(config.Value);
                 }

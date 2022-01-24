@@ -31,6 +31,12 @@ class FeatureUI : UIWindow
 
         m_itemFeature.gameObject.SetActive(false);
         m_btnBig.gameObject.SetActive(false);
+        if (!GameMgr.Instance.IsLandScape)
+        {
+            m_goFeature.transform.localScale = new Vector2(2, 2);
+            var rect = m_goFeature.transform as RectTransform;
+            CanvasUtils.RightBottom(rect,150,200);
+        }
     }
     #endregion
 
@@ -82,10 +88,12 @@ class PlayerItemFeature : UIWindowWidget
     #region 脚本工具生成的代码
     private Text m_textFeature;
     private Text m_textSlot;
+    private Button m_btnUse;
     protected override void ScriptGenerator()
     {
         m_textFeature = FindChildComponent<Text>("bg/m_textFeature");
         m_textSlot = FindChildComponent<Text>("bg/m_textSlot");
+        m_btnUse = FindChildComponent<Button>("bg/m_btnUse");
     }
     #endregion
 
@@ -97,6 +105,10 @@ class PlayerItemFeature : UIWindowWidget
         }
         m_textFeature.text = (config.UseColor == 1) ? config.Name.ToColor(config.ColorStr) : config.Name;
         m_textSlot.text = config.Slot + "格";
+        if (config.CanUse == 0)
+        {
+            m_btnUse.gameObject.SetActive(false);
+        }
     }
 
     #region 事件
