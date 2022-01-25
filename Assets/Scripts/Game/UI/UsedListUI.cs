@@ -32,7 +32,7 @@ class UsedListUI : UIWindow
         for (int i = 0; i < m_items.Count; i++)
         {
             m_items[i].Init(list[i]);
-            m_items[i].m_CanDrag = false;
+            m_items[i].CanDrag = false;
             m_items[i].CouldChoice = false;
         }
     }
@@ -54,7 +54,7 @@ class UsedListUI : UIWindow
         for (int i = 0; i < m_items.Count; i++)
         {
             m_items[i].Init(list[i]);
-            m_items[i].m_CanDrag = false;
+            m_items[i].CanDrag = false;
             m_items[i].CouldChoice = false;
         }
     }

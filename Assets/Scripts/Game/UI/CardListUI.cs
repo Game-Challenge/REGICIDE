@@ -162,7 +162,10 @@ partial class ItemCard : UIEventItem<ItemCard>
         m_choice = false;
         m_goCardInfo.gameObject.SetActive(false);
         Refresh();
-        m_CanDrag = true;
+        if (!isRandomCard)
+        {
+            CanDrag = true;
+        }
     }
 
     public void Init(RegicideProtocol.CardData data, bool isRandomCard = false)
@@ -535,12 +538,31 @@ partial class ItemCard
     private UIDragType m_dragState = UIDragType.Drop;
     private Vector3 m_itemOldPos;
     private Vector3 m_itemCachePos;
-    public bool m_CanDrag = false;
+    private bool m_CanDrag  = false;
 
+    public bool CanDrag
+    {
+        get
+        {
+            return m_CanDrag;
+        }
+        set
+        {
+            m_CanDrag = value;
+            if (m_CanDrag)
+            {
+                BindDrag();
+            }
+        }
+    }
     protected override void OnCreate()
     {
         base.OnCreate();
+        BindDrag();
+    }
 
+    private void BindDrag()
+    {
         if (m_CanDrag)
         {
             BindBeginDragEvent(delegate (ItemCard item, PointerEventData data)
