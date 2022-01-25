@@ -276,7 +276,7 @@ partial class ItemCard : UIEventItem<ItemCard>
             }
         }
 
-        if (m_goBoss != null && (m_cardData.cardType == CardType.RED_JOKER)|| (m_cardData.cardType == CardType.BLACK_JOKER))
+        if (m_goBoss != null)
         {
             m_goBoss.SetActive(true);
             m_imgIcon.gameObject.SetActive(false);

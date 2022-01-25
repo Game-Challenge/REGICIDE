@@ -195,6 +195,10 @@ public class BuffMgr
             case BuffType.BUFF_ADD_DEMAGE_VALUE:
                 bossActor.Atk += (int)(buff.BuffValue);
                 break;
+            case BuffType.BUFF_JUEMU:
+                var value = GameMgr.Instance.UseCardDatas.Count / (buff.BuffValue);
+                bossActor.Atk += (int)value;
+                break;
         }
 #if UNITY_EDITOR
         Debug.LogFormat("bossActor Init Buff:{0},bossAtk:{1},bossHp,{2}",buff.BuffName,bossActor.Atk,bossActor.Hp);

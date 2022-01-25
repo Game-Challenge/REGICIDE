@@ -8,6 +8,7 @@ public enum PlayerBuffType
 {
     BUFF_ADD_DEMAGE,
     BUFF_KUXINGSENG=5,
+    BUFF_DUGOU = 6,
     BUFF_TALUO_WORLD7 = 7,
 }
 

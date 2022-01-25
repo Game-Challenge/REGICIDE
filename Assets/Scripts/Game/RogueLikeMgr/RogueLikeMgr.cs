@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using Random = System.Random;
 
 public class PlayerData
 {
@@ -202,6 +203,7 @@ public class PlayerBuffMgr
             if (buff!=null)
             {
                 m_buffDic.Add(buffID,buff);
+                buffList.Add(buff);
                 InitBuff(buff);
             }
             else
@@ -235,6 +237,63 @@ public class PlayerBuffMgr
 #if UNITY_EDITOR
         Debug.LogFormat("Player Init Buff:{0}", buff.BuffName);
 #endif
+    }
+
+
+    public void HandleBuffAttack(ref AttackData attackData)
+    {
+        foreach (var buff in buffList)
+        {
+            var handleState = (GameMgr.GameState)buff.HandleState;
+
+            if (handleState != GameMgr.GameState.STATEONE)
+            {
+                return;
+            }
+
+            switch ((PlayerBuffType)buff.BuffType)
+            {
+                case PlayerBuffType.BUFF_DUGOU:
+                {
+                    var value1 = buff.BuffValue * 100;
+                    var value2 = buff.BuffValue2 *100;
+                    Random ran = new Random((int)DateTime.Now.Ticks);
+
+                    var idx = ran.Next(0, 100);
+                    if (idx<=value1)
+                    {
+                        attackData.Damage = attackData.Damage * 2;
+                        UISys.ShowTipMsg(string.Format("动发果效{0}成功",buff.BuffName));
+                    }
+
+                    if (idx>=value2)
+                    {
+                        attackData.Damage = attackData.Damage / 2;
+                        UISys.ShowTipMsg(string.Format("动发果效{0}失败", buff.BuffName));
+                    }
+                    break;
+                }
+            }
+        }
+
+    }
+
+    public void HandleBuffDef()
+    {
+        foreach (var buff in buffList)
+        {
+            var handleState = (GameMgr.GameState) buff.HandleState;
+
+            if (handleState != GameMgr.GameState.STATEFOUR)
+            {
+                return;
+            }
+
+            switch ((PlayerBuffType) buff.BuffType)
+            {
+
+            }
+        }
     }
     #endregion
 

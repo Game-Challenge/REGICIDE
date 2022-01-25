@@ -123,7 +123,7 @@ partial class GameMgr : Singleton<GameMgr>
         if (choiceRandCount == 0 && choiceCount == 0)
         {
             UISys.Mgr.CloseWindow<GameChoiceUI>();
-            return false;
+            return true;
         }
 
         if (choiceRandCount != choiceCount)
