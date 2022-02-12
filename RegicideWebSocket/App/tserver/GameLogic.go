@@ -19,7 +19,7 @@ var UseJoker bool
 
 //InitCards 初始化所有卡牌
 func (room *Room) InitCards() {
-	TOTAL_CARD_COUNT = 52
+	TOTAL_CARD_COUNT = 54
 	for i := 0; i < TOTAL_CARD_COUNT; i++ {
 		cardData := InstanceCardData(i)
 		room.ToTalCardList = append(room.ToTalCardList, &cardData)
